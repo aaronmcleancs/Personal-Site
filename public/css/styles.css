@@ -73,7 +73,7 @@ body {
 .hero__section {
     color: #fff;
     background-image: url(sgsgsg.svg);
-    background-size: 200%;
+    background-size: 240%;
     z-index: 7;
     overflow: hidden;
 }
@@ -463,3 +463,55 @@ body {
     --gradient-color-4: #F46036;
     z-index:0;
   }
+
+  .contact__section {
+    background-color: #000000;
+    padding: 50px 0;
+    color: #ffffff;
+}
+
+.contact__wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.contact__wrapper h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#contact-form {
+    display: flex;
+    flex-direction: column;
+}
+
+#contact-form input,
+#contact-form textarea {
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #333;
+    background-color: #1a1a1a;
+    color: #ffffff;
+}
+
+#contact-form textarea {
+    height: 150px;
+    resize: vertical;
+}
+
+#contact-form button {
+    padding: 10px 20px;
+    background-color: #7632eb;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#contact-form button:hover {
+    background-color: #5a20b9;
+}
