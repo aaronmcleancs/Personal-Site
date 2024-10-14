@@ -23,8 +23,6 @@
         </div>
         <a href="#home">Home</a>
         <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
-        <a href="#about">About</a>
         <div class="right-nav">
             <a href="/cv.pdf" class="download-btn" download="AaronMcLean_CV.pdf">
                 Resume <i class="fas fa-download"></i>
@@ -57,7 +55,7 @@
                 <div id="card1" class="card-props white-card animate__animated">
                     <div class="card-content">
                         <img src="icon/1.svg" alt="Icon 1" style="width: 40px; height: 40px;" /> 
-                        <p>CNN Architecture for X-ray Classification</p>
+                        <p>CNN Architecture</p>
                         <p>Trained and optimized a 15 million parameter Convolutional Neural Network (CNN) using TensorFlow and AWS for the local diagnosis of SARS-CoV-2 from chest X-ray images. Achieved 97.55% accuracy in testing utilizing Conv2D, MaxPooling, Dense, and Dropout layers. Deployed model weights on a resource-constrained platform, optimizing for performance for use on Apple M-Series CPUs.</p>
                         <p><strong>Skills:</strong> Machine Learning, TensorFlow, AWS, CNN</p>
                         <div class="button-container">
@@ -68,7 +66,7 @@
                 <div id="card2" class="card-props white-card animate__animated">
                     <div class="card-content">
                         <img src="icon/2.svg" alt="Icon 2" style="width: 40px; height: 40px;" /> 
-                        <p>Full-Stack iOS Application</p>
+                        <p>iOS Application</p>
                         <p>Deployed a full-stack iOS application using Swift, Node.js, and PostgreSQL, with user sign-up and authentication, secure cloud storage, and RESTful APIs for managing user data. Developed a robust NetworkManager tool in Swift to facilitate seamless device-server interactions, user sign-ups, and data retrieval efficiently. Integrated Keychain-based authentication for secure key storage.</p>
                         <p><strong>Skills:</strong> iOS Development, Swift, Node.js, PostgreSQL</p>
                         <div class="button-container">
@@ -125,18 +123,11 @@
 
 <script>
     window.addEventListener('scroll', function() {
-        // Get the hero section
         let heroSection = document.querySelector('.hero__section');
-        
-        // Calculate scroll percentage
         let scrollPercent = 400 * window.scrollY / (document.body.offsetHeight - window.innerHeight);
-        
-        // Check the viewport width
         if (window.innerWidth < 1300) {
-            // Apply styles for mobile
             heroSection.style.backgroundSize = `${400 + scrollPercent}%`;
         } else {
-            // Apply styles for larger screens
             heroSection.style.backgroundSize = `${220 + scrollPercent}%`;
         }
     });

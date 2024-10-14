@@ -141,7 +141,7 @@ body {
 
 @media screen and (max-width: 1300px) {
   .column__left h2 {
-      font-size: 3.2rem;
+      font-size: 2.8rem;
       display: table; 
       margin: 0 auto;
   }
@@ -162,13 +162,13 @@ body {
 
 @media screen and (max-width: 1300px) {
   .column__left h1 {
-      font-size: 5rem;
+      font-size: 4rem;
   }
 }
 
 @media screen and (max-width: 640px) {
   .column__left h1 {
-      font-size: 3.5rem;
+      font-size: 3.2rem;
   }
 }
 
@@ -443,6 +443,7 @@ body {
 @media screen and (max-width: 1300px) {
   .card-props{
     border-radius: 25px;
+    align-self: auto;
   }
 }
 .flex-props {
