@@ -141,7 +141,7 @@ body {
 
 @media screen and (max-width: 1300px) {
   .column__left h2 {
-      font-size: 2.8rem;
+      font-size: 2.3rem;
       display: table; 
       margin: 0 auto;
   }
@@ -149,7 +149,7 @@ body {
 
 @media screen and (max-width: 640px) {
   .column__left h2 {
-      font-size: 2.5rem;
+      font-size: 1.8rem;
       border-radius: 5px;
   }
 }
@@ -162,13 +162,13 @@ body {
 
 @media screen and (max-width: 1300px) {
   .column__left h1 {
-      font-size: 4rem;
+      font-size: 2.9rem;
   }
 }
 
 @media screen and (max-width: 640px) {
   .column__left h1 {
-      font-size: 3.2rem;
+      font-size: 2.8rem;
   }
 }
 
@@ -180,14 +180,14 @@ body {
 
 @media screen and (max-width: 1300px) {
   .column__left p {
-      font-size: 1.5rem;
+      font-size: 0.9rem;
   }
 }
 
 .column__left span {
   color: var(--accentColor);
   font-family: Consolas, monaco, monospace;
-  font-size: 1.8rem;
+  font-size: 0.9rem;
 }
 
 .hero2__section {

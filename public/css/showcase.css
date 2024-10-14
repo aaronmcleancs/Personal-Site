@@ -1,9 +1,9 @@
 :root {
-  --bg-color: #000000;
+  --bg-color: #030303;
   --text-color: #ffffff;
-  --accent-color: #797979;
-  --secondary-color: #6e6e73;
-  --hover-color: #292929;
+  --accent-color: #2e2e2e;
+  --secondary-color: #363639;
+  --hover-color: #161616;
 }
 
 body {
@@ -83,6 +83,9 @@ body {
   font-weight: 600;
   letter-spacing: -0.01em;
 }
+.showcase__section h3 {
+  margin-top: 20px;
+}
 
 .tech-icons {
   display: flex;
@@ -91,6 +94,7 @@ body {
   font-size: 3rem;
   margin-top: 20px;
   margin-left: 20px;
+  margin-bottom: 20px;
 }
 
 .tech-icons i {
