@@ -284,17 +284,18 @@ body {
 }
 
 .button {
-    background-color: #530093; /* Button color */
-    color: white; /* Text color */
+    background-color: #ffffff; /* Button color */
+    color: rgb(0, 0, 0); /* Text color */
     padding: 10px 15px; /* Padding */
     margin-left: 10px; /* Space between buttons */
     text-decoration: none; /* Remove underline */
     border-radius: 5px; /* Rounded corners */
+    font-weight: 200;
     transition: background-color 0.3s; /* Transition effect */
 }
 
 .button:hover {
-    background-color: #000000; /* Darker shade on hover */
+    background-color: #c6c6c6; /* Darker shade on hover */
 }
 
 
@@ -413,7 +414,7 @@ body {
   
   .white-card {
     background-color: #141414a3;
-    backdrop-filter: blur(1px);
+    backdrop-filter: blur(3px);
     transition: all 0.4s;
 
   } 
