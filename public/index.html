@@ -112,8 +112,6 @@
         </form>
     </div>
 </div>
-</body>
-
 <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
 
 <script>
@@ -127,9 +125,22 @@
 
 <script>
     window.addEventListener('scroll', function() {
-        let scrollPercent = 400 * window.scrollY / (document.body.offsetHeight - window.innerHeight);
+        // Get the hero section
         let heroSection = document.querySelector('.hero__section');
-        heroSection.style.backgroundSize = `${220 + scrollPercent}%`;
+        
+        // Calculate scroll percentage
+        let scrollPercent = 400 * window.scrollY / (document.body.offsetHeight - window.innerHeight);
+        
+        // Check the viewport width
+        if (window.innerWidth < 1300) {
+            // Apply styles for mobile
+            heroSection.style.backgroundSize = `${400 + scrollPercent}%`;
+        } else {
+            // Apply styles for larger screens
+            heroSection.style.backgroundSize = `${220 + scrollPercent}%`;
+        }
     });
-</script> 
+</script>
+
+</body>
 </html>
