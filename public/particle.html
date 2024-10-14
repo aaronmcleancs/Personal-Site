@@ -19,7 +19,6 @@
         <a href="index.html">Home</a>
         <a href="#overview">Overview</a>
         <a href="#features">Features</a>
-        <a href="#tech-stack">Tech Stack</a>
         <a href="#project-detail">Project Detail</a>
     </div>
 
@@ -33,34 +32,28 @@
     <div class="showcase__content">
         <section id="overview" class="showcase__section">
             <h2>Project Overview</h2>
-            <p>ParticleBox is a multithreaded particle dynamics engine written in C++ using SDL2, designed to visualize complex forces such as repulsion, thermodynamics, and gravity among hundreds of thousands of particles in real-time. This project showcases the fundamental principles of physics simulation through an engaging and interactive user interface.</p>
+            <p>ParticleBox is a robust particle dynamics engine implemented in C++ with SDL2. It's crafted for real-time visualization of complex forces such as repulsion, thermodynamics, and gravity among hundreds of thousands of particles. By employing a grid-based multithreaded rendering approach, this project achieves remarkable efficiency, central to the underlying computational theory and physical models.</p>
+            <p>At its core, ParticleBox employs concepts from the fields of physics and computer science, merging them to create realistic simulations. The interaction of particles is grounded in modeled equations that simulate forces, providing results akin to physical phenomena.</p>
         </section>
 
         <section id="features" class="showcase__section">
             <h2>Key Features</h2>
             <ul>
                 <li>Real-time visualization of particle dynamics with multithreading support.</li>
-                <li>Simulation of various physical interactions including gravity and repulsion.</li>
+                <li>Simulation of various physical interactions, including gravity and repulsion.</li>
                 <li>User-friendly interface for controlling simulation parameters.</li>
                 <li>Ability to export simulations as GIFs for sharing and demonstration.</li>
             </ul>
         </section>
 
-        <section id="tech-stack" class="showcase__section">
-            <h2>Tech Stack</h2>
-            <div class="tech-icons">
-                <i class="fab fa-cplusplus"></i>
-                <i class="fab fa-visual-studio-code"></i>
-            </div>
-        </section>
-
         <section id="project-detail" class="showcase__section">
             <h2>Project Detail</h2>
-            <p>ParticleBox leverages advanced multithreading techniques to ensure smooth, real-time performance, even with up to 100,000 particles. The engine takes advantage of multiple CPU cores to handle updates to particle positions and forces concurrently, which is essential for handling large-scale simulations.</p>
+            <p>ParticleBox utilizes advanced multithreading techniques to ensure smooth, real-time performance, even with up to 100,000 particles. The engine leverages multiple CPU cores to handle updates to particle positions and forces concurrently, essential for running large-scale simulations efficiently.</p>
 
             <h3>Multithreading Implementation</h3>
+            <p>In the realm of particle simulations, concurrency is a key aspect to boost performance. The multithreading method applied here is critical to optimizing particle updates. By using `std::async` and demarcating work into chunks, ParticleBox significantly enhances the processing speed of simulations, reducing bottlenecks typically encountered with single-threaded computations.</p>
             <div class="code-sample">
-                <pre><code class="language-cpp">
+                <pre><code class="language-javascript">
 if (!running) return;
 
 int numThreads = 24;
@@ -86,11 +79,12 @@ for (auto &future : futures) {
 }
                 </code></pre>
             </div>
-            <p>This code demonstrates the efficient partitioning of particle updates into chunks, each processed by a separate thread. Here, `std::async` allows ParticleBox to dispatch chunks to multiple threads, with each thread handling a subset of particles. This approach significantly accelerates the simulation by parallelizing the work and minimizing the wait time for each update cycle.</p>
+            <p>This code illustrates efficient partitioning of particle updates into distinct segments. Utilizing separate threads for each chunk, enabled by `std::async`, allows ParticleBox to concurrently perform computations, vastly improving simulation speed by parallel processing.</p>
 
-            <h3>Vector Operations</h3>
+            <h3>Vector Operations and Physics</h3>
+            <p>Within the ParticleBox, vectors play a pivotal role in computation. The `Vec2` class contributes essential vector operations like addition, subtraction, and dot products. These operations form the basis of force calculations, collision detection, and movement dynamics, integral aspects of physics simulations.</p>
             <div class="code-sample">
-                <pre><code class="language-cpp">
+                <pre><code class="language-javascript">
 Vec2& operator+=(const Vec2& other) {
     x += other.x;
     y += other.y;
@@ -117,7 +111,24 @@ float dot(const Vec2& other) const {
 }
                 </code></pre>
             </div>
-            <p>The `Vec2` class supports various vector operations, including addition, subtraction, and dot products. These are crucial for the physics calculations in ParticleBox, enabling efficient computations for force vectors, normalization, and other vector-based operations.</p>
+            <p>Vector operations enable efficient calculations needed for particle dynamics. Whether applying forces or calculating movement, these vector tricks assist in managing large datasets of particle interactions effectively.</p>
+
+            <p>In theoretical computing, the efficiency and correctness of these operations often tie back to mathematical optimization and algorithms such as Fast Fourier Transforms (FFT) for efficient force calculation or simulation optimization through algorithms like Barnes-Hut for reducing complexity in n-body simulation tasks.</p>
+
+            <h3>Theoretical Computer Science and Rendering Optimization</h3>
+            <p>From a theoretical standpoint, ParticleBox stands on significantly deep principles in computer science. One core concept is the utilization of data parallelism where data can be processed simultaneously across different processing units. In systems like ParticleBox, this allows handling large volumes of data multitasked across cores.</p>
+            
+            <p>When modeling liquid simulations or seeking greater entropy, methods such as SPH (Smoothed-Particle Hydrodynamics) come into play. By leveraging kernel functions to simulate fluid dynamics, one can achieve realistic fluid rendering. Moreover, applying concepts of entropy maximization using Boltzmann's principles allows for diverse simulation models granting complex, entropic behaviors in systems.</p>
+            
+            <p>Utilizing C++ language specific optimizations such as memory alignment, cache coherence, and SIMD (Single Instruction, Multiple Data) can further enhance performance profoundly, especially when dealing with vast particle collections, making the operations seamless and less CPU intensive.</p>
+            
+            <p align="center">
+              \[
+              F_{\text{total}} = \sum_{i=1}^{n} \left( F_{\text{gravitational}}^i + F_{\text{repulsion}}^i + F_{\text{boundary}}^i \right)
+              \]
+            </p>
+
+            <p>The above equation represents how total forces into each particle might be broken down through the partitioning of contributing forces such as gravitational, repulsion, and potential boundary-induced forces culminating in a dynamic update strategy. Real-world applications span from graphics programming to scientific simulations.</p>
         </section>
 
         <section id="gallery" class="showcase__section">
@@ -132,6 +143,69 @@ float dot(const Vec2& other) const {
         <a href="https://github.com/aaronmcleancs/ParticleBox" class="button">View on GitHub</a>
         <a href="#" class="button">Live Demo</a>
     </div>
+    <div class="fullscreen-viewer">
+        <img src="" alt="Fullscreen image" class="fullscreen-image">
+        <div class="fullscreen-nav">
+            <button class="fullscreen-prev">&lt;</button>
+            <button class="fullscreen-next">&gt;</button>
+        </div>
+        <button class="fullscreen-close">&times;</button>
+    </div>
+
+    <script>
+        const imageGallery = document.querySelector('.image-gallery');
+        const fullscreenViewer = document.querySelector('.fullscreen-viewer');
+        const fullscreenImage = document.querySelector('.fullscreen-image');
+        const prevButton = document.querySelector('.fullscreen-prev');
+        const nextButton = document.querySelector('.fullscreen-next');
+        const closeButton = document.querySelector('.fullscreen-close');
+        let currentImageIndex = 0;
+        const images = Array.from(imageGallery.querySelectorAll('img'));
+
+        function openFullscreen(index) {
+            currentImageIndex = index;
+            fullscreenImage.src = images[index].src;
+            fullscreenViewer.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeFullscreen() {
+            fullscreenViewer.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function showNextImage() {
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            fullscreenImage.src = images[currentImageIndex].src;
+        }
+
+        function showPrevImage() {
+            currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+            fullscreenImage.src = images[currentImageIndex].src;
+        }
+
+        images.forEach((img, index) => {
+            img.addEventListener('click', () => openFullscreen(index));
+        });
+
+        closeButton.addEventListener('click', closeFullscreen);
+        nextButton.addEventListener('click', showNextImage);
+        prevButton.addEventListener('click', showPrevImage);
+
+        fullscreenViewer.addEventListener('click', (e) => {
+            if (e.target === fullscreenViewer) {
+                closeFullscreen();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (fullscreenViewer.style.display === 'flex') {
+                if (e.key === 'Escape') closeFullscreen();
+                if (e.key === 'ArrowRight') showNextImage();
+                if (e.key === 'ArrowLeft') showPrevImage();
+            }
+        });
+    </script>
     <script src="js/showcase.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>

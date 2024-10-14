@@ -69,6 +69,24 @@ body {
   .visible {
     opacity: 1 !important;
   }
+
+  .right-nav {
+    margin-left: auto;
+}
+
+.download-btn {
+    padding: 5px 20px;
+    background-color: #00000039;
+    color: #fff;
+    margin: 5px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bolder;
+}
+
+.download-btn:hover {
+    background-color: #0a0a0ae9;
+}
   
 .hero__section {
     color: #fff;
@@ -374,16 +392,16 @@ body {
 }
 
 .social-menu ul li:nth-child(1) a:hover{
-    background-color: rgb(38, 136, 161);
+    background-color: rgb(99, 14, 202);
 }
 .social-menu ul li:nth-child(2) a:hover{
-    background-color: #8341ff;
+    background-color: #f3a11c;
 }
 .social-menu ul li:nth-child(3) a:hover{
-    background-color: #80a6f8;
+    background-color: #7092dc;
 }
 .social-menu ul li:nth-child(4) a:hover{
-    background-color: rgb(152, 48, 111);
+    background-color: rgb(146, 146, 146);
 }
   .card-props {
     border-radius: 33px;

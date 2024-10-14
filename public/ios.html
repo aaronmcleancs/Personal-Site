@@ -32,13 +32,19 @@
     <div class="showcase__content">
         <section id="overview" class="showcase__section">
             <h2>Project Overview</h2>
-            <p>RepBook-DemoServer is a backend server for a full-stack iOS fitness tracking application. It provides a personal dashboard for users, allowing them to build workouts, interact with an AI assistant, and manage their fitness metrics through a RESTful API. This project utilizes Apple’s Keychain for secure authentication, ensuring user data remains protected.</p>
+            <p>RepBook-DemoServer is a backend server for a full-stack iOS fitness tracking application. It provides a personal dashboard for users, allowing them to build workouts, interact with an AI assistant, and manage their fitness metrics through a RESTful API. This project utilizes Apple’s Keychain for secure authentication, ensuring user data remains protected.
+
+            At the core of this project is the development of a robust backend service which interfaces with an iOS client application. The system has been architected to handle the computational demands of fitness data processing, real-time updates, and user interactions with machine learning models. Apple's Keychain provides the assurance of secure, encrypted storage of sensitive user credentials, enhancing the overall security profile of the application.</p>
         </section>
 
         <section id="features" class="showcase__section">
             <h2>Key Features</h2>
-            <div class="code-sample">
-                <pre><code class="language-javascript">
+            <ul>
+                <li>Provides secure login and signup functionality using bcrypt and PostgreSQL.</li>
+                <li>RESTful API facilitates user data management and workout tracking.</li>
+                <div class="code-sample">
+                    <pre><code class="language-javascript">
+// Express.js route handler
 app.post('/login', async (req, res) => {
     try {
         const { email, username, password } = req.body;
@@ -53,7 +59,7 @@ app.post('/login', async (req, res) => {
             return res.status(400).send('Email or username is required');
         }
 
-        const result = await pool.query(query, values);
+         const result = await pool.query(query, values);
         if (result.rows.length > 0) {
             const user = result.rows[0];
             const match = await bcrypt.compare(password, user.password);
@@ -71,8 +77,10 @@ app.post('/login', async (req, res) => {
         res.status(500).send(err.message);
     }
 });
-                </code></pre>
-                <pre><code class="language-swift">
+                    </code></pre>
+                <li>AI assistant for customized fitness recommendations and tracking.</li>
+                <li>Apple Keychain integration for secure storage and retrieval of user authentication tokens on iOS.</li>
+                <pre><code class="language-javascript">
 import Foundation
 import Security
 
@@ -106,30 +114,38 @@ class KeychainManager {
 
     static func loadAuthKey() -> String? {
         guard let authKeyData = load(service: "YourAppService", account: "authKey"),
-              let authKey = String(data: authKeyData, encoding: .utf8) else {
+                let authKey = String(data: authKeyData, encoding: .utf8) else {
             return nil
         }
         return authKey
     }
 }
-                </code></pre>
-            </div>
-            <ul>
-                <li>Provides secure login and signup functionality using bcrypt and PostgreSQL.</li>
-                <li>RESTful API facilitates user data management and workout tracking.</li>
-                <li>AI assistant for customized fitness recommendations and tracking.</li>
-                <li>Apple Keychain integration for secure storage and retrieval of user authentication tokens on iOS.</li>
+                                    </code></pre>
             </ul>
         </section>
 
         <section id="methodology" class="showcase__section">
             <h2>Methodology and Architecture</h2>
-            <p>This project leverages a modular backend with a RESTful API architecture, designed to support complex fitness tracking functionality. The Node.js server handles HTTP requests, while PostgreSQL manages user data securely. User authentication is reinforced using Apple’s Keychain, providing end-to-end encryption of sensitive data. In this system, users can sign up and log in with encrypted passwords. The AI assistant is powered by custom-trained models and managed through microservices.</p>
+            <p>At the heart of the RepBook-DemoServer is the RESTful API architecture, a style of software design for interactive applications that involves leveraging HTTP requests to access and use data. In this system, REST is employed to manage user data and offer workout tracking functionality. The architectural pattern is significant for its stateless behavior, separation of client and server, and support for multiple backends.
+
+            User authentication, a fundamental component of any secure web application, is implemented using bcrypt for hashing passwords. The hashing mechanism employs a key derivation function based on the Blowfish cipher, making password hashes both secure and computationally expensive to reverse. Bcrypt safeguards against dictionary and brute-force attacks, thus securing user credentials on the PostgreSQL database. In this vein, the following expression represents bcrypt's mathematical operation for hashing passwords, where \( x \) represents the plaintext password and \( y \) the resultant hash:
+
+            \[
+            y = \text{bcrypt}(x, \text{salt})
+            \]
+
+            The AI component utilizes machine learning to provide users with relevant fitness recommendations. This personalization is achieved by training models on extensive fitness datasets, then deploying these models as microservices. Architecture-wise, microservices offer a resilient structure, allowing individual services to be deployed and scaled independently.
+
+            The integration with Apple Keychain fortifies security by relying on cryptographically secure storage for sensitive data on iOS, achieving end-to-end encryption. It ensures that a user's authentication credentials are safely and efficiently managed, reinforcing both security and user trust.</p>
         </section>
 
         <section id="results" class="showcase__section">
             <h2>Performance and Results</h2>
-            <p>RepBook-DemoServer efficiently manages concurrent requests, with benchmarks showing that the backend maintains high throughput on Apple M-series chips. Keychain integration has significantly enhanced data security. The app's user authentication times are improved by 30% due to optimizations in both the Node server and the Swift-based frontend, providing users with a faster and more secure experience overall. In addition, the AI assistant’s response time averages below 200ms, offering a responsive and engaging fitness tracking experience.</p>
+            <p>RepBook-DemoServer has been benchmarked to assess its ability to handle concurrent requests effectively. Thanks to the optimizations in the Node.js backend, the server maintains high throughput, suitable for deployment on Apple's M-series chips which are known for superior performance. Furthermore, incorporating Keychain integration significantly bolsters the server's security layer, offering end-users peace of mind regarding their data privacy.
+
+            Performance improvements have notably enhanced user experience. With optimizations to both the Node server and the Swift-based frontend, user authentication processing times are reduced by 30%, providing a seamless login experience. The AI assistant also boasts a response time of under 200ms, enabling a fluid, interactive user engagement with fitness tracking and recommendations.
+
+            Metrics indicate increased user engagement and satisfaction, highlighting the successful amalgamation of robust technological foundations and user-centric design principles.</p>
         </section>
 
         <section id="tech-stack" class="showcase__section">
@@ -140,6 +156,7 @@ class KeychainManager {
                 <i class="fab fa-swift"></i>
                 <i class="fab fa-objective-c"></i>
             </div>
+            <p>The project is built on a comprehensive suite of technologies. Node.js serves as the backbone, offering highly scalable network applications. PostgreSQL is leveraged for its robust SQL capabilities, essential for handling complex queries with security practices such as prepared statements to prevent SQL injection attacks. The client-side employs Swift and Objective-C, enabling rich iOS applications that demand high performance and seamless integration with Apple's services.</p>
         </section>
 
         <section id="gallery" class="showcase__section">
@@ -154,7 +171,69 @@ class KeychainManager {
         <a href="https://github.com/aaronmcleancs/RepBook-DemoServer" class="button">View on GitHub</a>
         <a href="#" class="button">Live Demo</a>
     </div>
+    <div class="fullscreen-viewer">
+        <img src="" alt="Fullscreen image" class="fullscreen-image">
+        <div class="fullscreen-nav">
+            <button class="fullscreen-prev">&lt;</button>
+            <button class="fullscreen-next">&gt;</button>
+        </div>
+        <button class="fullscreen-close">&times;</button>
+    </div>
 
+    <script>
+        const imageGallery = document.querySelector('.image-gallery');
+        const fullscreenViewer = document.querySelector('.fullscreen-viewer');
+        const fullscreenImage = document.querySelector('.fullscreen-image');
+        const prevButton = document.querySelector('.fullscreen-prev');
+        const nextButton = document.querySelector('.fullscreen-next');
+        const closeButton = document.querySelector('.fullscreen-close');
+        let currentImageIndex = 0;
+        const images = Array.from(imageGallery.querySelectorAll('img'));
+
+        function openFullscreen(index) {
+            currentImageIndex = index;
+            fullscreenImage.src = images[index].src;
+            fullscreenViewer.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeFullscreen() {
+            fullscreenViewer.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function showNextImage() {
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            fullscreenImage.src = images[currentImageIndex].src;
+        }
+
+        function showPrevImage() {
+            currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+            fullscreenImage.src = images[currentImageIndex].src;
+        }
+
+        images.forEach((img, index) => {
+            img.addEventListener('click', () => openFullscreen(index));
+        });
+
+        closeButton.addEventListener('click', closeFullscreen);
+        nextButton.addEventListener('click', showNextImage);
+        prevButton.addEventListener('click', showPrevImage);
+
+        fullscreenViewer.addEventListener('click', (e) => {
+            if (e.target === fullscreenViewer) {
+                closeFullscreen();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (fullscreenViewer.style.display === 'flex') {
+                if (e.key === 'Escape') closeFullscreen();
+                if (e.key === 'ArrowRight') showNextImage();
+                if (e.key === 'ArrowLeft') showPrevImage();
+            }
+        });
+    </script>
     <script src="js/showcase.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>

@@ -10,6 +10,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <script src="https://kit.fontawesome.com/ca7f2ffa51.js" crossorigin="anonymous"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
     <div class="navbar">
@@ -43,7 +45,7 @@
                 <li>Optimized for performance on Apple M-series CPUs.</li>
                 <li>Employs a robust methodology for downloading datasets and model weights.</li>
             </ul>
-            
+
             <div class="code-sample">
                 <pre><code class="language-python">
 # Model definition
@@ -70,30 +72,60 @@ def create_model():
 
         <section id="methodology" class="showcase__section">
             <h2>Methodology & Optimization</h2>
-            <p>The model architecture is based on AlexNet, which consists of several convolutional layers followed by dense layers. It was chosen due to its suitability for image classification tasks with moderate computational demands, making it ideal for the Apple M-series CPU. AlexNet includes key features such as ReLU activations and max-pooling layers, which reduce computation time and enhance model performance. The architecture has been adapted and optimized for Apple M1 CPUs, leveraging the M1’s Neural Engine and TensorFlow’s accelerated libraries. These optimizations allow faster training and inference, ideal for handling large datasets in a real-world scenario.</p>
+            <p>The model architecture is inspired by AlexNet, a pioneering deep learning model optimized for efficient image classification. AlexNet uses convolutional and max-pooling layers to effectively reduce computation while enhancing performance.</p>
+            
+            <h3>AlexNet Research and Theoretical Insights</h3>
+            <p>AlexNet introduced the use of the ReLU activation function over traditional sigmoid functions, significantly speeding up training by addressing the vanishing gradient problem inherent in sigmoid functions. The non-saturating ReLU, defined as \(f(x) = \max(0, x)\), enables neural networks to reach a desired accuracy substantially faster than equivalents using saturating neurons like tanh, as demonstrated in early observations on datasets such as CIFAR-10.</p>
+            
+            <p>ReLU's efficiency is augmented by local response normalization, a technique inspired by lateral inhibition in the brain. The local response normalized activity is expressed as:</p>
+            <p>$$b_{i, x, y} = \frac{a_{i, x, y}}{\left(k + \alpha \sum_{j=\max(0, i-n/2)}^{\min(N-1, i+n/2)} (a_{j, x, y})^2\right)^\beta}$$</p>
+            <p>Here, \(k\), \(n\), \(\alpha\), and \(\beta\) are hyperparameters that can be fine-tuned for optimality. This normalization method enhances the network's generalization capabilities.</p>
+            
+            <h3>Model Architecture and Optimization Techniques</h3>
+            <p>The architecture for the M1 Pro CPU was strategically selected for memory and computation efficiency. We utilize overlapping max pooling throughout the convolutional layers. Overlapping pooling is key to reducing overfitting, characterized by a stride \(s < z\), where \(z\) denotes the pooling region size, thus encouraging robust feature learning.</p>
+
+            <h3>Training and Hyperparameter Tuning</h3>
+            <p>Dropout, specifically with a rate of 0.5 after the fully connected layer, is implemented to combat overfitting by randomly deactivating neurons, enforcing the learning of more generalized features rather than memorization.</p>
+            <p>The choice of layer and neuron size reflects a balance needed to exploit the parallel processing capabilities of the M1 Pro CPU, maintaining high accuracy without overwhelming GPU memory resources.</p>
+            
+            <p>With these optimizations, the model aims for peak efficiency on the M1 Pro CPU, allowing for practical deep learning research on accessible hardware platforms.</p>
         </section>
 
         <section id="results" class="showcase__section">
             <h2>Results</h2>
             <div class="code-sample">
                 <pre><code class="language-python">
-# Result Matrix:
-Confusion Matrix:
-[[335  11   4]
- [ 22 318  10]
- [  0   9 260]]
-
-Classification Report:
-              precision    recall  f1-score   support
-      covid       0.94      0.96      0.95       350
-     normal       0.94      0.91      0.92       350
-  pneumonia       0.95      0.97      0.96       269
-   accuracy                           0.94       969
-  macro avg       0.94      0.94      0.94       969
-weighted avg       0.94      0.94      0.94       969
+        # Result Matrix:
+        Confusion Matrix:
+        [335  11   4]
+        [ 22 318  10]
+        [  0   9 260]
+        
+        Classification Report:
+                      precision    recall  f1-score   support
+              covid       0.94      0.96      0.95       350
+             normal       0.94      0.91      0.92       350
+          pneumonia       0.95      0.97      0.96       269
+           accuracy                          0.94       969
+          macro avg       0.94      0.94      0.94       969
+       weighted avg       0.94      0.94      0.94       969
                 </code></pre>
             </div>
-            <p>The model achieved impressive results on the test set, with an accuracy of 94%. The high f1-scores across all three classes indicate a balanced performance in terms of both precision and recall. Notably, COVID-19 and Viral Pneumonia categories both achieved an f1-score of 0.95 and above, showing the model’s strong ability to differentiate between similar symptoms seen in chest X-ray images. These results are indicative of the optimized AlexNet’s effectiveness in this context, with enhanced computational efficiency due to Apple M1 optimizations. The use of Dropout layers further improved generalization, preventing overfitting and leading to stable, reliable performance on unseen data. </p>
+            <p>The model achieved impressive accuracy with balanced precision and recall across all target classes. The use of dropout and ReLU activations enhances the generalization capacity of the model, making it robust against overfitting.</p>
+        
+            <h3>Model Optimization for the M1 Pro 16GB RAM</h3>
+            <p>Optimizing the model for the Apple M1 Pro with 16GB RAM involves several considerations given the unique architecture of the M1 series. The Apple M1 Pro combines 10 cores (8 performance and 2 efficiency cores) with an Apple M1 Pro GPU (16-core) integrated into a 5 nm fabrication process. This architecture, coupled with a base frequency of 3.2 GHz, offers robust capability for model processing.</p>
+        
+            <p>Key Focus Areas for Optimization:</p>
+            <ul>
+                <li><b>Memory Management:</b> With 16GB of unified memory, efficient memory allocation is crucial. Strategies such as reducing model size, using smaller batch sizes during training, and leveraging memory-swapping techniques can enhance performance.</li>
+                <li><b>Computational Efficiency:</b> Utilize the multi-core architecture by implementing parallel processing where possible. Libraries optimized for Apple silicon, such as TensorFlow Metal plugin, can also boost performance by offloading compute-heavy tasks to the GPU.</li>
+            </ul>
+        
+            <h3>Trends in Model Size and Performance</h3>
+            <p>Early models grew over seven orders of magnitude from 2000 to 2018, after which model sizes expanded an additional five orders in just four years. This exponential growth, especially pronounced in language models, highlights a significant shift in computational requirements and hardware optimization, particularly for models exceeding tens of billions of parameters.</p>
+        
+            <p>We observed a peculiar "parameter gap" between 20B and 70B parameters in language models. This gap is intriguing as it reveals a preference for either smaller, more manageable models or exceedingly large ones that challenge the state-of-the-art capabilities. Hypotheses for this phenomenon include the increased complexity of parallelism techniques as models exceed 20B parameters, making mid-sized models less cost-effective, and a focus on surpassing existing large models like GPT-3.</p>
         </section>
 
         <section id="tech-stack" class="showcase__section">
@@ -119,7 +151,69 @@ weighted avg       0.94      0.94      0.94       969
         <a href="https://github.com/aaronmcleancs/CVV_15M_SARS-CoV-2" class="button">View on GitHub</a>
         <a href="#" class="button">Live Demo</a> <!-- Update with actual demo link if available -->
     </div>
+    <div class="fullscreen-viewer">
+        <img src="" alt="Fullscreen image" class="fullscreen-image">
+        <div class="fullscreen-nav">
+            <button class="fullscreen-prev">&lt;</button>
+            <button class="fullscreen-next">&gt;</button>
+        </div>
+        <button class="fullscreen-close">&times;</button>
+    </div>
 
+    <script>
+        const imageGallery = document.querySelector('.image-gallery');
+        const fullscreenViewer = document.querySelector('.fullscreen-viewer');
+        const fullscreenImage = document.querySelector('.fullscreen-image');
+        const prevButton = document.querySelector('.fullscreen-prev');
+        const nextButton = document.querySelector('.fullscreen-next');
+        const closeButton = document.querySelector('.fullscreen-close');
+        let currentImageIndex = 0;
+        const images = Array.from(imageGallery.querySelectorAll('img'));
+
+        function openFullscreen(index) {
+            currentImageIndex = index;
+            fullscreenImage.src = images[index].src;
+            fullscreenViewer.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeFullscreen() {
+            fullscreenViewer.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function showNextImage() {
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            fullscreenImage.src = images[currentImageIndex].src;
+        }
+
+        function showPrevImage() {
+            currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+            fullscreenImage.src = images[currentImageIndex].src;
+        }
+
+        images.forEach((img, index) => {
+            img.addEventListener('click', () => openFullscreen(index));
+        });
+
+        closeButton.addEventListener('click', closeFullscreen);
+        nextButton.addEventListener('click', showNextImage);
+        prevButton.addEventListener('click', showPrevImage);
+
+        fullscreenViewer.addEventListener('click', (e) => {
+            if (e.target === fullscreenViewer) {
+                closeFullscreen();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (fullscreenViewer.style.display === 'flex') {
+                if (e.key === 'Escape') closeFullscreen();
+                if (e.key === 'ArrowRight') showNextImage();
+                if (e.key === 'ArrowLeft') showPrevImage();
+            }
+        });
+    </script>
     <script src="js/showcase.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
