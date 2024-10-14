@@ -124,37 +124,22 @@ class KeychainManager {
 
         <section id="methodology" class="showcase__section">
             <h2>Methodology and Architecture</h2>
-            <p>At the heart of the RepBook-DemoServer is the RESTful API architecture, a style of software design for interactive applications that involves leveraging HTTP requests to access and use data. In this system, REST is employed to manage user data and offer workout tracking functionality. The architectural pattern is significant for its stateless behavior, separation of client and server, and support for multiple backends.
+<p>The core of RepBook-DemoServer's functionality is its RESTful API, which manages user data and workout tracking. REST provides a stateless architecture, separating client and server interactions, supporting multiple backends, and ensuring efficient scalability.
 
-            User authentication, a fundamental component of any secure web application, is implemented using bcrypt for hashing passwords. The hashing mechanism employs a key derivation function based on the Blowfish cipher, making password hashes both secure and computationally expensive to reverse. Bcrypt safeguards against dictionary and brute-force attacks, thus securing user credentials on the PostgreSQL database. In this vein, the following expression represents bcrypt's mathematical operation for hashing passwords, where \( x \) represents the plaintext password and \( y \) the resultant hash:
+User authentication is secured with bcrypt, which uses the Blowfish cipher for computationally expensive password hashing. This approach defends against dictionary and brute-force attacks, securing credentials in the PostgreSQL database:
+\[
+y = \text{bcrypt}(x, \text{salt})
+\]
 
-            \[
-            y = \text{bcrypt}(x, \text{salt})
-            \]
+Machine learning drives personalized fitness recommendations, implemented as microservices for scalable deployment. Apple Keychain integration further enhances security, using cryptographic storage to protect user credentials on iOS.</p>
 
-            The AI component utilizes machine learning to provide users with relevant fitness recommendations. This personalization is achieved by training models on extensive fitness datasets, then deploying these models as microservices. Architecture-wise, microservices offer a resilient structure, allowing individual services to be deployed and scaled independently.
-
-            The integration with Apple Keychain fortifies security by relying on cryptographically secure storage for sensitive data on iOS, achieving end-to-end encryption. It ensures that a user's authentication credentials are safely and efficiently managed, reinforcing both security and user trust.</p>
-        </section>
-
-        <section id="results" class="showcase__section">
-            <h2>Performance and Results</h2>
-            <p>RepBook-DemoServer has been benchmarked to assess its ability to handle concurrent requests effectively. Thanks to the optimizations in the Node.js backend, the server maintains high throughput, suitable for deployment on Apple's M-series chips which are known for superior performance. Furthermore, incorporating Keychain integration significantly bolsters the server's security layer, offering end-users peace of mind regarding their data privacy.
-
-            Performance improvements have notably enhanced user experience. With optimizations to both the Node server and the Swift-based frontend, user authentication processing times are reduced by 30%, providing a seamless login experience. The AI assistant also boasts a response time of under 200ms, enabling a fluid, interactive user engagement with fitness tracking and recommendations.
-
-            Metrics indicate increased user engagement and satisfaction, highlighting the successful amalgamation of robust technological foundations and user-centric design principles.</p>
-        </section>
-
-        <section id="tech-stack" class="showcase__section">
-            <h2>Stack</h2>
-            <div class="tech-icons">
-                <i class="fab fa-node-js"></i>
-                <i class="fab fa-swift"></i>
-                <i class="fab fa-go"></i>
-            </div>
-            <p>The project is built on a comprehensive suite of technologies. Node.js serves as the backbone, offering highly scalable network applications. PostgreSQL is leveraged for its robust SQL capabilities, essential for handling complex queries with security practices such as prepared statements to prevent SQL injection attacks. The client-side employs Swift and Objective-C, enabling rich iOS applications that demand high performance and seamless integration with Apple's services.</p>
-        </section>
+<h2>Stack</h2>
+<div class="tech-icons">
+    <i class="fab fa-node-js"></i>
+    <i class="fab fa-swift"></i>
+    <i class="fas fa-database"></i>
+</div>
+<p>This project utilizes Node.js for its scalable backend, PostgreSQL for secure data management, and Swift for high-performance iOS applications. Security measures, such as bcrypt for hashing and Keychain for secure storage, provide strong data protection.</p>
 
         <section id="gallery" class="showcase__section">
             <h2>Project Gallery</h2>

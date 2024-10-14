@@ -40,125 +40,91 @@
             <ul>
                 <li>Real-time visualization of particle dynamics with multithreading support.</li>
                 <li>Simulation of various physical interactions, including gravity and repulsion.</li>
-                <li>User-friendly interface for controlling simulation parameters.</li>
-                <li>Ability to export simulations as GIFs for sharing and demonstration.</li>
+                <li>Efficient handling of high particle counts (up to 100,000+).</li>
+                <li>Potential for fluid simulation using particle-based methods.</li>
             </ul>
         </section>
-
         <section id="project-detail" class="showcase__section">
             <h2>Project Detail</h2>
-            <p>ParticleBox utilizes multithreading techniques to ensure smooth, real-time performance, even with up to 100,000 particles. The engine leverages multiple CPU cores to handle updates to particle positions and forces concurrently, essential for running large-scale simulations efficiently.</p>
-
+            <p>ParticleBox is a high-performance particle simulation engine that utilizes multithreading techniques to ensure smooth, real-time performance with up to 100,000 particles. The engine leverages multiple CPU cores to handle updates to particle positions and forces concurrently, essential for running large-scale simulations efficiently.</p>
+    
             <h3>Multithreading Implementation</h3>
-            <p>In the realm of particle simulations, concurrency is a key aspect to boost performance. The multithreading method applied here is critical to optimizing particle updates. By using `std::async` and demarcating work into chunks, ParticleBox significantly enhances the processing speed of simulations, reducing bottlenecks typically encountered with single-threaded computations.</p>
+            <p>ParticleBox's multithreading method is critical to optimizing particle updates. By using `std::async` and demarcating work into chunks, ParticleBox significantly enhances the processing speed of simulations, reducing bottlenecks typically encountered with single-threaded computations.</p>
             <div class="code-sample">
                 <pre><code class="language-javascript">
-if (!running) return;
+                    void Simulation::update(double deltaTime) {
+                        if (!running) return;
+                    
+                        int numThreads = 24;
+                        std::vector<std::future<void>> futures;
+                    
+                        auto updateChunk = [this, deltaTime](int start, int end) {
+                            std::vector<Vec2> forces = physics.computeForces(particles, start, end);
+                            for (int i = start; i < end; ++i) {
+                                particles[i].update(forces[i-start], deltaTime);
+                                physics.applyBoundaries(particles[i]);
+                            }
+                        };
+                    
+                        int chunkSize = particles.size() / numThreads;
+                        for (int i = 0; i < numThreads; ++i) {
+                            int start = i * chunkSize;
+                            int end = (i == numThreads - 1) ? particles.size() : (start + chunkSize);
+                            futures.push_back(std::async(std::launch::async, updateChunk, start, end));
+                        }
+                    
+                        for (auto &future : futures) {
+                            future.get();
+                        }
+                    
+                        calculateFrameRate();
+                    
+                        /*Frame Rate Regulation - Comment out to cap CPU
+                    
+                        auto currentTime = std::chrono::steady_clock::now();
+                        auto frameDuration = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastFrameTime);
+                    
+                        const int targetFrameDuration = 16;
+                    
+                        if (frameDuration.count() < targetFrameDuration) {
+                            std::this_thread::sleep_for(std::chrono::milliseconds(targetFrameDuration - frameDuration.count()));
+                        }
+                    
+                        lastFrameTime = std::chrono::steady_clock::now();
+                        */
+                        
+                    }
 
-int numThreads = 24;
-std::vector<std::future<void>> futures;
+</code></pre>
+</div>
+<p>This code illustrates the partitioning of particle updates into distinct segments. Utilizing separate threads for each chunk allows ParticleBox to concurrently perform computations, vastly improving simulation speed through parallel processing.</p>
+<h3>Fluid Simulation Potential</h3>
+        <p>While primarily a particle engine, ParticleBox's architecture allows for implementation of advanced fluid simulation techniques:</p>
+        <ul>
+            <li><strong>Smoothed Particle Hydrodynamics (SPH):</strong> Interpolates fluid properties using kernel functions, suitable for simulating liquids and gases.</li>
+            <li><strong>Position Based Dynamics (PBD):</strong> Iteratively adjusts particle positions to satisfy constraints, providing stable simulations even with large time steps.</li>
+            <li><strong>Lattice Boltzmann Method (LBM):</strong> Discretizes space into a lattice of particles, highly parallelizable and suitable for GPU acceleration.</li>
+        </ul>
+        <p>The high particle count capability of ParticleBox (100,000+) enables detailed fluid simulations with fine-grained surface details, complex interactions between multiple fluid bodies, and realistic behavior of splashes, droplets, and waves.</p>
 
-auto updateChunk = [this, deltaTime](int start, int end) {
-    std::vector<Vec2> forces = physics.computeForces(particles, start, end);
-    for (int i = start; i < end; ++i) {
-        particles[i].update(forces[i-start], deltaTime);
-        physics.applyBoundaries(particles[i]);
-    }
-};
+        <h3>Theoretical Computer Science and Optimization</h3>
+        <p>ParticleBox leverages key principles in computer science to achieve its performance:</p>
+        <ul>
+            <li><strong>Data Parallelism:</strong> Allows simultaneous processing of particle data across different processing units.</li>
+            <li><strong>Spatial Partitioning:</strong> Techniques like spatial hashing or octrees can be implemented to efficiently handle neighbor searches in high-density particle simulations.</li>
+            <li><strong>SIMD (Single Instruction, Multiple Data):</strong> Utilizes CPU-specific optimizations for parallel data processing, enhancing computational efficiency.</li>
+        </ul>
 
-int chunkSize = particles.size() / numThreads;
-for (int i = 0; i < numThreads; ++i) {
-    int start = i * chunkSize;
-    int end = (i == numThreads - 1) ? particles.size() : (start + chunkSize);
-    futures.push_back(std::async(std::launch::async, updateChunk, start, end));
-}
+        <h3>Future Enhancements</h3>
+        <p>Potential improvements to further boost ParticleBox's capabilities include:</p>
+        <ul>
+            <li>GPU acceleration using CUDA or OpenCL for even higher particle counts</li>
+            <li>Implementation of advanced collision detection algorithms</li>
+            <li>Integration of rigid body dynamics for complex scene simulations</li>
+        </ul>
 
-for (auto &future : futures) {
-    future.get();
-}
-                </code></pre>
-            </div>
-            <p>This code illustrates partitioning of particle updates into distinct segments. Utilizing separate threads for each chunk, enabled by `std::async`, allows ParticleBox to concurrently perform computations, vastly improving simulation speed by parallel processing.</p>
-
-            <h3>Vector Operations and Physics</h3>
-            <p>Within the ParticleBox, vectors play a pivotal role in computation. The `Vec2` class contributes essential vector operations like addition, subtraction, and dot products. These operations form the basis of force calculations, collision detection, and movement dynamics, integral aspects of physics simulations.</p>
-            <div class="code-sample">
-                <pre><code class="language-javascript">
-Vec2& operator+=(const Vec2& other) {
-    x += other.x;
-    y += other.y;
-    return *this;
-}
-
-Vec2& operator-=(const Vec2& other) {
-    x -= other.x;
-    y -= other.y;
-    return *this;
-}
-
-float magnitude() const {
-    return sqrt(x * x + y * y);
-}
-
-Vec2 norm() const {
-    float mag = magnitude();
-    return mag > 0 ? *this * (1 / mag) : Vec2(); 
-}
-
-float dot(const Vec2& other) const {
-    return x * other.x + y * other.y;
-}
-                </code></pre>
-            </div>
-            <p>Vector operations enable efficient calculations needed for particle dynamics. Whether applying forces or calculating movement, these vector tricks assist in managing large datasets of particle interactions effectively.</p>
-
-<h3>Theoretical Computer Science and Rendering Optimization</h3>
-<p>From a theoretical standpoint, ParticleBox stands on significantly deep principles in computer science. One core concept is the utilization of data parallelism where data can be processed simultaneously across different processing units. In systems like ParticleBox, this allows handling large volumes of data multitasked across cores.</p>
-
-<p>When modeling liquid simulations or seeking greater entropy, methods such as SPH (Smoothed-Particle Hydrodynamics) come into play. By leveraging kernel functions to simulate fluid dynamics, one can achieve realistic fluid rendering. Moreover, applying concepts of entropy maximization using Boltzmann's principles allows for diverse simulation models granting complex, entropic behaviors in systems.</p>
-
-<p>Utilizing C++ language-specific optimizations such as memory alignment, cache coherence, and SIMD (Single Instruction, Multiple Data) can further enhance performance profoundly, especially when dealing with vast particle collections, making the operations seamless and less CPU intensive.</p>
-
-<p align="center">
-    \[
-    F_{\text{total}} = \sum_{i=1}^{n} \left( F_{\text{gravitational}}^i + F_{\text{repulsion}}^i + F_{\text{boundary}}^i \right)
-    \]
-</p>
-
-<p>The above equation represents how total forces into each particle might be broken down through the partitioning of contributing forces such as gravitational, repulsion, and potential boundary-induced forces culminating in a dynamic update strategy. Real-world applications span from graphics programming to scientific simulations.</p>
-
-<h3>Methodology</h3>
-<p>Our particle simulator, <strong>ParticleBox</strong>, employs data parallelism and optimized computations to manage extensive datasets in real-time, a significant challenge in simulating complex systems such as fluids and granular materials.</p>
-
-<h4>Computational Approach</h4>
-<p>ParticleBox uses Smoothed Particle Hydrodynamics (SPH) to simulate fluid dynamics accurately. SPH is a mathematical method that interpolates properties such as density and pressure at a particular point using surrounding particles and kernel functions:</p>
-<p align="center">
-    \[
-    W(r,h) = \frac{315}{64 \pi h^9} (h^2 - r^2)^3 \quad \text{for} \quad 0 \leq r \leq h
-    \]
-</p>
-<p>where \(W(r,h)\) is a smoothing kernel function used to interpolate properties based on neighbor particle distance \(r\) and smoothing length \(h\).</p>
-
-<p>In addition, ParticleBox is designed to maximize entropy following Boltzmann’s principle to provide realistic simulations of fluid and solid interactions, which is essential for applications such as liquid rendering or granular flow simulations.</p>
-
-<h4>Optimization Techniques</h4>
-<p>Uniquely, ParticleBox utilizes C++ language-specific optimizations such as SIMD (Single Instruction, Multiple Data), which processes data with parallel instructions to enhance computational efficiency significantly. This methodology ensures reduced latency and higher throughput, particularly vital when handling simulations with thousands of particles.</p>
-
-<p>Graph Network Simulators (GNS) offer an additional layer of innovation by representing particles as nodes and their interactions as edges, thus encoding physical laws into a neural network framework. This approach enables predicting system dynamics such as momentum through learned edge functions:</p>
-<p align="center">
-    \[
-    \mathbf{e}_{i,j}' = \phi_e(\mathbf{e}_{i,j}, \mathbf{v}_i, \mathbf{v}_j, \mathbf{u})
-    \]
-</p>
-<p>where \(\phi_e\) represents the learned function for interaction messages. This representation supports forward simulations with improved speed and accuracy, verified by achieving a remarkable 165x speedup compared to traditional CPU-based numerical simulations.</p>
-
-<h4>Practical Applications and Performance</h4>
-<p>Leveraging techniques like hybrid GNS and Material Point Method (MPM), ParticleBox blends physics-embedded modeling for enhanced predictive capabilities. This hybrid approach iteratively refines system states to satisfy conservation laws while minimizing errors, as demonstrated by a notable reduction in displacement errors when integrating GNS with MPM:</p>
-<p align="center">
-    \[
-    \text{minimize} \, J(\phi) = (\text{target runout} - \text{simulated runout})^2
-    \]
-</p>
+        <p>These enhancements would push the boundaries of what's possible in real-time particle and fluid simulations, opening up new applications in graphics, scientific modeling, and interactive physics engines.</p>
+    </section>
 
         </section>
 

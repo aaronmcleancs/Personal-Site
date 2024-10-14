@@ -149,7 +149,7 @@ body {
 
 @media screen and (max-width: 640px) {
   .column__left h2 {
-      font-size: 1.8rem;
+      font-size: 1.2rem;
       border-radius: 5px;
   }
 }
@@ -187,7 +187,7 @@ body {
 .column__left span {
   color: var(--accentColor);
   font-family: Consolas, monaco, monospace;
-  font-size: 0.9rem;
+  font-size: 1.2rem;
 }
 
 .hero2__section {
@@ -266,7 +266,7 @@ body {
 
 @media screen and (max-width: 1300px) {
   .column2__left h2 {
-      font-size: 2rem;
+      font-size: 1.1rem;
   }
 }
 
@@ -279,7 +279,7 @@ body {
   width: 60%;
   justify-content: center;
   text-align: center;
-  border-radius: 30px;
+  border-radius: 25px;
   background-color: #1b1b1b0c;
   backdrop-filter: blur(5px);
   z-index: 2;
@@ -288,7 +288,7 @@ body {
 
 @media screen and (max-width: 1300px) {
   .column2__left h1 {
-      font-size: 2rem;
+      font-size: 3rem;
   }
 }
 
@@ -332,6 +332,12 @@ body {
   transition: background-color 0.3s;
 }
 
+@media (max-width: 1300px) {
+  .button {
+    width: 100%; /* Make the button take the full width of the parent */
+    margin-left: 0; /* Remove margin on smaller screens to avoid overflow */
+  }
+}
 .button:hover {
   background-color: #c6c6c6;
 }
@@ -444,6 +450,9 @@ body {
   .card-props{
     border-radius: 25px;
     align-self: auto;
+    padding: 20px;
+    margin-left: 3px;
+    margin-right: 3px;
   }
 }
 .flex-props {
@@ -475,14 +484,13 @@ body {
 }
 
 .white-card img:nth-child(1) {
-  position: absolute;
   top: 20px;
   right: 20px;
 }
 
 .white-card p:nth-child(2) {
   color: #ffffff;
-  font-size: 30px;
+  font-size: 25px;
   font-weight: 650;
   letter-spacing: 1px;
 }
@@ -562,3 +570,4 @@ body {
 #contact-form button:hover {
   background-color: #5a20b9;
 }
+

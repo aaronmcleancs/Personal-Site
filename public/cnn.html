@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/showcase.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet" />
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <script src="https://kit.fontawesome.com/ca7f2ffa51.js" crossorigin="anonymous"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
@@ -26,23 +28,22 @@
     <div class="showcase__hero">
         <div class="showcase__wrapper">
             <h1 class="animate__animated animate__fadeIn">CVV_15M_SARS-CoV-2</h1>
-            <p class="animate__animated animate__fadeIn animate__delay-1s">COVID-19 X-ray Classification using a 15 Million Parameter Convolutional Neural Network.</p>
+            <p class="animate__animated animate__fadeIn animate__delay-1s">X-ray Classification Model built on 15 Million Parameter Convolutional Neural Network.</p>
         </div>
     </div>
 
     <div class="showcase__content">
         <section id="overview" class="showcase__section">
-            <h2>Project Overview</h2>
-            <p>This project implements a Convolutional Neural Network (CNN) to classify chest X-ray images into three categories: COVID-19, Normal, and Viral Pneumonia. Leveraging the TensorFlow and Keras frameworks, it is optimized to run on Apple M-series CPUs, providing high accuracy in classifying SARS-CoV-2 from medical images.</p>
+            <h2>Overview</h2>
+            <p>This project implements a Convolutional Neural Network (CNN) to classify chest X-ray images and explores the undlerying archetchure of ReLu. Leveraging the TensorFlow and Keras frameworks, the model weights are optimized to run on Apple M-series CPUs, evaluated accuracy >97%.</p>
         </section>
 
         <section id="features" class="showcase__section">
-            <h2>Key Features</h2>
+            <h2>Features</h2>
             <ul>
                 <li>Classifies chest X-ray images into COVID-19, Normal, and Viral Pneumonia categories.</li>
-                <li>Utilizes TensorFlow and Keras for model training and evaluation.</li>
-                <li>Optimized for performance on Apple M-series CPUs.</li>
-                <li>Employs a robust methodology for downloading datasets and model weights.</li>
+                <li>TensorFlow and Keras for model training and evaluation</li>
+                <li>Optimized for performance on Apple M1 Pro | 16GB Mem</li>
             </ul>
 
             <div class="code-sample">
@@ -71,43 +72,196 @@ def create_model():
 
         <section id="methodology" class="showcase__section">
             <h2>Methodology & Optimization</h2>
-            <p>The model architecture is inspired by AlexNet, a pioneering deep learning model optimized for efficient image classification. AlexNet uses convolutional and max-pooling layers to effectively reduce computation while enhancing performance.</p>
             
-            <h3>AlexNet Research and Theoretical Insights</h3>
-            <p>AlexNet introduced the use of the ReLU activation function over traditional sigmoid functions, significantly speeding up training by addressing the vanishing gradient problem inherent in sigmoid functions. The non-saturating ReLU, defined as \(f(x) = \max(0, x)\), enables neural networks to reach a desired accuracy substantially faster than equivalents using saturating neurons like tanh, as demonstrated in early observations on datasets such as CIFAR-10.</p>
-            
-            <p>ReLU's efficiency is augmented by local response normalization, a technique inspired by lateral inhibition in the brain. The local response normalized activity is expressed as:</p>
-            <p>$$b_{i, x, y} = \frac{a_{i, x, y}}{\left(k + \alpha \sum_{j=\max(0, i-n/2)}^{\min(N-1, i+n/2)} (a_{j, x, y})^2\right)^\beta}$$</p>
-            <p>Here, \(k\), \(n\), \(\alpha\), and \(\beta\) are hyperparameters that can be fine-tuned for optimality. This normalization method enhances the network's generalization capabilities.</p>
-            
-            <h3>Model Architecture and Optimization Techniques</h3>
-            <p>The architecture for the M1 Pro CPU was strategically selected for memory and computation efficiency. We utilize overlapping max pooling throughout the convolutional layers. Overlapping pooling is key to reducing overfitting, characterized by a stride \(s < z\), where \(z\) denotes the pooling region size, thus encouraging robust feature learning.</p>
+<p>
+    AlexNet, introduced by Krizhevsky et al. in 2012 was pivotal in the field of deep learning. This convolutional neural network (CNN) outperformed models on the ImageNet Large Scale Visual Recognition Challenge (ILSVRC) significantly and can be deployed in low weight densities.
+</p>
 
-            <h3>Training and Hyperparameter Tuning</h3>
-            <p>Dropout, specifically with a rate of 0.5 after the fully connected layer, is implemented to combat overfitting by randomly deactivating neurons, enforcing the learning of more generalized features rather than memorization.</p>
-            <p>The choice of layer and neuron size reflects a balance needed to exploit the parallel processing capabilities of the M1 Pro CPU, maintaining high accuracy without overwhelming GPU memory resources.</p>
-            
-            <p>With these optimizations, the model aims for peak efficiency on the M1 Pro CPU, allowing for practical deep learning research on accessible hardware platforms.</p>
+<h4>ReLU Activation Function</h4>
+<p>
+    One of AlexNet's key innovations was the widespread use of the Rectified Linear Unit (ReLU) activation function replacing sigmoid learning functions. The ReLU function is defined as:
+</p>
+<p>
+    \[ f(x) = \max(0, x) \]
+</p>
+<p>
+    ReLU addresses the vanishing gradient problem in sigmoid functions, allowing for faster training. Evidence from widely used datasets such as CIFAR-10 demonstrated that deep convolutional neural networks with ReLUs reach a given accuracy up to six times faster than their equivalents with tanh units.
+    Unlike sigmoid functions that saturate and kill gradients, ReLU allows a network to easily obtain representations. When a neuron's output is negative, it's set to zero and does not activate. This sparsity is theorized to be beneficial for neural networks, as it allows for more efficient and disentangled representations.
+</p>
+
+<h4>Local Response Normalization (LRN)</h4>
+<p>
+    AlexNet introduced Local Response Normalization, a technique inspired by lateral inhibition in biological neurons. LRN encourages competition among neuron outputs at the same spatial position but across feature maps. The normalized activity \( b_{i,x,y} \) of a neuron using the kernel \( i \) at position \( (x,y) \) is given by:
+</p>
+<p>
+    \[
+    b_{i,x,y} = \frac{a_{i,x,y}}{\left(k + \alpha \sum_{j=\max(0,i-n/2)}^{\min(N-1,i+n/2)} (a_{j,x,y})^2\right)^\beta}
+    \]
+</p>
+<p>
+    Where:
+    <ul>
+        <li>\( a_{i,x,y} \) is the activity of a neuron computed by applying kernel \( i \) at position \( (x,y) \)</li>
+        <li>\( N \) is the total number of kernels in the layer</li>
+        <li>\( n \) is the size of the normalization neighborhood</li>
+        <li>\( k \), \( \alpha \), and \( \beta \) are hyperparameters</li>
+    </ul>
+</p>
+
+<h4>Overlapping Pooling</h4>
+<p>
+    AlexNet employs overlapping max pooling, where the pooling regions overlap. This is characterized by stride \( s < z \), where \( z \) is the filter size. For instance, AlexNet uses \( z=3 \) and \( s=2 \). Overlapping pooling was found to marginally reduce classification error rates compared to non-overlapping pooling, and also helps to reduce overfitting.
+</p>
+
+<h4>Dropout Regularization</h4>
+<p>
+    To combat overfitting, AlexNet employs dropout with a rate of 0.5 in the first two fully connected layers. Dropout can be viewed as a form of model averaging, where for each training sample, a random subset of neurons is "dropped out" or temporarily removed from the network. The probability of including a hidden unit is given by:
+</p>
+<p>
+    \[
+    P(h_j|x) = \sum_i P(h_j|i)P(i|x)
+    \]
+</p>
+<p>
+    Where \( i \) indexes the possible subsets of hidden units, and \( P(i|x) \) is uniform over all \( 2^n \) subsets of hidden units.
+</p>
+
+<h4>Data Augmentation</h4>
+<p>
+    AlexNet employs two forms of data augmentation:
+    <ul>
+        <li>Image translations and horizontal reflections: The original 256x256 images are cropped to 224x224 patches at random positions during training.</li>
+        <li>Altering RGB channel intensities: Principal Component Analysis (PCA) is performed on the set of RGB pixel values throughout the training set. The following quantity is added to each image pixel:
+        </li>
+    </ul>
+</p>
+<p>
+    \[
+    \mathbf{p}_1, \mathbf{p}_2, \mathbf{p}_3\alpha_1\lambda_1, \alpha_2\lambda_2, \alpha_3\lambda_3
+    \]
+</p>
+
+<h4>Architecture Details</h4>
+<p>
+    AlexNet consists of eight learned layers - five convolutional and three fully-connected. The network's structure can be represented as:
+</p>
+
+<img src="/images/alexnet.png" alt="AlexNet Diagram" style="max-width: 1300px; width: 100%; height: auto; display: block; margin: 0 auto;">
+<h4>Optimization and Training</h4>
+<p>
+    The model was trained using the Adam optimizer with an initial learning rate of 1e-3 on a dataset of n=4800 labelled X-rays. The update rule for the Adam optimizer can be summarized as:
+<p>
+    \[
+    m_t = \beta_1 \cdot m_{t-1} + (1 - \beta_1) \cdot g_t
+    \]
+    \[
+    v_t = \beta_2 \cdot v_{t-1} + (1 - \beta_2) \cdot g_t^2
+    \]
+    \[
+    \hat{m}_t = \frac{m_t}{1 - \beta_1^t}
+    \]
+    \[
+    \hat{v}_t = \frac{v_t}{1 - \beta_2^t}
+    \]
+    \[
+    w_t = w_{t-1} - \frac{\eta}{\sqrt{\hat{v}_t} + \epsilon} \cdot \hat{m}_t
+    \]
+</p>
+<p>
+    Where \( m_t \) and \( v_t \) are the first and second moment estimates, \( g_t \) is the gradient at time \( t \), \( \beta_1 \) and \( \beta_2 \) are the exponential decay rates for the moment estimates, \( \eta \) is the learning rate, and \( \epsilon \) is a small constant for numerical stability.
+</p>
+<p>
+    The model was compiled with categorical crossentropy as the loss function and accuracy as the metric. Early stopping was implemented with a patience of 5 epochs, restoring the best weights when triggered. Additionally, a custom TensorBoard callback was used to log the learning rate during training.
+</p>
         </section>
 
         <section id="results" class="showcase__section">
             <h2>Results</h2>
             <div class="code-sample">
                 <pre><code class="language-python">
-        # Result Matrix:
-        Confusion Matrix:
-        [335  11   4]
-        [ 22 318  10]
-        [  0   9 260]
-        
-        Classification Report:
-                      precision    recall  f1-score   support
-              covid       0.94      0.96      0.95       350
-             normal       0.94      0.91      0.92       350
-          pneumonia       0.95      0.97      0.96       269
-           accuracy                          0.94       969
-          macro avg       0.94      0.94      0.94       969
-       weighted avg       0.94      0.94      0.94       969
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┓
+┃ Layer (type)                         ┃ Output Shape                ┃         Param # ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━┩
+│ conv2d (Conv2D)                      │ (None, 222, 222, 32)        │             896 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ max_pooling2d (MaxPooling2D)         │ (None, 111, 111, 32)        │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ conv2d_1 (Conv2D)                    │ (None, 109, 109, 64)        │          18,496 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ max_pooling2d_1 (MaxPooling2D)       │ (None, 54, 54, 64)          │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ conv2d_2 (Conv2D)                    │ (None, 52, 52, 128)         │          73,856 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ max_pooling2d_2 (MaxPooling2D)       │ (None, 26, 26, 128)         │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ conv2d_3 (Conv2D)                    │ (None, 24, 24, 256)         │         295,168 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ max_pooling2d_3 (MaxPooling2D)       │ (None, 12, 12, 256)         │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ flatten (Flatten)                    │ (None, 36864)               │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dense (Dense)                        │ (None, 128)                 │       4,718,720 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dropout (Dropout)                    │ (None, 128)                 │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dense_1 (Dense)                      │ (None, 3)                   │             387 │
+└──────────────────────────────────────┴─────────────────────────────┴─────────────────┘
+    Total params: 5,107,523 (19.48 MB)
+    Trainable params: 5,107,523 (19.48 MB)
+    Non-trainable params: 0 (0.00 B)
+Starting model training...
+Epoch 1/30
+194/194 ━━━━━━━━━━━━━━━━━━━━ 49s 251ms/step - accuracy: 0.5537 - loss: 0.8931 - val_accuracy: 0.7848 - val_loss: 0.4817 - learning_rate: 0.0010
+Epoch 2/30
+194/194 ━━━━━━━━━━━━━━━━━━━━ 50s 258ms/step - accuracy: 0.8174 - loss: 0.4719 - val_accuracy: 0.8853 - val_loss: 0.3070 - learning_rate: 0.0010
+Epoch 3/30
+194/194 ━━━━━━━━━━━━━━━━━━━━ 48s 248ms/step - accuracy: 0.8747 - loss: 0.3499 - val_accuracy: 0.8930 - val_loss: 0.2792 - learning_rate: 0.0010
+Epoch 4/30
+194/194 ━━━━━━━━━━━━━━━━━━━━ 46s 238ms/step - accuracy: 0.8991 - loss: 0.2697 - val_accuracy: 0.9162 - val_loss: 0.1963 - learning_rate: 0.0010
+Epoch 5/30
+194/194 ━━━━━━━━━━━━━━━━━━━━ 46s 237ms/step - accuracy: 0.9136 - loss: 0.2296 - val_accuracy: 0.9201 - val_loss: 0.1956 - learning_rate: 0.0010
+Epoch 6/30
+194/194 ━━━━━━━━━━━━━━━━━━━━ 47s 242ms/step - accuracy: 0.9306 - loss: 0.1896 - val_accuracy: 0.9214 - val_loss: 0.1930 - learning_rate: 0.0010
+Epoch 7/30
+194/194 ━━━━━━━━━━━━━━━━━━━━ 46s 236ms/step - accuracy: 0.9450 - loss: 0.1632 - val_accuracy: 0.9317 - val_loss: 0.1969 - learning_rate: 0.0010
+Epoch 8/30
+194/194 ━━━━━━━━━━━━━━━━━━━━ 45s 230ms/step - accuracy: 0.9449 - loss: 0.1524 - val_accuracy: 0.9214 - val_loss: 0.2087 - learning_rate: 0.0010
+Epoch 9/30
+194/194 ━━━━━━━━━━━━━━━━━━━━ 46s 235ms/step - accuracy: 0.9590 - loss: 0.1143 - val_accuracy: 0.9356 - val_loss: 0.1861 - learning_rate: 0.0010
+Epoch 10/30
+194/194 ━━━━━━━━━━━━━━━━━━━━ 47s 244ms/step - accuracy: 0.9585 - loss: 0.1141 - val_accuracy: 0.9420 - val_loss: 0.1647 - learning_rate: 0.0010
+Epoch 11/30
+194/194 ━━━━━━━━━━━━━━━━━━━━ 45s 230ms/step - accuracy: 0.9679 - loss: 0.0906 - val_accuracy: 0.9317 - val_loss: 0.2029 - learning_rate: 0.0010
+Epoch 12/30
+194/194 ━━━━━━━━━━━━━━━━━━━━ 47s 241ms/step - accuracy: 0.9755 - loss: 0.0869 - val_accuracy: 0.9278 - val_loss: 0.2597 - learning_rate: 0.0010
+Epoch 13/30
+194/194 ━━━━━━━━━━━━━━━━━━━━ 45s 233ms/step - accuracy: 0.9747 - loss: 0.0640 - val_accuracy: 0.9343 - val_loss: 0.2271 - learning_rate: 0.0010
+Epoch 14/30
+194/194 ━━━━━━━━━━━━━━━━━━━━ 47s 245ms/step - accuracy: 0.9727 - loss: 0.0710 - val_accuracy: 0.9356 - val_loss: 0.2435 - learning_rate: 0.0010
+Epoch 15/30
+194/194 ━━━━━━━━━━━━━━━━━━━━ 47s 241ms/step - accuracy: 0.9815 - loss: 0.0481 - val_accuracy: 0.9240 - val_loss: 0.2443 - learning_rate: 0.0010
+Evaluating model on test set...
+31/31 - 5s - 159ms/step - accuracy: 0.9422 - loss: 0.1828
+Test accuracy: 0.9422
+
+                    Model saved as 'chest_xray_classifier_final.h5'
+                    Training history plot saved as 'training_history.png'
+                    31/31 ━━━━━━━━━━━━━━━━━━━━ 5s 175ms/step
+                    Confusion Matrix:
+                    [[335  11   4]
+                     [ 22 318  10]
+                     [  0   9 260]]
+                    
+                    Classification Report:
+                                  precision    recall  f1-score   support
+                    
+                           covid       0.94      0.96      0.95       350
+                          normal       0.94      0.91      0.92       350
+                       pneumonia       0.95      0.97      0.96       269
+                    
+                        accuracy                           0.94       969
+                       macro avg       0.94      0.94      0.94       969
+                    weighted avg       0.94      0.94      0.94       969
                 </code></pre>
             </div>
             <p>The model achieved impressive accuracy with balanced precision and recall across all target classes. The use of dropout and ReLU activations enhances the generalization capacity of the model, making it robust against overfitting.</p>
@@ -117,14 +271,9 @@ def create_model():
         
             <p>Key Focus Areas for Optimization:</p>
             <ul>
-                <li><b>Memory Management:</b> With 16GB of unified memory, efficient memory allocation is crucial. Strategies such as reducing model size, using smaller batch sizes during training, and leveraging memory-swapping techniques can enhance performance.</li>
-                <li><b>Computational Efficiency:</b> Utilize the multi-core architecture by implementing parallel processing where possible. Libraries optimized for Apple silicon, such as TensorFlow Metal plugin, can also boost performance by offloading compute-heavy tasks to the GPU.</li>
+                <li><b>Memory Management:</b> With 16GB of unified memory, sizing the model correctly was essential.</li>
+                <li><b>Computational Efficiency:</b>Optimized for Apple silicon with TensorFlow Metal plugin, offloading to the GPU.</li>
             </ul>
-        
-            <h3>Trends in Model Size and Performance</h3>
-            <p>Early models grew over seven orders of magnitude from 2000 to 2018, after which model sizes expanded an additional five orders in just four years. This exponential growth, especially pronounced in language models, highlights a significant shift in computational requirements and hardware optimization, particularly for models exceeding tens of billions of parameters.</p>
-        
-            <p>We observed a peculiar "parameter gap" between 20B and 70B parameters in language models. This gap is intriguing as it reveals a preference for either smaller, more manageable models or exceedingly large ones that challenge the state-of-the-art capabilities. Hypotheses for this phenomenon include the increased complexity of parallelism techniques as models exceed 20B parameters, making mid-sized models less cost-effective, and a focus on surpassing existing large models like GPT-3.</p>
         </section>
 
         <section id="tech-stack" class="showcase__section">
