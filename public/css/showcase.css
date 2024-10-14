@@ -1,0 +1,94 @@
+/* showcase.css */
+
+body {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.showcase__hero {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('project-hero-image.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.showcase__wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.showcase__hero h1 {
+    font-size: 4rem;
+    margin-bottom: 20px;
+}
+
+.showcase__hero p {
+    font-size: 1.5rem;
+    opacity: 0.8;
+}
+
+.showcase__content {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 0 20px;
+}
+
+.showcase__section {
+    margin-bottom: 50px;
+}
+
+.showcase__section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: var(--accentColor);
+}
+
+.tech-icons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    font-size: 3rem;
+}
+
+.image-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.image-gallery img {
+    width: 100%;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.image-gallery img:hover {
+    transform: scale(1.05);
+}
+
+.showcase__cta {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.showcase__cta .button {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: var(--accentColor);
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    margin: 0 10px;
+    transition: background-color 0.3s ease;
+}
+
+.showcase__cta .button:hover {
+    background-color: #5a20b9;
+}
