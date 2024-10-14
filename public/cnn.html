@@ -7,6 +7,7 @@
     <title>Project Showcase - CVV_15M_SARS-CoV-2</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/showcase.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <script src="https://kit.fontawesome.com/ca7f2ffa51.js" crossorigin="anonymous"></script>
 </head>
@@ -31,7 +32,7 @@
     <div class="showcase__content">
         <section id="overview" class="showcase__section">
             <h2>Project Overview</h2>
-            <p>This project implements a Convolutional Neural Network (CNN) for classifying chest X-ray images into three categories: COVID-19, Normal, and Viral Pneumonia. It utilizes TensorFlow, AWS, and Keras for training and evaluation on Apple M-series CPUs, achieving high accuracy in diagnosing SARS-CoV-2 from medical images.</p>
+            <p>This project implements a Convolutional Neural Network (CNN) to classify chest X-ray images into three categories: COVID-19, Normal, and Viral Pneumonia. Leveraging the TensorFlow and Keras frameworks, it is optimized to run on Apple M-series CPUs, providing high accuracy in classifying SARS-CoV-2 from medical images.</p>
         </section>
 
         <section id="features" class="showcase__section">
@@ -40,8 +41,59 @@
                 <li>Classifies chest X-ray images into COVID-19, Normal, and Viral Pneumonia categories.</li>
                 <li>Utilizes TensorFlow and Keras for model training and evaluation.</li>
                 <li>Optimized for performance on Apple M-series CPUs.</li>
-                <li>Provides a robust methodology for downloading datasets and model weights.</li>
+                <li>Employs a robust methodology for downloading datasets and model weights.</li>
             </ul>
+            
+            <div class="code-sample">
+                <pre><code class="language-python">
+# Model definition
+def create_model():
+    print("Creating a complex model optimized for M1 CPU...")
+    model = keras.Sequential([
+        keras.layers.Conv2D(32, (3, 3), activation='relu', input_shape=(IMAGE_SIZE, IMAGE_SIZE, 3)),
+        keras.layers.MaxPooling2D((2, 2)),
+        keras.layers.Conv2D(64, (3, 3), activation='relu'),
+        keras.layers.MaxPooling2D((2, 2)),
+        keras.layers.Conv2D(128, (3, 3), activation='relu'),
+        keras.layers.MaxPooling2D((2, 2)),
+        keras.layers.Conv2D(256, (3, 3), activation='relu'),
+        keras.layers.MaxPooling2D((2, 2)),
+        keras.layers.Flatten(),
+        keras.layers.Dense(128, activation='relu'),
+        keras.layers.Dropout(0.5),
+        keras.layers.Dense(NUM_CLASSES, activation='softmax')
+    ])
+    return model
+                </code></pre>
+            </div>
+        </section>
+
+        <section id="methodology" class="showcase__section">
+            <h2>Methodology & Optimization</h2>
+            <p>The model architecture is based on AlexNet, which consists of several convolutional layers followed by dense layers. It was chosen due to its suitability for image classification tasks with moderate computational demands, making it ideal for the Apple M-series CPU. AlexNet includes key features such as ReLU activations and max-pooling layers, which reduce computation time and enhance model performance. The architecture has been adapted and optimized for Apple M1 CPUs, leveraging the M1’s Neural Engine and TensorFlow’s accelerated libraries. These optimizations allow faster training and inference, ideal for handling large datasets in a real-world scenario.</p>
+        </section>
+
+        <section id="results" class="showcase__section">
+            <h2>Results</h2>
+            <div class="code-sample">
+                <pre><code class="language-python">
+# Result Matrix:
+Confusion Matrix:
+[[335  11   4]
+ [ 22 318  10]
+ [  0   9 260]]
+
+Classification Report:
+              precision    recall  f1-score   support
+      covid       0.94      0.96      0.95       350
+     normal       0.94      0.91      0.92       350
+  pneumonia       0.95      0.97      0.96       269
+   accuracy                           0.94       969
+  macro avg       0.94      0.94      0.94       969
+weighted avg       0.94      0.94      0.94       969
+                </code></pre>
+            </div>
+            <p>The model achieved impressive results on the test set, with an accuracy of 94%. The high f1-scores across all three classes indicate a balanced performance in terms of both precision and recall. Notably, COVID-19 and Viral Pneumonia categories both achieved an f1-score of 0.95 and above, showing the model’s strong ability to differentiate between similar symptoms seen in chest X-ray images. These results are indicative of the optimized AlexNet’s effectiveness in this context, with enhanced computational efficiency due to Apple M1 optimizations. The use of Dropout layers further improved generalization, preventing overfitting and leading to stable, reliable performance on unseen data. </p>
         </section>
 
         <section id="tech-stack" class="showcase__section">
@@ -57,8 +109,8 @@
         <section id="gallery" class="showcase__section">
             <h2>Project Gallery</h2>
             <div class="image-gallery">
-                <img src="placeholder-image-1.jpg" alt="Project screenshot 1">
-                <img src="placeholder-image-2.jpg" alt="Project screenshot 2">
+                <img src="images/cnn1.png" alt="Project screenshot 1">
+                <img src="images/cnn2.png" alt="Project screenshot 2">
             </div>
         </section>
     </div>
@@ -69,5 +121,7 @@
     </div>
 
     <script src="js/showcase.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
 </body>
 </html>

@@ -7,6 +7,7 @@
     <title>Project Showcase - ParticleBox</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/showcase.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <script src="https://kit.fontawesome.com/ca7f2ffa51.js" crossorigin="anonymous"></script>
 </head>
@@ -19,6 +20,7 @@
         <a href="#overview">Overview</a>
         <a href="#features">Features</a>
         <a href="#tech-stack">Tech Stack</a>
+        <a href="#project-detail">Project Detail</a>
     </div>
 
     <div class="showcase__hero">
@@ -47,26 +49,91 @@
         <section id="tech-stack" class="showcase__section">
             <h2>Tech Stack</h2>
             <div class="tech-icons">
-                <i class="fab fa-cplusplus"></i> <!-- C++ icon -->
-                <i class="fab fa-visual-studio-code"></i> <!-- Represents coding tools used -->
+                <i class="fab fa-cplusplus"></i>
+                <i class="fab fa-visual-studio-code"></i>
             </div>
+        </section>
+
+        <section id="project-detail" class="showcase__section">
+            <h2>Project Detail</h2>
+            <p>ParticleBox leverages advanced multithreading techniques to ensure smooth, real-time performance, even with up to 100,000 particles. The engine takes advantage of multiple CPU cores to handle updates to particle positions and forces concurrently, which is essential for handling large-scale simulations.</p>
+
+            <h3>Multithreading Implementation</h3>
+            <div class="code-sample">
+                <pre><code class="language-cpp">
+if (!running) return;
+
+int numThreads = 24;
+std::vector<std::future<void>> futures;
+
+auto updateChunk = [this, deltaTime](int start, int end) {
+    std::vector<Vec2> forces = physics.computeForces(particles, start, end);
+    for (int i = start; i < end; ++i) {
+        particles[i].update(forces[i-start], deltaTime);
+        physics.applyBoundaries(particles[i]);
+    }
+};
+
+int chunkSize = particles.size() / numThreads;
+for (int i = 0; i < numThreads; ++i) {
+    int start = i * chunkSize;
+    int end = (i == numThreads - 1) ? particles.size() : (start + chunkSize);
+    futures.push_back(std::async(std::launch::async, updateChunk, start, end));
+}
+
+for (auto &future : futures) {
+    future.get();
+}
+                </code></pre>
+            </div>
+            <p>This code demonstrates the efficient partitioning of particle updates into chunks, each processed by a separate thread. Here, `std::async` allows ParticleBox to dispatch chunks to multiple threads, with each thread handling a subset of particles. This approach significantly accelerates the simulation by parallelizing the work and minimizing the wait time for each update cycle.</p>
+
+            <h3>Vector Operations</h3>
+            <div class="code-sample">
+                <pre><code class="language-cpp">
+Vec2& operator+=(const Vec2& other) {
+    x += other.x;
+    y += other.y;
+    return *this;
+}
+
+Vec2& operator-=(const Vec2& other) {
+    x -= other.x;
+    y -= other.y;
+    return *this;
+}
+
+float magnitude() const {
+    return sqrt(x * x + y * y);
+}
+
+Vec2 norm() const {
+    float mag = magnitude();
+    return mag > 0 ? *this * (1 / mag) : Vec2(); 
+}
+
+float dot(const Vec2& other) const {
+    return x * other.x + y * other.y;
+}
+                </code></pre>
+            </div>
+            <p>The `Vec2` class supports various vector operations, including addition, subtraction, and dot products. These are crucial for the physics calculations in ParticleBox, enabling efficient computations for force vectors, normalization, and other vector-based operations.</p>
         </section>
 
         <section id="gallery" class="showcase__section">
             <h2>Project Gallery</h2>
             <div class="image-gallery">
-                <img src="placeholder-image-1.jpg" alt="Project screenshot 1">
-                <img src="UML.png" alt="UML Diagram">
-                <img src="placeholder-image-2.jpg" alt="Project screenshot 2">
+                <img src="images/p1.gif" alt="Project screenshot 1">
             </div>
         </section>
     </div>
 
     <div class="showcase__cta">
         <a href="https://github.com/aaronmcleancs/ParticleBox" class="button">View on GitHub</a>
-        <a href="#" class="button">Live Demo</a> <!-- Update with actual demo link if available -->
+        <a href="#" class="button">Live Demo</a>
     </div>
-
     <script src="js/showcase.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
 </body>
 </html>
