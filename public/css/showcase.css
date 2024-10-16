@@ -88,7 +88,7 @@ body {
 }
   .code-sample {
     overflow-x: auto;
-    font-size: 0.6rem;
+    font-size: 0.8rem;
   }
 }
 
@@ -223,14 +223,14 @@ body {
 }
 
 ul {
-  list-style-position: inside; /* Optional: Change to outside for bullet points outside */
-  padding-left: 20px; /* Indentation for unordered lists */
+  list-style-position: inside;
+  padding-left: 20px;
 }
 
 ol {
-  padding-left: 20px; /* Indentation for ordered lists */
+  padding-left: 20px;
 }
 
 li {
-  margin-bottom: 5px; /* Optional: Add space between list items */
+  margin-bottom: 5px;
 }

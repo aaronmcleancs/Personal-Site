@@ -54,7 +54,7 @@
                 <div id="card1" class="card-props white-card animate__animated">
                     <div class="card-content">
                         <img src="icon/1.svg" alt="Icon 1" style="width: 40px; height: 40px;" /> 
-                        <p>CNN Architecture</p>
+                        <p>TensorFlow Vision Model</p>
                         <p>Trained and optimized a 15 million parameter Convolutional Neural Network (CNN) using TensorFlow and AWS for the local diagnosis of SARS-CoV-2 from chest X-ray images. Achieved 97.55% accuracy in testing utilizing Conv2D, MaxPooling, Dense, and Dropout layers. Deployed model weights on a resource-constrained platform, optimizing for performance for use on Apple M-Series CPUs.</p>
                         <p><strong>Skills:</strong> Machine Learning, TensorFlow, AWS, CNN</p>
                         <div class="button-container">
@@ -135,8 +135,11 @@
 <script>
     document.getElementById('projects-link').addEventListener('click', function(e) {
         e.preventDefault();
-        document.getElementById('column2__right').scrollIntoView({ 
-            behavior: 'smooth' 
+        const targetElement = document.getElementById('column2__right');
+        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - 170;
+        window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
         });
     });
 </script>
