@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="css/styles.css"> 
     <link rel="stylesheet" href="css/social-media-icons.css"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    <script src="https://kit.fontawesome.com/66aa7c98b3.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://kit.fontawesome.com/ca7f2ffa51.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -22,7 +21,7 @@
             <div class="icon"><img src="images/blurIcon.png" height="27px" width="27px" alt="Logo"></div> 
         </div>
         <a href="#home">Home</a>
-        <a href="#projects">Projects</a>
+        <a href="#projects" id="projects-link">Projects</a>
         <div class="right-nav">
             <a href="/cv.pdf" class="download-btn" download="AaronMcLean_CV.pdf">
                 Resume <i class="fas fa-download"></i>
@@ -130,6 +129,15 @@
         } else {
             heroSection.style.backgroundSize = `${220 + scrollPercent}%`;
         }
+    });
+</script>
+
+<script>
+    document.getElementById('projects-link').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('column2__right').scrollIntoView({ 
+            behavior: 'smooth' 
+        });
     });
 </script>
 

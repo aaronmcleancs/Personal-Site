@@ -86,6 +86,11 @@ body {
 .showcase__section h4 {
   margin-top: 20px;
 }
+  .code-sample {
+    overflow-x: auto;
+    font-size: 0.6rem;
+  }
+}
 
 .tech-icons {
   display: flex;

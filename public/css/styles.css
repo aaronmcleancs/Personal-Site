@@ -98,7 +98,7 @@ body {
 .hero__section {
   color: #fff;
   background-image: url(sgsgsg.svg);
-  background-size: 240%;
+  background-size: 220%;
   z-index: 7;
   overflow: hidden;
 }
@@ -187,12 +187,18 @@ body {
 .column__left span {
   color: var(--accentColor);
   font-family: Consolas, monaco, monospace;
-  font-size: 1.2rem;
+  font-size: 1.9rem;
+}
+
+@media screen and (max-width: 1300px) {
+  .column__left span {
+      font-size: 1.0rem;
+  }
 }
 
 .hero2__section {
-  border-radius: 50px;
-  margin: 50px;
+  border-radius: 40px;
+  margin: 30px;
   color: rgb(17, 17, 17);
   background: hsl(0, 0%, 0%);
   background-image: radial-gradient(rgb(32, 32, 32) 5%, transparent 0);
@@ -246,9 +252,7 @@ body {
   display: grid;
   grid-template-columns: repeat(2, 2fr);
   margin: 30px;
-  border-radius: 40px;
-  margin-top: 40px;
-  margin-bottom: 40px;
+  border-radius: 30px;
 }
 
 @media screen and (max-width: 1300px) {
@@ -273,10 +277,11 @@ body {
 .column2__left h1 {
   font-size: 4rem;
   color: #ffffff;
-  margin-bottom: 10px;
   padding: 10px;
-  margin-top: 40px;
-  width: 60%;
+  margin-top: 30px;
+  width: auto;
+  padding-left: 20px;
+  padding-right: 20px;
   justify-content: center;
   text-align: center;
   border-radius: 25px;
@@ -404,8 +409,8 @@ body {
 
 .social-menu ul li a {
   display: block;
-  width: 50px;
-  height: 50px;
+  width: 45px;
+  height: 45px;
   border-radius: 25%;
   background-color: #0c0c0c;
   box-shadow: inset -2px -2px 6px rgba(16, 16, 16, 0.287), inset 2px 2px 4px rgba(8, 8, 8, 0.8);
@@ -438,18 +443,16 @@ body {
   height: auto;
   width: auto;
   padding: 25px;
-  margin-top: 15px;
-  margin-bottom: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   margin-left: 10px;
   margin-right: 10px;
-  align-self: stretch;
   opacity: 0;
 }
 
 @media screen and (max-width: 1300px) {
   .card-props{
     border-radius: 25px;
-    align-self: auto;
     padding: 20px;
     margin-left: 3px;
     margin-right: 3px;
@@ -471,7 +474,7 @@ body {
 }
 
 .white-card {
-  background-color: #141414a3;
+  background-color: #010101c9;
   backdrop-filter: blur(3px);
   transition: all 0.4s;
 }
@@ -492,7 +495,6 @@ body {
   color: #ffffff;
   font-size: 25px;
   font-weight: 650;
-  letter-spacing: 1px;
 }
 
 .white-card p:nth-child(3) {
@@ -501,12 +503,13 @@ body {
   font-weight: 310;
   line-height: 1.4;
   position: relative;
-  padding-top: 20px;
+  padding-top: 10px;
   width: 96%;
 }
 
 .white-card p:nth-child(4) {
   color: #bcbcbc;
+  padding-top: 5px
 }
 
 #gradient-canvas {
