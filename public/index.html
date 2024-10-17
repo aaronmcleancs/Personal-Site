@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://kit.fontawesome.com/ca7f2ffa51.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/github.js"></script>
     <script src="js/scroll.js"></script> 
     <link rel="icon" type="image/x-icon" href="images/favicon.ico"> 
 </head>
@@ -45,59 +46,83 @@
             </div>
         </div>
     </div>
-    <div class="hero2__section">
-        <div class="hero2__wrapper">
-            <div class="column2__left">
-                <h1 id="scroll" class="animate__animated"><span>Open Source</span> Projects</h1>
-            </div>
-            <div id="column2__right" class="column2__right">
-                <div id="card1" class="card-props white-card animate__animated">
-                    <div class="card-content">
-                        <img src="icon/1.svg" alt="Icon 1" style="width: 40px; height: 40px;" /> 
-                        <p>TensorFlow Vision Model</p>
-                        <p>Trained and optimized a 15 million parameter Convolutional Neural Network (CNN) using TensorFlow and AWS for the local diagnosis of SARS-CoV-2 from chest X-ray images. Achieved 97.55% accuracy in testing utilizing Conv2D, MaxPooling, Dense, and Dropout layers. Deployed model weights on a resource-constrained platform, optimizing for performance for use on Apple M-Series CPUs.</p>
-                        <p><strong>Skills:</strong> Machine Learning, TensorFlow, AWS, CNN</p>
-                        <div class="button-container">
-                            <a href="/cnn.html" class="button code-button">Code</a>
+        <div class="hero2__section">
+            <div class="hero2__wrapper">
+                <div class="column2__left">
+                    <h1 id="scroll" class="animate__animated"><span>Open Source</span> Projects</h1>
+                </div>
+                <div id="column2__right" class="column2__right">
+                    <div id="card1" class="card-props white-card animate__animated">
+                        <div class="card-content">
+                            <img src="icon/1.svg" alt="Icon 1" style="width: 40px; height: 40px;" /> 
+                            <p>TensorFlow Vision Model</p>
+                            <p><strong>Skills:</strong> Machine Learning, TensorFlow, AWS, CNN</p>
+                            <p>Trained and optimized a 15 million parameter Convolutional Neural Network (CNN) using TensorFlow and AWS for the local diagnosis of SARS-CoV-2 from chest X-ray images. Achieved 97.55% accuracy in testing utilizing Conv2D, MaxPooling, Dense, and Dropout layers. Deployed model weights on a resource-constrained platform, optimizing for performance for use on Apple M-Series CPUs.</p>
+                            <div class="project-stats">
+                                <p class="line-count">Project Size: <span id="lineCount1">Loading...</span> 
+                                    <a href="https://github.com/aaronmcleancs/CVV_15M_SARS-CoV-2" class="button" style="color: #ffffff; " target="_blank">GitHub</a>
+                                    <a href="/cnn.html" class="button" style="color: #ffffff; " target="_blank">Outline</a>
+                                </p>
+                                <div class="language-distribution">
+                                    <div class="lang-bar" id="langBar1"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="card2" class="card-props white-card animate__animated">
+                        <div class="card-content">
+                            <img src="icon/2.svg" alt="Icon 2" style="width: 40px; height: 40px;" /> 
+                            <p>iOS Application</p>
+                            <p><strong>Skills:</strong> Swift, Objective-C, Node.js, SQL</p>
+                            <p>Deployed a full-stack iOS application using Swift, Node.js, and PostgreSQL, with user sign-up and authentication, secure cloud storage, and RESTful APIs for managing user data. Developed a robust NetworkManager tool in Swift to facilitate seamless device-server interactions, user sign-ups, and data retrieval efficiently. Integrated Keychain-based authentication for secure key storage.</p>
+                            <div class="project-stats">
+                                <p class="line-count">Project Size: <span id="lineCount2">Loading...</span> 
+                                    <a href="https://github.com/aaronmcleancs/RepBook-DemoServer" class="button" style="color: #ffffff; " target="_blank">Github</a>
+                                    <a href="/ios.html" class="button" style="color: #ffffff; " target="_blank">Outline</a>
+                                </p>
+                                <div class="language-distribution">
+                                    <div class="lang-bar" id="langBar2"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="card3" class="card-props white-card animate__animated">
+                        <div class="card-content">
+                            <img src="icon/3.svg" alt="Icon 3" style="width: 40px; height: 40px;" /> 
+                            <p>ParticleBox</p>
+                            <p><strong>Skills:</strong> C++, Multithreading, Real-time Simulation</p>
+                            <p>Multithreaded particle dynamics engine for visualizing forces like repulsion, thermodynamics, and gravity among hundreds of thousands of particles in real-time. This project focuses on the efficient rendering and interaction of particle systems to simulate various physical phenomena.</p>
+                            <div class="project-stats">
+                                <p class="line-count">Project Size: <span id="lineCount3">Loading...</span> 
+                                    <a href="https://github.com/aaronmcleancs/ParticleBox"class="button" style="color: #ffffff; " target="_blank">GitHub</a>
+                                    <a href="/particle.html" class="button" style="color: #ffffff; " target="_blank">Outline</a>
+                                </p>
+                                <div class="language-distribution">
+                                    <div class="lang-bar" id="langBar3"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="card4" class="card-props white-card animate__animated">
+                        <div class="card-content">
+                            <img src="icon/4.svg" alt="Icon 4" style="width: 40px; height: 40px;" /> 
+                            <p>SiteDeck</p>
+                            <p><strong>Skills:</strong> JavaScript, Web Development, AI</p>
+                            <p>Landing Page Analysis web app for automatically analyzing areas of improvement from an open vision model. This project leverages AI and machine learning techniques to evaluate landing pages and provide actionable insights for optimization.</p>
+                            <div class="project-stats">
+                                <p class="line-count">Project Size: <span id="lineCount4">Loading...</span>
+                                    <a href="https://github.com/aaronmcleancs/SiteDeck" class="button" style="color: #ffffff; " target="_blank">GitHub</a>
+                                    <a href="/sitedeck.html" class="button" style="color: #ffffff; " target="_blank">Outline</a>
+                                </p>
+                                <div class="language-distribution">
+                                    <div class="lang-bar" id="langBar4"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div id="card2" class="card-props white-card animate__animated">
-                    <div class="card-content">
-                        <img src="icon/2.svg" alt="Icon 2" style="width: 40px; height: 40px;" /> 
-                        <p>iOS Application</p>
-                        <p>Deployed a full-stack iOS application using Swift, Node.js, and PostgreSQL, with user sign-up and authentication, secure cloud storage, and RESTful APIs for managing user data. Developed a robust NetworkManager tool in Swift to facilitate seamless device-server interactions, user sign-ups, and data retrieval efficiently. Integrated Keychain-based authentication for secure key storage.</p>
-                        <p><strong>Skills:</strong> iOS Development, Swift, Node.js, PostgreSQL</p>
-                        <div class="button-container">
-                            <a href="/ios.html" class="button code-button">Code</a>
-                        </div>
-                    </div>
-                </div>
-                <div id="card3" class="card-props white-card animate__animated">
-                    <div class="card-content">
-                        <img src="icon/3.svg" alt="Icon 3" style="width: 40px; height: 40px;" /> 
-                        <p>ParticleBox</p>
-                        <p>Multithreaded particle dynamics engine for visualizing forces like repulsion, thermodynamics, and gravity among hundreds of thousands of particles in real-time. This project focuses on the efficient rendering and interaction of particle systems to simulate various physical phenomena.</p>
-                        <p><strong>Skills:</strong> C++, SDL, Real-time Simulation</p>
-                        <div class="button-container">
-                            <a href="particle.html" class="button code-button">Code</a>
-                        </div>
-                    </div>
-                </div>
-                <div id="card4" class="card-props white-card animate__animated">
-                    <div class="card-content">
-                        <img src="icon/4.svg" alt="Icon 4" style="width: 40px; height: 40px;" /> 
-                        <p>SiteDeck</p>
-                        <p>Landing Page Analysis web app for automatically analyzing areas of improvement from an open vision model. This project leverages AI and machine learning techniques to evaluate landing pages and provide actionable insights for optimization.</p>
-                        <p><strong>Skills:</strong> Web Development, Machine Learning, AI</p>
-                        <div class="button-container">
-                            <a href="sitedeck.html" class="button code-button">Code</a>
-                        </div>
-                    </div>
-                </div>            
-            </div>
-        </div> 
-    </div>
+            </div> 
+        </div>
     <div class="contact__section">
     <div class="contact__wrapper">
         <h2>Contact Me</h2>
@@ -136,7 +161,7 @@
     document.getElementById('projects-link').addEventListener('click', function(e) {
         e.preventDefault();
         const targetElement = document.getElementById('column2__right');
-        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - 170;
+        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - 250;
         window.scrollTo({
             top: targetPosition,
             behavior: 'smooth'

@@ -69,7 +69,7 @@ body {
 .showcase__content {
   max-width: 900px;
   margin: 50px auto;
-  padding: 0 20px;
+  padding-top: 20px;
 }
 
 .showcase__section h2 {
@@ -97,7 +97,7 @@ body {
   justify-content: flex-start;
   margin-bottom: 10px;
   gap: 20px;
-  font-size: 3rem;
+  size: 90px;
 }
 
 .tech-icons i {

@@ -230,7 +230,7 @@ body {
 @media screen and (max-width: 1300px) {
   .hero2__wrapper {
       grid-template-columns: 1fr;
-      text-align: center;
+      text-align: left;
       align-items: center;
   }
 }
@@ -320,32 +320,6 @@ body {
   }
 }
 
-.button-container {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 10px;
-}
-
-.button {
-  background-color: #ffffff;
-  color: rgb(0, 0, 0);
-  padding: 10px 15px;
-  margin-left: 10px;
-  text-decoration: none;
-  border-radius: 5px;
-  font-weight: 200;
-  transition: background-color 0.3s;
-}
-
-@media (max-width: 1300px) {
-  .button {
-    width: 100%; /* Make the button take the full width of the parent */
-    margin-left: 0; /* Remove margin on smaller screens to avoid overflow */
-  }
-}
-.button:hover {
-  background-color: #c6c6c6;
-}
 
 .ui {
   height: 1000px;
@@ -438,6 +412,25 @@ body {
   background-color: rgb(146, 146, 146);
 }
 
+.button {
+  background: linear-gradient(135deg, #242424, #0c0c0c); /* Gradient background */
+  padding: 7px 7px; /* Increased padding for a more substantial look */
+  margin-left: 5px; /* Slightly increased margin */
+  text-decoration: none;
+  border-radius: 8px; /* More rounded corners */
+  font-weight: 400; /* Bolder font for better visibility */
+  font-size: 13px; /* Increased font size */
+  color: #b8b8b8; /* Text color */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  display: inline-block; /* Makes the button align with surrounding text */
+  transition: background-color 0.3s, transform 0.2s; /* Added transform transition */
+  cursor: pointer; /* Changes cursor on hover */
+}
+
+.button:hover {
+  background: linear-gradient(135deg, #111111, #323232); /* Reverse gradient on hover */
+  transform: translateY(-2px); /* Slight lift effect on hover */
+}
 .card-props {
   border-radius: 33px;
   height: auto;
@@ -476,6 +469,7 @@ body {
 .white-card {
   background-color: #010101c9;
   backdrop-filter: blur(3px);
+  box-shadow: inset -1px -1px 2px rgba(223, 223, 223, 0.036), inset 1px 1px 2px rgba(142, 142, 142, 0.319);
   transition: all 0.4s;
 }
 
@@ -483,7 +477,7 @@ body {
   backdrop-filter: blur(5px);
   background-color: #000000;
   transition: all 0.4s;
-  box-shadow: inset -1px -1px 2px rgba(223, 223, 223, 0.108), inset 1px 1px 2px rgba(142, 142, 142, 0.8);
+  box-shadow: inset -1px -1px 2px rgba(223, 223, 223, 0.187), inset 1px 1px 2px rgba(142, 142, 142, 0.8);
 }
 
 .white-card img:nth-child(1) {
@@ -499,17 +493,94 @@ body {
 
 .white-card p:nth-child(3) {
   font-size: 16px;
-  color: #7a7a7a;
+  color: #a6a6a6;
   font-weight: 310;
   line-height: 1.4;
   position: relative;
-  padding-top: 10px;
   width: 96%;
 }
 
 .white-card p:nth-child(4) {
-  color: #bcbcbc;
-  padding-top: 5px
+  color: #6e6e6e;
+}
+
+.project-stats {
+  margin-top: 15px;
+}
+
+.line-count {
+  font-size: 14px;
+  color: #8d8d8d;
+  margin-bottom: 10px;
+}
+
+.language-distribution {
+  height: 25px;
+  background-color: #2a2a2a;
+  border-radius: 20px; /* Adjust radius if needed */
+  overflow: hidden;
+  position: relative; /* Required for positioning of pseudo-elements */
+}
+
+.language-distribution:before,
+.language-distribution:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  box-shadow: 
+      inset 1px 1px 3px rgba(0, 0, 0, 0.5), /* Darker inner shadow */
+      inset -1px -1px 4px rgba(23, 23, 23, 0.528); /* Subtle lighter inner shadow */
+  border-radius: 11px; /* Match the border radius of the parent */
+}
+
+.lang-bar {
+  height: 100%;
+  display: flex;
+}
+
+.lang-segment {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(228, 228, 228);
+  font-size: 12px;
+  font-weight: 100;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 4px;
+  box-sizing: border-box;
+  background-color: #2a2a2a; /* Optional: background color */
+}
+
+@media screen and (max-width: 768px) {
+  .line-count {
+    font-size: 12px; /* Smaller font size for mobile */
+    color: #a8a8a8; /* Slightly lighter color for better contrast */
+    margin-bottom: 8px; /* Reduced margin */
+  }
+
+  .language-distribution {
+    height: 20px; /* Smaller height for mobile */
+  }
+
+  .language-distribution:before,
+  .language-distribution:after {
+    border-radius: 10px; /* Adjusted radius for mobile */
+  }
+
+  .lang-bar {
+    flex-direction: row; /* Ensure the segments are horizontal */
+    height: 100%; /* Keep height consistent */
+  }
+
+  .lang-segment {
+    font-size: 10px; /* Smaller font size for mobile */
+    padding: 0 2px; /* Reduced padding for mobile */
+  }
 }
 
 #gradient-canvas {
@@ -551,7 +622,7 @@ body {
   padding: 10px;
   border-radius: 5px;
   border: 1px solid #333;
-  background-color: #0f0f0f;
+  background-color: #0b0b0b;
   color: #ffffff;
 }
 
