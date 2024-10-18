@@ -413,27 +413,27 @@ body {
 }
 
 .button {
-  background: linear-gradient(135deg, #242424, #0c0c0c); /* Gradient background */
-  padding: 7px 7px; /* Increased padding for a more substantial look */
-  margin-left: 5px; /* Slightly increased margin */
+  background: linear-gradient(135deg, #242424, #0c0c0c);
+  padding: 7px 7px;
+  margin-left: 5px; 
   text-decoration: none;
-  border-radius: 8px; /* More rounded corners */
-  font-weight: 400; /* Bolder font for better visibility */
-  font-size: 13px; /* Increased font size */
-  color: #b8b8b8; /* Text color */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
-  display: inline-block; /* Makes the button align with surrounding text */
-  transition: background-color 0.3s, transform 0.2s; /* Added transform transition */
-  cursor: pointer; /* Changes cursor on hover */
+  border-radius: 8px; 
+  font-weight: 400;
+  font-size: 13px;
+  color: #b8b8b8;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: inline-block;
+  transition: background-color 0.3s, transform 0.2s;
+  cursor: pointer;
 }
 
 .button:hover {
-  background: linear-gradient(135deg, #111111, #323232); /* Reverse gradient on hover */
-  transform: translateY(-2px); /* Slight lift effect on hover */
+  background: linear-gradient(135deg, #111111, #323232);
+  transform: translateY(-2px);
 }
 .card-props {
   border-radius: 33px;
-  height: auto;
+  height: 300px;
   width: auto;
   padding: 25px;
   margin-top: 10px;
@@ -493,15 +493,16 @@ body {
 
 .white-card p:nth-child(3) {
   font-size: 16px;
-  color: #a6a6a6;
+  color: #a9a9a9;
   font-weight: 310;
   line-height: 1.4;
   position: relative;
   width: 96%;
+  overflow: hidden;
 }
 
 .white-card p:nth-child(4) {
-  color: #6e6e6e;
+  color: #525252;
 }
 
 .project-stats {
@@ -517,9 +518,9 @@ body {
 .language-distribution {
   height: 25px;
   background-color: #2a2a2a;
-  border-radius: 20px; /* Adjust radius if needed */
+  border-radius: 20px;
   overflow: hidden;
-  position: relative; /* Required for positioning of pseudo-elements */
+  position: relative;
 }
 
 .language-distribution:before,
@@ -530,9 +531,9 @@ body {
   bottom: 0;
   width: 100%;
   box-shadow: 
-      inset 1px 1px 3px rgba(0, 0, 0, 0.5), /* Darker inner shadow */
-      inset -1px -1px 4px rgba(23, 23, 23, 0.528); /* Subtle lighter inner shadow */
-  border-radius: 11px; /* Match the border radius of the parent */
+      inset 1px 1px 3px rgba(0, 0, 0, 0.5),
+      inset -1px -1px 4px rgba(23, 23, 23, 0.528);
+  border-radius: 11px;
 }
 
 .lang-bar {
@@ -553,33 +554,33 @@ body {
   text-overflow: ellipsis;
   padding: 0 4px;
   box-sizing: border-box;
-  background-color: #2a2a2a; /* Optional: background color */
+  background-color: #2a2a2a;
 }
 
 @media screen and (max-width: 768px) {
   .line-count {
-    font-size: 12px; /* Smaller font size for mobile */
-    color: #a8a8a8; /* Slightly lighter color for better contrast */
-    margin-bottom: 8px; /* Reduced margin */
+    font-size: 12px;
+    color: #a8a8a8;
+    margin-bottom: 8px;
   }
 
   .language-distribution {
-    height: 20px; /* Smaller height for mobile */
+    height: 20px;
   }
 
   .language-distribution:before,
   .language-distribution:after {
-    border-radius: 10px; /* Adjusted radius for mobile */
+    border-radius: 10px;
   }
 
   .lang-bar {
-    flex-direction: row; /* Ensure the segments are horizontal */
-    height: 100%; /* Keep height consistent */
+    flex-direction: row;
+    height: 100%;
   }
 
   .lang-segment {
-    font-size: 10px; /* Smaller font size for mobile */
-    padding: 0 2px; /* Reduced padding for mobile */
+    font-size: 10px;
+    padding: 0 2px;
   }
 }
 
@@ -644,4 +645,3 @@ body {
 #contact-form button:hover {
   background-color: #5a20b9;
 }
-

@@ -28,16 +28,16 @@ async function fetchGitHubStats(repoName, cardId) {
 
 function getColorForLanguage(lang) {
     const colors = {
-        JavaScript: '#1C1C1C',     // Almost Black
-        Python: '#191919',         // Near Black
-        HTML: '#161616',           // Very Dark Gray
-        CSS: '#040404',            // Dark Gray
-        Swift: '#141414',          // Dark Charcoal
-        'Objective-C': '#141414',  // Borderline Black
-        'C++': '#0F0F0F',          // Near-Black Charcoal
-        Java: '#222222',           // Darker Gray
+        JavaScript: '#1C1C1C',     
+        Python: '#191919',         
+        HTML: '#161616',           
+        CSS: '#040404',            
+        Swift: '#141414',          
+        'Objective-C': '#141414',  
+        'C++': '#0F0F0F',          
+        Java: '#222222',           
         C: '#353535',   
-        Mermaid: '#000000'           // Dark Silver
+        Mermaid: '#000000'           
     };
     return colors[lang] || '#858585';
 }
