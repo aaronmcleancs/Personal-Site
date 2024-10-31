@@ -1,10 +1,8 @@
 import re
 
-# Define the path to your SVG file
 svg_file_path = '/Users/aaronmclean/Desktop/Work/GitHub/personalsite/public/sgsgsg.svg'
 colors_file_path = 'colors.txt'
 
-# Regular expression to match fill attributes
 fill_pattern = re.compile(r'fill="([^"]+)"')
 
 try:

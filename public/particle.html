@@ -32,7 +32,7 @@
     <div class="showcase__content">
         <section id="overview" class="showcase__section">
             <h2>Project Overview</h2>
-            <p>ParticleBox is a robust particle dynamics engine implemented in C++ with SDL2. It's crafted for real-time visualization of complex forces such as repulsion, thermodynamics, and gravity among hundreds of thousands of particles. By employing a grid-based multithreaded rendering approach, this project achieves remarkable efficiency, central to the underlying computational theory and physical models.</p>
+            <p>ParticleBox is an advanced particle dynamics engine developed in C++ and optimized with SDL2 for high-performance, real-time physics visualization. Designed to simulate complex particle interactions among large groups, ParticleBox can model forces such as repulsion, thermodynamics, and gravity for simulations of up to 100,000+ particles. By leveraging multithreading and an efficient grid-based spatial hashing technique, ParticleBox achieves remarkable computational efficiency, even with high particle counts, making it ideal for research, simulation, and real-time applications.</p>
         </section>
 
         <section id="features" class="showcase__section">
@@ -52,48 +52,36 @@
             <p>ParticleBox's multithreading method is critical to optimizing particle updates. By using `std::async` and demarcating work into chunks, ParticleBox significantly enhances the processing speed of simulations, reducing bottlenecks typically encountered with single-threaded computations.</p>
             <div class="code-sample">
                 <pre><code class="language-javascript">
-                    void Simulation::update(double deltaTime) {
-                        if (!running) return;
-                    
-                        int numThreads = 24;
-                        std::vector<std::future<void>> futures;
-                    
-                        auto updateChunk = [this, deltaTime](int start, int end) {
-                            std::vector<Vec2> forces = physics.computeForces(particles, start, end);
-                            for (int i = start; i < end; ++i) {
-                                particles[i].update(forces[i-start], deltaTime);
-                                physics.applyBoundaries(particles[i]);
-                            }
-                        };
-                    
-                        int chunkSize = particles.size() / numThreads;
-                        for (int i = 0; i < numThreads; ++i) {
-                            int start = i * chunkSize;
-                            int end = (i == numThreads - 1) ? particles.size() : (start + chunkSize);
-                            futures.push_back(std::async(std::launch::async, updateChunk, start, end));
-                        }
-                    
-                        for (auto &future : futures) {
-                            future.get();
-                        }
-                    
-                        calculateFrameRate();
-                    
-                        /*Frame Rate Regulation - Comment out to cap CPU
-                    
-                        auto currentTime = std::chrono::steady_clock::now();
-                        auto frameDuration = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastFrameTime);
-                    
-                        const int targetFrameDuration = 16;
-                    
-                        if (frameDuration.count() < targetFrameDuration) {
-                            std::this_thread::sleep_for(std::chrono::milliseconds(targetFrameDuration - frameDuration.count()));
-                        }
-                    
-                        lastFrameTime = std::chrono::steady_clock::now();
-                        */
-                        
-                    }
+void Simulation::update(double deltaTime) {
+    if (!running) return;
+
+    int numThreads = 24;
+    std::vector<std::future<void>> futures;
+
+    auto updateChunk = [this, deltaTime](int start, int end) {
+        std::vector<Vec2> forces = physics.computeForces(particles, start, end);
+        for (int i = start; i < end; ++i) {
+            particles[i].update(forces[i-start], deltaTime);
+            physics.applyBoundaries(particles[i]);
+        }
+    };
+
+    int chunkSize = particles.size() / numThreads;
+    for (int i = 0; i < numThreads; ++i) {
+        int start = i * chunkSize;
+        int end = (i == numThreads - 1) ? particles.size() : (start + chunkSize);
+        futures.push_back(std::async(std::launch::async, updateChunk, start, end));
+    }
+
+    for (auto &future : futures) {
+        future.get();
+    }
+
+    calculateFrameRate();
+
+
+
+}
 
 </code></pre>
 </div>
@@ -107,6 +95,21 @@
         </ul>
         <p>The high particle count capability of ParticleBox (100,000+) enables detailed fluid simulations with fine-grained surface details, complex interactions between multiple fluid bodies, and realistic behavior of splashes, droplets, and waves.</p>
 
+        <div class="code-sample">
+            <pre><code class="language-javascript">
+namespace std {
+    template<>
+    struct hash<std::pair<int, int>> {
+        std::size_t operator()(const std::pair<int, int>& pair) const noexcept {
+            auto hash1 = std::hash<int>{}(pair.first);
+            auto hash2 = std::hash<int>{}(pair.second);
+            return hash1 ^ (hash2 << 1);
+        }
+    };
+}
+            </code></pre>
+        </div>
+
         <h3>Theoretical Computer Science and Optimization</h3>
         <p>ParticleBox leverages key principles in computer science to achieve its performance:</p>
         <ul>
@@ -114,6 +117,69 @@
             <li><strong>Spatial Partitioning:</strong> Techniques like spatial hashing or octrees can be implemented to efficiently handle neighbor searches in high-density particle simulations.</li>
             <li><strong>SIMD (Single Instruction, Multiple Data):</strong> Utilizes CPU-specific optimizations for parallel data processing, enhancing computational efficiency.</li>
         </ul>
+
+        <div class="code-sample">
+            <pre><code class="language-javascript">
+std::vector<Vec2> PhysicsEngine::computeForces(std::vector<Particle>& particles, int start, int end) {
+    const float cellSize = 50.0f;
+    std::unordered_map<std::pair<int, int>, std::vector<int>> cellMap;
+
+    for (int i = start; i < end; ++i) {
+        int cellX = particles[i].position.x / cellSize;
+        int cellY = particles[i].position.y / cellSize;
+        cellMap[{cellX, cellY}].push_back(i);
+    }
+
+    std::vector<Vec2> forces(end - start, Vec2(0, 0));
+    for (int i = start; i < end; ++i) {
+        Vec2 netForce(0, 0);
+
+        if (gravityEnabled) {
+            netForce.y += particles[i].mass * gravity;
+        }
+
+        int cellX = particles[i].position.x / cellSize;
+        int cellY = particles[i].position.y / cellSize;
+
+        for (int dx = -1; dx <= 1; ++dx) {
+            for (int dy = -1; dy <= 1; ++dy) {
+                auto it = cellMap.find({cellX + dx, cellY + dy});
+                if (it == cellMap.end()) continue;
+
+                for (int j : it->second) {
+                    if (i == j) continue;
+
+                    Vec2 direction = particles[j].position - particles[i].position;
+                    float distance = direction.magnitude();
+                    float combinedRadius = particles[i].radius + particles[j].radius;
+
+                    if (distance < combinedRadius) {
+                        Vec2 normal = direction / distance;
+                        float overlap = combinedRadius - distance;
+
+                        float separationScale = overlap / (particles[i].mass + particles[j].mass);
+                        particles[i].position -= normal * (separationScale * particles[j].mass);
+                        particles[j].position += normal * (separationScale * particles[i].mass);
+
+                        Vec2 relativeVelocity = particles[j].velocity - particles[i].velocity;
+                        float impulseMagnitude = -(1.0f + 0.8f) * relativeVelocity.dot(normal) / 
+                                                 (1.0f / particles[i].mass + 1.0f / particles[j].mass);
+                        Vec2 impulse = normal * impulseMagnitude;
+
+                        particles[i].velocity -= impulse / particles[i].mass;
+                        particles[j].velocity += impulse / particles[j].mass;
+                    }
+                }
+            }
+        }
+
+        forces[i - start] = netForce;
+    }
+
+    return forces;
+}
+            </code></pre>
+        </div>
 
         <h3>Future Enhancements</h3>
         <p>Potential improvements to further boost ParticleBox's capabilities include:</p>
