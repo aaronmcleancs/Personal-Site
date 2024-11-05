@@ -32,165 +32,162 @@
     <div class="showcase__content">
         <section id="overview" class="showcase__section">
             <h2>Project Overview</h2>
-            <p>ParticleBox is an advanced particle dynamics engine developed in C++ and optimized with SDL2 for high-performance, real-time physics visualization. Designed to simulate complex particle interactions among large groups, ParticleBox can model forces such as repulsion, thermodynamics, and gravity for simulations of up to 100,000+ particles. By leveraging multithreading and an efficient grid-based spatial hashing technique, ParticleBox achieves remarkable computational efficiency, even with high particle counts, making it ideal for research, simulation, and real-time applications.</p>
+            <p>ParticleBox is an advanced particle dynamics engine developed in C++ and optimized with SDL2 for high-performance, real-time physics visualization. It is designed to simulate complex particle interactions among large groups, enabling ParticleBox to model forces such as repulsion, thermodynamics, and gravity for simulations of over 100,000 particles. By leveraging multithreading and an efficient grid-based spatial hashing technique, ParticleBox achieves remarkable computational efficiency, even with high particle counts. This makes it ideal for research, simulation, and real-time applications in various fields.</p>
         </section>
-
+    
         <section id="features" class="showcase__section">
             <h2>Key Features</h2>
             <ul>
-                <li>Real-time visualization of particle dynamics with multithreading support.</li>
-                <li>Simulation of various physical interactions, including gravity and repulsion.</li>
-                <li>Efficient handling of high particle counts (up to 100,000+).</li>
-                <li>Potential for fluid simulation using particle-based methods.</li>
+                <li>Real-time visualization of particle dynamics with multithreading support for enhanced performance.</li>
+                <li>Simulation of various physical interactions, including gravitational effects and particle repulsion.</li>
+                <li>Efficient handling of high particle counts (up to 100,000+), ensuring smooth simulations.</li>
+                <li>Potential for fluid simulation utilizing particle-based methods, providing realism in dynamics.</li>
             </ul>
         </section>
+    
         <section id="project-detail" class="showcase__section">
             <h2>Project Detail</h2>
-            <p>ParticleBox is a high-performance particle simulation engine that utilizes multithreading techniques to ensure smooth, real-time performance with up to 100,000 particles. The engine leverages multiple CPU cores to handle updates to particle positions and forces concurrently, essential for running large-scale simulations efficiently.</p>
     
             <h3>Multithreading Implementation</h3>
-            <p>ParticleBox's multithreading method is critical to optimizing particle updates. By using `std::async` and demarcating work into chunks, ParticleBox significantly enhances the processing speed of simulations, reducing bottlenecks typically encountered with single-threaded computations.</p>
+            <p>ParticleBox's multithreading technique plays a pivotal role in optimizing particle updates. By employing <code>std::async</code> to execute particle updates in parallel, the simulation speed is significantly enhanced. This approach mitigates bottlenecks that typically arise from single-threaded computations, enabling simultaneous processing of multiple particle updates. The multithreading implementation allows the engine to effectively utilize available CPU cores, resulting in substantial performance improvements.</p>
             <div class="code-sample">
                 <pre><code class="language-javascript">
-void Simulation::update(double deltaTime) {
-    if (!running) return;
-
-    int numThreads = 24;
-    std::vector<std::future<void>> futures;
-
-    auto updateChunk = [this, deltaTime](int start, int end) {
-        std::vector<Vec2> forces = physics.computeForces(particles, start, end);
+    void Simulation::update(double deltaTime) {
+        if (!running) return;
+    
+        int numThreads = 24;
+        std::vector<std::future<void>> futures;
+    
+        auto updateChunk = [this, deltaTime](int start, int end) {
+            std::vector<Vec2> forces = physics.computeForces(particles, start, end);
+            for (int i = start; i < end; ++i) {
+                particles[i].update(forces[i-start], deltaTime);
+                physics.applyBoundaries(particles[i]);
+            }
+        };
+    
+        int chunkSize = particles.size() / numThreads;
+        for (int i = 0; i < numThreads; ++i) {
+            int start = i * chunkSize;
+            int end = (i == numThreads - 1) ? particles.size() : (start + chunkSize);
+            futures.push_back(std::async(std::launch::async, updateChunk, start, end));
+        }
+    
+        for (auto &future : futures) {
+            future.get();
+        }
+    
+        calculateFrameRate();
+    }
+                </code></pre>
+            </div>
+            <p>This code exemplifies the partitioning of particle updates into distinct segments. By employing separate threads for each segment, ParticleBox can concurrently perform computations, resulting in a marked improvement in simulation speed via parallel processing.</p>
+    
+            <h3>Fluid Simulation Potential</h3>
+            <p>While primarily a particle engine, ParticleBox's architecture supports the implementation of advanced fluid simulation techniques:</p>
+            <ul>
+                <li><strong>Smoothed Particle Hydrodynamics (SPH):</strong> Utilizes kernel functions to interpolate fluid properties, making it suitable for simulating both liquids and gases.</li>
+                <li><strong>Position Based Dynamics (PBD):</strong> Iteratively adjusts particle positions to satisfy constraints, ensuring stable simulations even with larger time steps.</li>
+                <li><strong>Lattice Boltzmann Method (LBM):</strong> Discretizes space into a lattice of particles, allowing for high parallelizability and suitability for GPU acceleration.</li>
+            </ul>
+            <p>The high particle count capability of ParticleBox (100,000+) facilitates detailed fluid simulations with fine-grained surface details, complex interactions among multiple fluid bodies, and realistic behaviors such as splashes, droplets, and waves.</p>
+    
+            <div class="code-sample">
+                <pre><code class="language-javascript">
+    namespace std {
+        template<>
+        struct hash<std::pair<int, int>> {
+            std::size_t operator()(const std::pair<int, int>& pair) const noexcept {
+                auto hash1 = std::hash<int>{}(pair.first);
+                auto hash2 = std::hash<int>{}(pair.second);
+                return hash1 ^ (hash2 << 1);
+            }
+        };
+    }
+                </code></pre>
+            </div>
+    
+            <h3>Theoretical Computer Science and Optimization</h3>
+            <p>ParticleBox leverages key principles from theoretical computer science to optimize its performance:</p>
+            <ul>
+                <li><strong>Data Parallelism:</strong> This technique allows for simultaneous processing of particle data across various processing units, enabling the engine to efficiently manage extensive particle sets.</li>
+                <li><strong>Spatial Partitioning:</strong> By implementing techniques such as spatial hashing, ParticleBox efficiently handles neighbor searches in high-density particle simulations, reducing computational overhead during interactions.</li>
+                <li><strong>SIMD (Single Instruction, Multiple Data):</strong> This optimization allows the engine to utilize CPU-specific instructions for parallel data processing, further enhancing computational efficiency and performance.</li>
+            </ul>
+    
+            <div class="code-sample">
+                <pre><code class="language-javascript">
+    std::vector<Vec2> PhysicsEngine::computeForces(std::vector<Particle>& particles, int start, int end) {
+        const float cellSize = 50.0f;
+        std::unordered_map<std::pair<int, int>, std::vector<int>> cellMap;
+    
         for (int i = start; i < end; ++i) {
-            particles[i].update(forces[i-start], deltaTime);
-            physics.applyBoundaries(particles[i]);
+            int cellX = particles[i].position.x / cellSize;
+            int cellY = particles[i].position.y / cellSize;
+            cellMap[{cellX, cellY}].push_back(i);
         }
-    };
-
-    int chunkSize = particles.size() / numThreads;
-    for (int i = 0; i < numThreads; ++i) {
-        int start = i * chunkSize;
-        int end = (i == numThreads - 1) ? particles.size() : (start + chunkSize);
-        futures.push_back(std::async(std::launch::async, updateChunk, start, end));
-    }
-
-    for (auto &future : futures) {
-        future.get();
-    }
-
-    calculateFrameRate();
-
-
-
-}
-
-</code></pre>
-</div>
-<p>This code illustrates the partitioning of particle updates into distinct segments. Utilizing separate threads for each chunk allows ParticleBox to concurrently perform computations, vastly improving simulation speed through parallel processing.</p>
-<h3>Fluid Simulation Potential</h3>
-        <p>While primarily a particle engine, ParticleBox's architecture allows for implementation of advanced fluid simulation techniques:</p>
-        <ul>
-            <li><strong>Smoothed Particle Hydrodynamics (SPH):</strong> Interpolates fluid properties using kernel functions, suitable for simulating liquids and gases.</li>
-            <li><strong>Position Based Dynamics (PBD):</strong> Iteratively adjusts particle positions to satisfy constraints, providing stable simulations even with large time steps.</li>
-            <li><strong>Lattice Boltzmann Method (LBM):</strong> Discretizes space into a lattice of particles, highly parallelizable and suitable for GPU acceleration.</li>
-        </ul>
-        <p>The high particle count capability of ParticleBox (100,000+) enables detailed fluid simulations with fine-grained surface details, complex interactions between multiple fluid bodies, and realistic behavior of splashes, droplets, and waves.</p>
-
-        <div class="code-sample">
-            <pre><code class="language-javascript">
-namespace std {
-    template<>
-    struct hash<std::pair<int, int>> {
-        std::size_t operator()(const std::pair<int, int>& pair) const noexcept {
-            auto hash1 = std::hash<int>{}(pair.first);
-            auto hash2 = std::hash<int>{}(pair.second);
-            return hash1 ^ (hash2 << 1);
-        }
-    };
-}
-            </code></pre>
-        </div>
-
-        <h3>Theoretical Computer Science and Optimization</h3>
-        <p>ParticleBox leverages key principles in computer science to achieve its performance:</p>
-        <ul>
-            <li><strong>Data Parallelism:</strong> Allows simultaneous processing of particle data across different processing units.</li>
-            <li><strong>Spatial Partitioning:</strong> Techniques like spatial hashing or octrees can be implemented to efficiently handle neighbor searches in high-density particle simulations.</li>
-            <li><strong>SIMD (Single Instruction, Multiple Data):</strong> Utilizes CPU-specific optimizations for parallel data processing, enhancing computational efficiency.</li>
-        </ul>
-
-        <div class="code-sample">
-            <pre><code class="language-javascript">
-std::vector<Vec2> PhysicsEngine::computeForces(std::vector<Particle>& particles, int start, int end) {
-    const float cellSize = 50.0f;
-    std::unordered_map<std::pair<int, int>, std::vector<int>> cellMap;
-
-    for (int i = start; i < end; ++i) {
-        int cellX = particles[i].position.x / cellSize;
-        int cellY = particles[i].position.y / cellSize;
-        cellMap[{cellX, cellY}].push_back(i);
-    }
-
-    std::vector<Vec2> forces(end - start, Vec2(0, 0));
-    for (int i = start; i < end; ++i) {
-        Vec2 netForce(0, 0);
-
-        if (gravityEnabled) {
-            netForce.y += particles[i].mass * gravity;
-        }
-
-        int cellX = particles[i].position.x / cellSize;
-        int cellY = particles[i].position.y / cellSize;
-
-        for (int dx = -1; dx <= 1; ++dx) {
-            for (int dy = -1; dy <= 1; ++dy) {
-                auto it = cellMap.find({cellX + dx, cellY + dy});
-                if (it == cellMap.end()) continue;
-
-                for (int j : it->second) {
-                    if (i == j) continue;
-
-                    Vec2 direction = particles[j].position - particles[i].position;
-                    float distance = direction.magnitude();
-                    float combinedRadius = particles[i].radius + particles[j].radius;
-
-                    if (distance < combinedRadius) {
-                        Vec2 normal = direction / distance;
-                        float overlap = combinedRadius - distance;
-
-                        float separationScale = overlap / (particles[i].mass + particles[j].mass);
-                        particles[i].position -= normal * (separationScale * particles[j].mass);
-                        particles[j].position += normal * (separationScale * particles[i].mass);
-
-                        Vec2 relativeVelocity = particles[j].velocity - particles[i].velocity;
-                        float impulseMagnitude = -(1.0f + 0.8f) * relativeVelocity.dot(normal) / 
-                                                 (1.0f / particles[i].mass + 1.0f / particles[j].mass);
-                        Vec2 impulse = normal * impulseMagnitude;
-
-                        particles[i].velocity -= impulse / particles[i].mass;
-                        particles[j].velocity += impulse / particles[j].mass;
+    
+        std::vector<Vec2> forces(end - start, Vec2(0, 0));
+        for (int i = start; i < end; ++i) {
+            Vec2 netForce(0, 0);
+    
+            if (gravityEnabled) {
+                netForce.y += particles[i].mass * gravity;
+            }
+    
+            int cellX = particles[i].position.x / cellSize;
+            int cellY = particles[i].position.y / cellSize;
+    
+            for (int dx = -1; dx <= 1; ++dx) {
+                for (int dy = -1; dy <= 1; ++dy) {
+                    auto it = cellMap.find({cellX + dx, cellY + dy});
+                    if (it == cellMap.end()) continue;
+    
+                    for (int j : it->second) {
+                        if (i == j) continue;
+    
+                        Vec2 direction = particles[j].position - particles[i].position;
+                        float distance = direction.magnitude();
+                        float combinedRadius = particles[i].radius + particles[j].radius;
+    
+                        if (distance < combinedRadius) {
+                            Vec2 normal = direction / distance;
+                            float overlap = combinedRadius - distance;
+    
+                            float separationScale = overlap / (particles[i].mass + particles[j].mass);
+                            particles[i].position -= normal * (separationScale * particles[j].mass);
+                            particles[j].position += normal * (separationScale * particles[i].mass);
+    
+                            Vec2 relativeVelocity = particles[j].velocity - particles[i].velocity;
+                            float impulseMagnitude = -(1.0f + 0.8f) * relativeVelocity.dot(normal) / 
+                                                     (1.0f / particles[i].mass + 1.0f / particles[j].mass);
+                            Vec2 impulse = normal * impulseMagnitude;
+    
+                            particles[i].velocity -= impulse / particles[i].mass;
+                            particles[j].velocity += impulse / particles[j].mass;
+                        }
                     }
                 }
             }
+    
+            forces[i - start] = netForce;
         }
-
-        forces[i - start] = netForce;
+    
+        return forces;
     }
-
-    return forces;
-}
-            </code></pre>
-        </div>
-
-        <h3>Future Enhancements</h3>
-        <p>Potential improvements to further boost ParticleBox's capabilities include:</p>
-        <ul>
-            <li>GPU acceleration using CUDA or OpenCL for even higher particle counts</li>
-            <li>Implementation of advanced collision detection algorithms</li>
-            <li>Integration of rigid body dynamics for complex scene simulations</li>
-        </ul>
-
-        <p>These enhancements would push the boundaries of what's possible in real-time particle and fluid simulations, opening up new applications in graphics, scientific modeling, and interactive physics engines.</p>
-    </section>
+                </code></pre>
+            </div>
+    
+            <h3>Future Enhancements</h3>
+            <p>Looking ahead, potential improvements to further boost ParticleBox's capabilities include:</p>
+            <ul>
+                <li>GPU acceleration using CUDA or OpenCL to manage even higher particle counts and enhance performance.</li>
+                <li>Implementation of advanced collision detection algorithms to improve simulation accuracy and efficiency.</li>
+                <li>Integration of rigid body dynamics for more complex scene simulations, enriching the overall experience.</li>
+            </ul>
+    
+            <p>These enhancements will push the boundaries of what is possible in real-time particle and fluid simulations, opening new applications in graphics, scientific modeling, and interactive physics engines.</p>
+        </section>    
 
         </section>
 
@@ -221,61 +218,7 @@ std::vector<Vec2> PhysicsEngine::computeForces(std::vector<Particle>& particles,
         <button class="fullscreen-close">&times;</button>
     </div>
 
-    <script>
-        const imageGallery = document.querySelector('.image-gallery');
-        const fullscreenViewer = document.querySelector('.fullscreen-viewer');
-        const fullscreenImage = document.querySelector('.fullscreen-image');
-        const prevButton = document.querySelector('.fullscreen-prev');
-        const nextButton = document.querySelector('.fullscreen-next');
-        const closeButton = document.querySelector('.fullscreen-close');
-        let currentImageIndex = 0;
-        const images = Array.from(imageGallery.querySelectorAll('img'));
-
-        function openFullscreen(index) {
-            currentImageIndex = index;
-            fullscreenImage.src = images[index].src;
-            fullscreenViewer.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeFullscreen() {
-            fullscreenViewer.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-
-        function showNextImage() {
-            currentImageIndex = (currentImageIndex + 1) % images.length;
-            fullscreenImage.src = images[currentImageIndex].src;
-        }
-
-        function showPrevImage() {
-            currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
-            fullscreenImage.src = images[currentImageIndex].src;
-        }
-
-        images.forEach((img, index) => {
-            img.addEventListener('click', () => openFullscreen(index));
-        });
-
-        closeButton.addEventListener('click', closeFullscreen);
-        nextButton.addEventListener('click', showNextImage);
-        prevButton.addEventListener('click', showPrevImage);
-
-        fullscreenViewer.addEventListener('click', (e) => {
-            if (e.target === fullscreenViewer) {
-                closeFullscreen();
-            }
-        });
-
-        document.addEventListener('keydown', (e) => {
-            if (fullscreenViewer.style.display === 'flex') {
-                if (e.key === 'Escape') closeFullscreen();
-                if (e.key === 'ArrowRight') showNextImage();
-                if (e.key === 'ArrowLeft') showPrevImage();
-            }
-        });
-    </script>
-    <script src="js/showcase.js"></script>
+    <script src="js/photo.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
 </body>
