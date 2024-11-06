@@ -1,0 +1,26 @@
+=== PAGE TITLE ===
+Project Showcase - ParticleBox
+
+=== HERO SECTION ===
+Title: ParticleBox
+Subtitle: Multithreaded particle simulation engine for real-time physics interactions.
+
+=== PROJECT OVERVIEW ===
+ParticleBox is an advanced particle dynamics engine developed in C++ and optimized with SDL2 for high-performance, real-time physics visualization. It is designed to simulate complex particle interactions among large groups, enabling ParticleBox to model forces such as repulsion, thermodynamics, and gravity for simulations of over 100,000 particles. By leveraging multithreading and an efficient grid-based spatial hashing technique, ParticleBox achieves remarkable computational efficiency, even with high particle counts. This makes it ideal for research, simulation, and real-time applications in various fields.
+
+=== KEY FEATURES ===
+- Real-time visualization of particle dynamics with multithreading support for enhanced performance.
+- Simulation of various physical interactions, including gravitational effects and particle repulsion.
+- Efficient handling of high particle counts (up to 100,000+), ensuring smooth simulations.
+- Potential for fluid simulation utilizing particle-based methods, providing realism in dynamics.
+
+=== PROJECT DETAIL ===
+ParticleBox's multithreading technique plays a pivotal role in optimizing particle updates. By employing std::async to execute particle updates in parallel, the simulation speed is significantly enhanced. This approach mitigates bottlenecks that typically arise from single-threaded computations, enabling simultaneous processing of multiple particle updates. The multithreading implementation allows the engine to effectively utilize available CPU cores, resulting in substantial performance improvements.
+This code exemplifies the partitioning of particle updates into distinct segments. By employing separate threads for each segment, ParticleBox can concurrently perform computations, resulting in a marked improvement in simulation speed via parallel processing.
+While primarily a particle engine, ParticleBox's architecture supports the implementation of advanced fluid simulation techniques:
+The high particle count capability of ParticleBox (100,000+) facilitates detailed fluid simulations with fine-grained surface details, complex interactions among multiple fluid bodies, and realistic behaviors such as splashes, droplets, and waves.
+ParticleBox leverages key principles from theoretical computer science to optimize its performance:
+Looking ahead, potential improvements to further boost ParticleBox's capabilities include:
+These enhancements will push the boundaries of what is possible in real-time particle and fluid simulations, opening new applications in graphics, scientific modeling, and interactive physics engines.
+
+=== PROJECT GALLERY ===

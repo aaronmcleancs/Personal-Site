@@ -1,0 +1,99 @@
+=== PAGE TITLE ===
+Project Showcase - CVV_15M_SARS-CoV-2
+
+=== HERO SECTION ===
+Title: CVV_15M_SARS-CoV-2
+Subtitle: X-ray Classification Model built on Convolutional Neural Network.
+
+=== OVERVIEW ===
+This project implements a Convolutional Neural Network (CNN) to classify chest X-ray images and explores the undlerying archetchure of ReLu. Leveraging the TensorFlow and Keras frameworks, the model weights are optimized to run on Apple M-series CPUs, evaluated accuracy >97%.
+
+=== FEATURES ===
+- High-accuracy classification of chest X-rays (>97% accuracy)
+- TensorFlow, Keras, NumPy for model training and evaluation
+- Optimized alexnet implementation for local deployment on Apple M1 Pro
+
+=== METHODOLOGY & OPTIMIZATION ===
+AlexNet, introduced by Krizhevsky et al. in 2012, marked a transformative moment in the field of deep learning. This convolutional neural network (CNN) significantly outperformed previous models in the ImageNet Large Scale Visual Recognition Challenge (ILSVRC), setting new benchmarks for image classification performance. A key aspect of AlexNet's success stems from its innovative use of computational techniques that enable deployment even in environments with low-weight computational capabilities.
+One of the pivotal advancements AlexNet capitalized on was the widespread implementation of the Rectified Linear Unit (ReLU) activation function, replacing traditional sigmoid and tanh activation functions. The ReLU function can be mathematically expressed as follows:
+\[
+    f(x) = \max(0, x)
+    \]
+ReLU plays a critical role in mitigating the vanishing gradient problem prevalent in sigmoid functions, where gradients become excessively small, causing slow convergence during training. With ReLU, training is expedited due to its piecewise linear property allowing gradients to propagate more effectively through the network. Empirical studies on datasets like CIFAR-10 have demonstrated that deep convolutional neural networks utilizing ReLUs can reach a specified accuracy level up to six times faster than comparable models with tanh units.
+The function's simplicity—outputting the identity for positive inputs and zero otherwise—contributes to its computational efficiency, essential for training large-scale networks such as AlexNet. Unlike sigmoid functions that saturate and diminish gradients, ReLU maintains a linear gradient for positive inputs, facilitating efficient backpropagation.
+Furthermore, the sparsity introduced by ReLU—activating only a subset of the neural units at any given time—promotes robust feature learning. This sparse activation mimics biological neural networks, potentially leading to more disentangled and efficient representations. The behavioral sparsity allows for a reduction in overfitting, particularly when employed alongside regularization techniques such as dropout, a method also utilized in AlexNet to enhance generalization ability.
+Local Response Normalization (LRN) is an influential technique introduced by AlexNet to enhance generalization abilities of convolutional neural networks by mimicking a form of lateral inhibition observed in the brain. Inspired by biological neurons, LRN creates a local competition among neuron activations positioned at the same spatial coordinates but across varying feature maps. This suggests that strong activity by a neuron in one feature map will suppress activations of surrounding neurons in adjacent feature maps.
+The LRN mechanism can be mathematically described as follows: The normalized activity \( b_{i,x,y} \) of a neuron using the \( i^{\text{th}} \) kernel at position \( (x,y) \) is computed by:
+\[
+b_{i,x,y} = \frac{a_{i,x,y}}{\left(k + \alpha \sum_{j=\max(0,i-\frac{n}{2})}^{\min(N-1,i+\frac{n}{2})} (a_{j,x,y})^2 \right)^{\beta}}
+\]
+Here, the critical components are defined as:
+    
+\( a_{i,x,y} \) is the raw activity or the pre-normalization output of the neuron found by applying the \( i^{\text{th}} \) kernel at position \( (x,y) \).
+\( N \) represents the total number of feature maps or neurons (kernels) in the specific layer under consideration.
+\( n \) indicates the normalization neighborhood size, determining how many adjacent feature maps are involved in the normalization process.
+\( k \), \( \alpha \), and \( \beta \) are hyperparameters that control the normalization's strength and behavior:
+            
+\( k \): baseline for normalization that prevents division by zero.
+\( \alpha \): scaling parameter affecting the magnitude of the sum in the denominator.
+\( \beta \): exponent parameter impacting the normalization effect's intensity.
+In terms of its functional role within a convolutional neural network, LRN helps in enhancing feature selectivity and invariance, reducing redundancy among features, and promoting the development of more robust representations. By introducing this competitive dynamic, the network benefits from better generalization and reduced overfitting, resulting in improved performance on complex tasks like image classification.
+Researchers and practitioners can adjust the hyperparameters \( k \), \( \alpha \), and \( \beta \) to tailor the normalization to a specific dataset and model architecture. Typically, experiments are conducted to find the best configuration that maximizes model accuracy and efficiency, balancing the trade-offs between complexity and performance.
+With advanced libraries like TensorFlow or PyTorch, implementing LRN is straightforward, allowing researchers to experiment with its benefits without needing exhaustive manual calculations, and focusing solely on the neural network's architecture optimizations.
+Overlapping pooling is a technique used in deep learning architectures, such as AlexNet, which employs regions that overlap during the pooling operation. Mathematically, this is expressed by the condition \( s < z \), where \( s \) is the stride and \( z \) is the pooling filter size. For example, in AlexNet, the overlapping max pooling uses \( z = 3 \) and \( s = 2 \). This subtle design choice has been empirically shown to marginally reduce classification error rates compared to non-overlapping pooling, enhancing model accuracy. In addition, overlapping pooling contributes to reducing overfitting by creating more robust feature representations. By overlapping regions slightly, the network gains a finer spatial resolution of features, aiding better generalization and performance in deep convolutional neural networks.
+To mitigate the risk of overfitting, AlexNet integrates a dropout regularization technique with a dropout rate of 0.5 in the first two fully connected layers. Dropout serves as a form of implicit model averaging by randomizing the neurons rendered inactive for each training instance. This can be mathematically represented in probabilistic terms, akin to:
+\[
+    P(h_j \mid x) = \sum_i P(h_j \mid i) P(i \mid x)
+    \]
+In the context of deep learning, data augmentation is a crucial technique to improve the robustness and generalization capabilities of a neural network by artificially increasing the diversity of the training data. Specifically, AlexNet utilizes two primary forms of data augmentation to enhance its ability to accurately classify images even when presented with variations:
+    
+Image Translations and Horizontal Reflections: During the training phase, AlexNet randomly crops the original 256x256 pixel images into 224x224 patches. This process introduces a variety of potential views for each image, simulating slight changes in perspective and location, which helps in learning invariant features. Additionally, randomly flipping the images horizontally during training further diversifies the dataset, allowing the model to become invariant to horizontal reflections.
+Altering RGB Channel Intensities: To address variations in lighting and color in the training dataset, Principal Component Analysis (PCA) is applied on the set of RGB pixel values across the training data. The operation involves adjusting each image pixel by adding a weighted combination of the principal components, formulated as:
+        
+
+
+    \[
+    \mathbf{x}_{ijk} \leftarrow \mathbf{x}_{ijk} + \left[ \mathbf{p}_1 \, \alpha_1 \, \lambda_1 + \mathbf{p}_2 \, \alpha_2 \, \lambda_2 + \mathbf{p}_3 \, \alpha_3 \, \lambda_3 \right],
+    \]
+    
+
+    where \(\mathbf{x}_{ijk}\) is the RGB vector of the \(k\)-th pixel in the \(i\)-th image at position \(j\). Here, \(\mathbf{p}_1, \mathbf{p}_2,\) and \(\mathbf{p}_3\) are the eigenvectors from PCA, \(\lambda_1, \lambda_2,\) and \(\lambda_3\) are the corresponding eigenvalues, and \(\alpha_1, \alpha_2,\) and \(\alpha_3\) are random variables sampled from a Gaussian distribution \(\mathcal{N}(0, 0.1)\). This enhances the network’s robustness against photometric transformations.
+\[
+    \mathbf{x}_{ijk} \leftarrow \mathbf{x}_{ijk} + \left[ \mathbf{p}_1 \, \alpha_1 \, \lambda_1 + \mathbf{p}_2 \, \alpha_2 \, \lambda_2 + \mathbf{p}_3 \, \alpha_3 \, \lambda_3 \right],
+    \]
+where \(\mathbf{x}_{ijk}\) is the RGB vector of the \(k\)-th pixel in the \(i\)-th image at position \(j\). Here, \(\mathbf{p}_1, \mathbf{p}_2,\) and \(\mathbf{p}_3\) are the eigenvectors from PCA, \(\lambda_1, \lambda_2,\) and \(\lambda_3\) are the corresponding eigenvalues, and \(\alpha_1, \alpha_2,\) and \(\alpha_3\) are random variables sampled from a Gaussian distribution \(\mathcal{N}(0, 0.1)\). This enhances the network’s robustness against photometric transformations.
+AlexNet, a pioneering architecture in the field of deep learning, consists of a sequence of eight trainable layers designed to extract hierarchical features from input images. This design outperformed previous models in the ImageNet Large Scale Visual Recognition Challenge (ILSVRC) and ushered in a new era of deep convolutional neural networks. The network's architecture can be principally divided as follows:
+The model was optimized using the Adam optimizer, a popular choice for deep learning tasks due to its adaptive learning rate capabilities and ability to handle sparse gradients effectively. We initialized our learning rate at \( \eta = 1 \times 10^{-3} \) and trained on a dataset comprising \( n = 9962 \) labeled X-ray images. The Adam update rule introduces concepts from both momentum and RMSProp, combining the benefits of gradient descent's velocity with adaptive gradient scaling.
+The mathematical formulation follows these equations:
+\[
+m_t = \beta_1 \cdot m_{t-1} + (1 - \beta_1) \cdot g_t
+\]
+\[
+v_t = \beta_2 \cdot v_{t-1} + (1 - \beta_2) \cdot g_t^2
+\]
+\[
+\hat{m}_t = \frac{m_t}{1 - \beta_1^t}
+\]
+\[
+\hat{v}_t = \frac{v_t}{1 - \beta_2^t}
+\]
+\[
+w_t = w_{t-1} - \frac{\eta}{\sqrt{\hat{v}_t} + \epsilon} \cdot \hat{m}_t
+\]
+In these equations, \( m_t \) and \( v_t \) represent the first and second moment estimates respectively, with \( g_t \) denoting the gradient of the loss function with respect to the parameters at time \( t \). The parameters \( \beta_1 \) and \( \beta_2 \) are the exponential decay rates controlling the moving averages of the moment estimates, traditionally set to 0.9 and 0.999. The constants \(\eta\) and \( \epsilon \) signify the learning rate and a term for numerical stability, often set to \( 1 \times 10^{-8} \).
+The model’s objective function, categorical crossentropy, was chosen to accommodate the multi-class nature of the X-ray classification task, offering a probabilistic interpretation of the output layer. This is mathematically expressed as:
+\[
+\text{Loss} = -\sum_{i} y_i \log(\hat{y}_i)
+\]
+where \( y_i \) is the true label, and \( \hat{y}_i \) is the predicted probability for class \( i \).
+To improve convergence and prevent overfitting, early stopping was employed, halting training once the validation loss ceased to improve for 5 consecutive epochs. This technique utilized a callback mechanism to restore the model parameters to the best iteration observed, minimizing the risk of overfitting.
+Furthermore, a custom TensorBoard callback was integrated, providing deeper insights into the training dynamics by logging the learning rate and other pertinent training metrics. This facilitated manual inspection and visualization of the model’s progression across epochs, enhancing the interpretability and diagnostics beyond conventional logging.
+
+=== RESULTS ===
+The model achieved impressive accuracy with balanced precision and recall across all target classes. The use of dropout and ReLU activations enhances the generalization capacity of the model, making it robust against overfitting.
+Optimizing the model for the Apple M1 Pro with 16GB RAM involves several considerations given the unique architecture of the M1 series. The Apple M1 Pro combines 10 cores (8 performance and 2 efficiency cores) with an Apple M1 Pro GPU (16-core) integrated into a 5 nm fabrication process. This architecture, coupled with a base frequency of 3.2 GHz, offers robust capability for model processing.
+Key Focus Areas for Optimization:
+
+=== STACK ===
+
+=== PROJECT GALLERY ===

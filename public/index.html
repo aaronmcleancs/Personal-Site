@@ -24,7 +24,7 @@
         <a href="#home">Home</a>
         <a href="#projects" id="projects-link">Projects</a>
         <div class="right-nav">
-            <a href="/image/cv.pdf" class="download-btn" download="AaronMcLean_CV.pdf">
+            <a href="/images/CV.pdf" class="download-btn" download="AaronMcLean_CV.pdf">
                 Resume <i class="fas fa-download"></i>
             </a>
         </div>
@@ -34,7 +34,10 @@
             <div class="column__left">
                 <h2>I'm Aaron,</h2>
                 <h1>Full Stack Developer.</h1>
-                <p>Ready to work on your next <span class="auto-type"></span></p>
+                
+                <div class="text-wrapper">
+                    <p> % Ready to work on your next <span class="auto-type"></span></p>
+                </div>
                 <div class="social-menu">
                     <ul>
                         <li><a href="https://github.com/aaronmcleancs" target="blank"><i class="fab fa-github"></i></a></li>
@@ -150,7 +153,7 @@
         let heroSection = document.querySelector('.hero__section');
         let scrollPercent = 400 * window.scrollY / (document.body.offsetHeight - window.innerHeight);
         if (window.innerWidth < 1300) {
-            heroSection.style.backgroundSize = `${400 + scrollPercent}%`;
+            heroSection.style.backgroundSize = `auto`;
         } else {
             heroSection.style.backgroundSize = `${220 + scrollPercent}%`;
         }

@@ -10,7 +10,7 @@ body {
 }
 
 :root {
-  --accentColor: #7632eb;
+  --accentColor: #7192e3;
   --white: #ffffff;
 }
 
@@ -40,10 +40,6 @@ body {
   justify-content: center;
   align-items: center;
   width: 50px;
-}
-
-.navbar:hover {
-  height: 48px;
 }
 
 .navbar a {
@@ -97,7 +93,7 @@ body {
 
 .hero__section {
   color: #fff;
-  background-image: url(sgsgsg.svg);
+  background-image: url(output.svg);
   background-size: 220%;
   z-index: 7;
   overflow: hidden;
@@ -172,16 +168,21 @@ body {
   }
 }
 
+.text-wrapper {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  padding: 10px 20px;
+  display: inline-block;
+  width: fit-content;
+  position: relative;
+  border: 1px solid rgba(67, 67, 67, 0.7);
+}
 .column__left p {
   font-family: Consolas, monaco, monospace;
   font-size: 1.9rem;
-  margin-top: 0px;
-}
-
-@media screen and (max-width: 1300px) {
-  .column__left p {
-      font-size: 0.9rem;
-  }
+  margin: 0;
+  white-space: nowrap;
 }
 
 .column__left span {
@@ -191,11 +192,11 @@ body {
 }
 
 @media screen and (max-width: 1300px) {
+  .column__left p,
   .column__left span {
-      font-size: 1.0rem;
+      font-size: 1rem;
   }
 }
-
 .hero2__section {
   border-radius: 40px;
   margin: 30px;
@@ -304,7 +305,7 @@ body {
 }
 
 .column2__left span {
-  background: linear-gradient(to right, rgb(78, 78, 199), rgb(183, 96, 255));
+  background: linear-gradient(to right, #7192e3, #2d3a5a);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-weight: 850;
@@ -325,16 +326,6 @@ body {
   height: 1000px;
   color: #080808;
   backdrop-filter: blur(70px);
-}
-
-.accentGradientUI {
-  height: 400px;
-  width: 20px;
-  margin-top: 300px;
-  top: auto;
-  align-items: center;
-  position: absolute;
-  background: linear-gradient(180deg, rgba(255,101,170,1) 0%, rgba(198,153,255,1) 28%, rgba(122,141,237,1) 55%, rgba(138,136,242,1) 64%, rgb(192, 128, 255) 81%, rgb(255, 226, 241) 100%);
 }
 
 .ui h1 {
@@ -362,12 +353,11 @@ body {
 .social-menu ul {
   position: relative;
   display: flex;
-  margin-bottom: 20px;
 }
 
 .social-menu ul li {
   list-style: none;
-  margin: 40px 27px;
+  margin: 45px 27px;
 }
 
 .social-menu ul li .fab {
@@ -435,11 +425,8 @@ body {
   border-radius: 33px;
   height: 300px;
   width: auto;
-  padding: 25px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  margin-left: 10px;
-  margin-right: 10px;
+  padding: 30px;
+  margin: 20px;
   opacity: 0;
 }
 
@@ -467,7 +454,7 @@ body {
 }
 
 .white-card {
-  background-color: #010101c9;
+  background-color: #000000e3;
   backdrop-filter: blur(3px);
   box-shadow: inset -1px -1px 2px rgba(223, 223, 223, 0.036), inset 1px 1px 2px rgba(142, 142, 142, 0.319);
   transition: all 0.4s;
@@ -475,7 +462,7 @@ body {
 
 .white-card:hover {
   backdrop-filter: blur(5px);
-  background-color: #000000;
+  background-color: #0101019c;
   transition: all 0.4s;
   box-shadow: inset -1px -1px 2px rgba(223, 223, 223, 0.187), inset 1px 1px 2px rgba(142, 142, 142, 0.8);
 }
@@ -584,16 +571,6 @@ body {
   }
 }
 
-#gradient-canvas {
-  width: 100%;
-  height: 100%;
-  --gradient-color-1: #7140D9;
-  --gradient-color-2: #5C28CC;
-  --gradient-color-3: #6200C0;
-  --gradient-color-4: #F46036;
-  z-index: 0;
-}
-
 .contact__section {
   background-color: #000000;
   padding: 50px 0;
@@ -634,7 +611,7 @@ body {
 
 #contact-form button {
   padding: 10px 20px;
-  background-color: #7632eb;
+  background-color: #5264c9;
   color: #ffffff;
   border: none;
   border-radius: 5px;
@@ -643,5 +620,5 @@ body {
 }
 
 #contact-form button:hover {
-  background-color: #5a20b9;
+  background-color: #949494;
 }
