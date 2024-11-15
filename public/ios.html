@@ -79,9 +79,6 @@ app.post('/login', async (req, res) => {
                 <li>AI assistant for customized fitness recommendations and tracking.</li>
                 <li>Apple Keychain integration for secure storage and retrieval of user authentication tokens on iOS.</li>
                 <pre><code class="language-javascript">
-import Foundation
-import Security
-
 class KeychainManager {
     static func save(_ data: Data, service: String, account: String) -> OSStatus {
         let query: [String: Any] = [
