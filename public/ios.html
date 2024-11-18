@@ -136,6 +136,186 @@ class KeychainManager {
             </ul>
         </section>
 
+        <!-- New API Endpoints section -->
+        <section id="api-endpoints" class="showcase__section">
+            <h2>API Endpoints</h2>
+            <p>The backend provides the following API endpoints:</p>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Method</th>
+                            <th>Endpoint</th>
+                            <th>Description</th>
+                            <th>Parameters</th>
+                            <th>Authentication Required</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>POST</td>
+                            <td><code>/signup</code></td>
+                            <td>Register a new user with account and metrics data.</td>
+                            <td>
+                                <strong>Request Body</strong>: <code>firstName</code>, <code>lastName</code>, <code>dateOfBirth</code>, <code>email</code>, <code>password</code>, <code>username</code>, <code>heightCm</code>, <code>weightKg</code>, <code>gender</code>, <code>workoutFrequency</code><br>
+                                <em>Optional</em>: <code>bodyFatPercentage</code>, <code>goalType</code>, <code>activityLevel</code>, <code>restingHeartRate</code>, <code>bmrCalories</code>
+                            </td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>POST</td>
+                            <td><code>/login</code></td>
+                            <td>Authenticate a user and provide an auth key.</td>
+                            <td>
+                                <strong>Request Body</strong>: <code>email</code> <em>or</em> <code>username</code>, <code>password</code>
+                            </td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>GET</td>
+                            <td><code>/checkUsername/:username</code></td>
+                            <td>Check if a username is available for registration.</td>
+                            <td>
+                                <strong>Path Parameter</strong>: <code>username</code>
+                            </td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>POST</td>
+                            <td><code>/exercises</code></td>
+                            <td>Record a new workout with specified exercises.</td>
+                            <td>
+                                <strong>Request Body</strong>: <code>memberId</code>, <code>exerciseIds</code> (array)<br>
+                                <strong>Header</strong>: <code>Auth-Key</code>
+                            </td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>POST</td>
+                            <td><code>/updateUserInfo/:memberId</code></td>
+                            <td>Update personal information for a specific user.</td>
+                            <td>
+                                <strong>Path Parameter</strong>: <code>memberId</code><br>
+                                <strong>Request Body</strong>: <code>firstName</code>, <code>lastName</code>, <code>dateOfBirth</code>, <code>email</code>, <code>username</code><br>
+                                <strong>Header</strong>: <code>Auth-Key</code>
+                            </td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>GET</td>
+                            <td><code>/userDataAndMetrics/:memberId</code></td>
+                            <td>Retrieve user data and physical metrics.</td>
+                            <td>
+                                <strong>Path Parameter</strong>: <code>memberId</code><br>
+                                <strong>Header</strong>: <code>Auth-Key</code>
+                            </td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>POST</td>
+                            <td><code>/setGymMembership</code></td>
+                            <td>Update or set gym membership details for a user.</td>
+                            <td>
+                                <strong>Request Body</strong>: <code>memberId</code>, <code>gym</code>, <code>address</code>, <code>membershipType</code><br>
+                                <strong>Header</strong>: <code>Auth-Key</code>
+                            </td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>GET</td>
+                            <td><code>/workouts/:memberId</code></td>
+                            <td>Retrieve all workouts for a specific member.</td>
+                            <td>
+                                <strong>Path Parameter</strong>: <code>memberId</code><br>
+                                <strong>Header</strong>: <code>Auth-Key</code>
+                            </td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>GET</td>
+                            <td><code>/membersMetrics/:memberId</code></td>
+                            <td>Retrieve physical metrics data for a specific member.</td>
+                            <td>
+                                <strong>Path Parameter</strong>: <code>memberId</code><br>
+                                <strong>Header</strong>: <code>Auth-Key</code>
+                            </td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>POST</td>
+                            <td><code>/createWorkout/:memberId</code></td>
+                            <td>Create a new workout record for a member.</td>
+                            <td>
+                                <strong>Path Parameter</strong>: <code>memberId</code><br>
+                                <strong>Request Body</strong>: <code>workoutName</code>, <code>exerciseIds</code> (array)<br>
+                                <strong>Header</strong>: <code>Auth-Key</code>
+                            </td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>GET</td>
+                            <td><code>/exercises</code></td>
+                            <td>Retrieve a list of all exercises.</td>
+                            <td>
+                                <strong>Query Parameter</strong>: <code>page</code> (optional)
+                            </td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>GET</td>
+                            <td><code>/exercises/search</code></td>
+                            <td>Retrieve exercises based on a workout ID or search query.</td>
+                            <td>
+                                <strong>Query Parameter</strong>: <code>workoutId</code> <em>or</em> <code>q</code> (search query)
+                            </td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>GET</td>
+                            <td><code>/fetchSafeData/:memberId</code></td>
+                            <td>Retrieve safe user data for a specific member.</td>
+                            <td>
+                                <strong>Path Parameter</strong>: <code>memberId</code>
+                            </td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>DELETE</td>
+                            <td><code>/workouts/:workoutId</code></td>
+                            <td>Delete a workout by its ID.</td>
+                            <td>
+                                <strong>Path Parameter</strong>: <code>workoutId</code><br>
+                                <strong>Header</strong>: <code>Auth-Key</code>
+                            </td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>PUT</td>
+                            <td><code>/workouts/:workoutId</code></td>
+                            <td>Rename a workout by its ID.</td>
+                            <td>
+                                <strong>Path Parameter</strong>: <code>workoutId</code><br>
+                                <strong>Request Body</strong>: <code>newName</code><br>
+                                <strong>Header</strong>: <code>Auth-Key</code>
+                            </td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>POST</td>
+                            <td><code>/loggedWorkouts</code></td>
+                            <td>Save a completed workout for a specific member.</td>
+                            <td>
+                                <strong>Request Body</strong>: <code>memberId</code>, <code>workoutId</code>, <code>time</code><br>
+                                <strong>Header</strong>: <code>Auth-Key</code>
+                            </td>
+                            <td>Yes</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p><em>Note:</em> Endpoints requiring authentication expect the <code>Auth-Key</code> header and the <code>memberId</code> (either as a path parameter or in the request body). The authentication middleware checks if the provided <code>Auth-Key</code> matches the one stored for the given <code>memberId</code>.</p>
+        </section>
+
         <section id="methodology" class="showcase__section">
             <h2>Methodology and Architecture</h2>
             <p>
