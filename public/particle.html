@@ -25,240 +25,123 @@
     <div class="showcase__hero">
         <div class="showcase__wrapper">
             <h1 class="animate__animated animate__fadeIn">ParticleBox</h1>
-            <p class="animate__animated animate__fadeIn animate__delay-1s">Multithreaded particle simulation engine for real-time physics interactions.</p>
+            <p class="animate__animated animate__fadeIn animate__delay-1s">A highly optimized, real-time particle simulation engine.</p>
         </div>
     </div>
 
     <div class="showcase__content">
         <section id="overview" class="showcase__section">
-            <h2>Project Overview</h2>
-            <p>ParticleBox is an advanced particle dynamics engine developed in C++ and optimized with SDL2 for high-performance, real-time physics visualization. It is designed to simulate complex particle interactions among large groups, enabling ParticleBox to model forces such as repulsion, thermodynamics, and gravity for simulations of over 100,000 particles. By leveraging multithreading and an efficient grid-based spatial hashing technique, ParticleBox achieves remarkable computational efficiency, even with high particle counts. This makes it ideal for research, simulation, and real-time applications in various fields.</p>
-            <p>ParticleBox leverages advanced computer science principles to achieve high performance and scalability. Key features include:</p>
+            <h2>Overview</h2>
+            <p>ParticleBox is a C++-based, SDL2-accelerated particle simulator designed for real-time physics visualization. It simulates large swarms of particles interacting via forces such as gravity, repulsion, and boundary collisions.</p>
+            <p>To handle high particle counts efficiently, ParticleBox combines:</p>
             <ul>
-                <li><strong>Optimal Data Structures:</strong> Utilizes spatial partitioning to organize particles efficiently.</li>
-                <li><strong>Fast Collision Detection:</strong> Implements spatial hashing to reduce the computational complexity of collision checks.</li>
-                <li><strong>Multithreading:</strong> Distributes computation across multiple threads for parallel processing.</li>
+                <li><strong>Spatial Partitioning:</strong> Grid-based spatial hashing to reduce collision checks from \( \mathcal{O}(n^2) \) to approximately \( \mathcal{O}(n) \).</li>
+                <li><strong>Multithreading:</strong> Parallel computation of particle updates, fully utilizing multi-core processors.</li>
+                <li><strong>Efficient Data Structures:</strong> Memory pre-allocation and careful data layout to improve cache locality and reduce overhead.</li>
             </ul>
         </section>
     
         <section id="features" class="showcase__section">
-            <h2>Key Features</h2>
+            <h2>Key Techniques</h2>
             <ul>
-                <li>Real-time visualization of particle dynamics with multithreading support for enhanced performance.</li>
-                <li>Efficient collision detection and response optimized for large numbers of particles.</li>
-                <li>Simulation of various physical interactions, including gravitational effects and particle repulsion.</li>
-                <li>Capability to handle high particle counts (up to 100,000+), ensuring smooth simulations.</li>
-                <li>Potential for fluid simulation utilizing particle-based methods, providing realism in dynamics.</li>
+                <li><strong>Multi-Core Parallelism:</strong> Leveraging <code>std::async</code> and multiple threads to update particle subsets in parallel.</li>
+                <li><strong>Spatial Hashing & Grid Partitioning:</strong> Assigning particles to grid cells, ensuring only local neighbors are considered for collisions.</li>
+                <li><strong>Reduced Pairwise Comparisons:</strong> Disabling certain checks or limiting neighbor ranges to cut down computational overhead.</li>
+                <li><strong>Efficient Collision Response:</strong> Direct vector arithmetic and precomputed normals for quick, stable resolution of overlaps.</li>
             </ul>
         </section>
     
         <section id="project-detail" class="showcase__section">
-            <h2>Project Detail</h2>
-    
-            <h3>Multithreading Implementation</h3>
-            <p>ParticleBox's multithreading strategy is central to its high performance in real-time simulations. By dividing particle updates across multiple threads using <code>std::async</code>, the engine capitalizes on modern multi-core processors. Each thread is responsible for updating a subset of particles, allowing concurrent computations and reducing the overall simulation time.</p>
-            <p>The simulator divides the particle list into chunks, each processed by a separate thread:</p>
+            <h2>Performance Detail</h2>
+            
+            <h3>Multithreading for Parallel Updates</h3>
+            <p>ParticleBox divides the workload across multiple threads, each handling a subset of particles. This parallelization nearly linearly scales the simulation speed with the number of cores:</p>
             <div class="code-sample">
                 <pre><code class="language-cpp">
-void Simulation::update(double deltaTime) {
-    if (!running) return;
+const int numThreads = 8; 
+const size_t total = particles.size();
+const size_t chunkSize = (total + numThreads - 1) / numThreads;
 
-    const int numThreads = 8; // Adjust based on your CPU cores
-    std::vector&lt;std::future&lt;void&gt;&gt; futures;
-    futures.reserve(numThreads);
-
-    const size_t totalParticles = particles.size();
-    const size_t chunkSize = (totalParticles + numThreads - 1) / numThreads;
-
-    auto updateChunk = [this, deltaTime](size_t start, size_t end) {
-        std::vector&lt;Vec2&gt; forces = physics.computeForces(particles, start, end);
-        for (size_t i = start; i &lt; end; ++i) {
-            particles[i].update(forces[i - start], deltaTime);
+std::vector<std::future<void>> futures;
+for (int i = 0; i < numThreads; ++i) {
+    size_t start = i * chunkSize;
+    size_t end = std::min(start + chunkSize, total);
+    futures.push_back(std::async(std::launch::async, [this, start, end, deltaTime]() {
+        auto forces = physics.computeForces(particles, (int)start, (int)end);
+        for (size_t i = start; i < end; ++i) {
+            particles[i].velocity += (forces[i - start] / particles[i].mass) * (float)deltaTime;
+            particles[i].position += particles[i].velocity * (float)deltaTime;
             physics.applyBoundaries(particles[i]);
         }
-    };
-
-    for (int i = 0; i &lt; numThreads; ++i) {
-        const size_t start = i * chunkSize;
-        const size_t end = std::min(start + chunkSize, totalParticles);
-        futures.push_back(std::async(std::launch::async | std::launch::deferred, updateChunk, start, end));
-    }
-
-    for (auto&amp; future : futures) {
-        future.get();
-    }
-
-    calculateFrameRate();
+    }));
 }
+
+for (auto &f : futures) f.get();
                 </code></pre>
             </div>
-            <p>Each thread computes forces for its assigned particles independently, allowing for parallel execution. This approach reduces computational bottlenecks and maximizes CPU utilization, enabling the simulation to maintain real-time performance even with a large number of particles.</p>
+            <p>This approach ensures the simulation can handle large particle counts smoothly.</p>
     
-            <h3>Collision Detection Optimization</h3>
-            <p>One of the key challenges in particle simulations is efficiently detecting and responding to collisions between particles, especially when dealing with hundreds of thousands of them. Naively checking every pair of particles for collisions results in an \( \mathcal{O}(n^2) \) complexity, which is computationally infeasible for large \( n \). To overcome this, ParticleBox implements a grid-based spatial hashing technique that reduces the complexity to approximately \( \mathcal{O}(n) \) by only checking for collisions between particles that are in neighboring grid cells.</p>
-            <p>Spatial partitioning divides the simulation space into a grid of cells, allowing for efficient organization and retrieval of particles. Each particle is assigned to a cell based on its position:</p>
+            <h3>Spatial Partitioning Using a Grid</h3>
+            <p>Instead of checking all pairs, the simulation uses a grid to partition space. Each particle is quickly placed into a cell based on its position:</p>
             <p>
                 \[
-                \text{cellX} = \left\lfloor \frac{x}{s} \right\rfloor, \quad \text{cellY} = \left\lfloor \frac{y}{s} \right\rfloor
+                \text{cellX} = \lfloor x / s \rfloor, \quad \text{cellY} = \lfloor y / s \rfloor
                 \]
             </p>
-            <p>Where \( s \) is the cell size. This approach reduces the average case complexity of neighborhood queries from \( \mathcal{O}(n) \) to \( \mathcal{O}(1) \).</p>
+            <p>Only particles in the same or neighboring cells are checked for collisions:</p>
             <div class="code-sample">
                 <pre><code class="language-cpp">
-namespace std {
-    template&lt;&gt;
-    struct hash&lt;std::pair&lt;int, int&gt;&gt; {
-        std::size_t operator()(const std::pair&lt;int, int&gt;&amp; pair) const noexcept {
-            auto hash1 = std::hash&lt;int&gt;{}(pair.first);
-            auto hash2 = std::hash&lt;int&gt;{}(pair.second);
-            return hash1 ^ (hash2 &lt;&lt; 1);
-        }
-    };
-}
-                </code></pre>
-            </div>
-            <p>The custom hash function allows for efficient indexing into an <code>unordered_map</code> for the grid cells. The simulation space is divided into a grid, and particles are assigned to cells based on their positions. This spatial partitioning ensures that only nearby particles are considered for collision checks, significantly reducing unnecessary computations.</p>
-            <div class="code-sample">
-                <pre><code class="language-cpp">
-std::vector&lt;Vec2&gt; PhysicsEngine::computeForces(std::vector&lt;Particle&gt;&amp; particles, int start, int end) {
-    const float cellSize = 50.0f;
-    std::unordered_map&lt;std::pair&lt;int, int&gt;, std::vector&lt;int&gt;&gt; cellMap;
-
-    // Assign particles to grid cells
-    for (int i = start; i &lt; end; ++i) {
-        int cellX = particles[i].position.x / cellSize;
-        int cellY = particles[i].position.y / cellSize;
-        cellMap[{cellX, cellY}].push_back(i);
+std::vector<Vec2> PhysicsEngine::computeForces(std::vector<Particle> &particles, int start, int end) {
+    const float cellSize = 8.0f;
+    // Build grid cells
+    std::vector<std::vector<int>> cells(gridWidth * gridHeight);
+    for (int i = start; i < end; ++i) {
+        int cx = (int)(particles[i].position.x / cellSize);
+        int cy = (int)(particles[i].position.y / cellSize);
+        cells[cy * gridWidth + cx].push_back(i);
     }
 
-    std::vector&lt;Vec2&gt; forces(end - start, Vec2(0, 0));
-    // Compute forces considering neighboring cells
-    for (int i = start; i &lt; end; ++i) {
-        Vec2 netForce(0, 0);
-        if (gravityEnabled) {
-            netForce.y += particles[i].mass * gravity;
-        }
-
-        int cellX = particles[i].position.x / cellSize;
-        int cellY = particles[i].position.y / cellSize;
-
-        for (int dx = -1; dx &lt;= 1; ++dx) {
-            for (int dy = -1; dy &lt;= 1; ++dy) {
-                auto it = cellMap.find({cellX + dx, cellY + dy});
-                if (it == cellMap.end()) continue;
-
-                for (int j : it-&gt;second) {
-                    if (i == j) continue;
-
-                    // Collision detection and response
-                    Vec2 direction = particles[j].position - particles[i].position;
-                    float distance = direction.magnitude();
-                    float combinedRadius = particles[i].radius + particles[j].radius;
-
-                    if (distance &lt; combinedRadius) {
-                        // Handle collision
-                        // ...
-                    }
-                }
-            }
-        }
-        forces[i - start] = netForce;
+    std::vector<Vec2> forces(end - start, Vec2(0,0));
+    // Check only local cells
+    for (int i = start; i < end; ++i) {
+        // ...
+        // Loop over neighboring cells to compute repulsion, etc.
     }
     return forces;
 }
                 </code></pre>
             </div>
-            <p>This method effectively reduces the number of collision checks by only considering particles within adjacent cells. The grid size (\( \text{cellSize} \)) can be adjusted based on the average particle radius to balance between the number of cells and the number of particles per cell.</p>
+            <p>This method dramatically cuts unnecessary checks, improving performance as \(n\) grows.</p>
     
-            <h3>Mathematics Behind Collision Response</h3>
-            <p>Accurate collision response is crucial for realistic simulations. When two particles collide, ParticleBox calculates the overlap and adjusts their positions and velocities accordingly using principles from classical mechanics.</p>
-            <p>The overlap (\( \delta \)) between particles is calculated as:</p>
+            <h3>Reduced Pairwise Comparisons & Conditional Features</h3>
+            <p>Additional flags help toggle features off when not needed, minimizing computation:</p>
+            <ul>
+                <li><strong>Reduced Comparisons:</strong> Skips certain checks or uses fewer neighbors for high-density systems.</li>
+                <li><strong>Gravity Toggle:</strong> Disables gravitational forces if not required, saving per-particle computations each frame.</li>
+            </ul>
+            
+            <h3>Mathematics of Collision Response</h3>
+            <p>For colliding particles, the overlap \(\delta\) and normalized direction \(\hat{n}\) are computed efficiently. Velocities are updated directly via impulse-based methods:</p>
             <p>
                 \[
-                \delta = (r_i + r_j) - d
+                \delta = (r_i + r_j) - d, \quad \hat{n} = \frac{\mathbf{p}_j - \mathbf{p}_i}{d}
                 \]
             </p>
-            <p>Where \( r_i \) and \( r_j \) are the radii of particles \( i \) and \( j \), and \( d \) is the distance between them.</p>
-            <p>The normal vector (\( \hat{n} \)) pointing from one particle to the other is computed as:</p>
-            <p>
-                \[
-                \hat{n} = \frac{\mathbf{p}_j - \mathbf{p}_i}{\lVert \mathbf{p}_j - \mathbf{p}_i \rVert}
-                \]
-            </p>
-            <p>The impulse magnitude (\( J \)) is calculated using the coefficient of restitution (\( e \)):</p>
-            <p>
-                \[
-                J = -\left(1 + e\right) \frac{\left(\mathbf{v}_j - \mathbf{v}_i\right) \cdot \hat{n}}{\frac{1}{m_i} + \frac{1}{m_j}}
-                \]
-            </p>
-            <p>Where \( m_i \) and \( m_j \) are the masses of the particles. The particles' velocities are then updated based on the impulse.</p>
-            <div class="code-sample">
-                <pre><code class="language-cpp">
-// Calculate overlap and normal vector
-Vec2 normal = direction / distance;
-float overlap = combinedRadius - distance;
-
-// Separate the particles to prevent interpenetration
-float separationScale = overlap / (particles[i].mass + particles[j].mass);
-particles[i].position -= normal * (separationScale * particles[j].mass);
-particles[j].position += normal * (separationScale * particles[i].mass);
-
-// Compute relative velocity
-Vec2 relativeVelocity = particles[j].velocity - particles[i].velocity;
-float impulseMagnitude = -(1.0f + restitutionCoefficient) * relativeVelocity.dot(normal) / 
-                         (1.0f / particles[i].mass + 1.0f / particles[j].mass);
-
-// Apply impulse to update velocities
-Vec2 impulse = normal * impulseMagnitude;
-particles[i].velocity -= impulse / particles[i].mass;
-particles[j].velocity += impulse / particles[j].mass;
-                </code></pre>
-            </div>
-            <p>By applying these physics principles, ParticleBox maintains both accuracy and stability in its simulations.</p>
+            <p>This ensures that the response calculation remains straightforward and cache-friendly.</p>
     
-            <h3>Optimizing Real-Time Performance</h3>
-            <p>Maximizing performance in real-time simulations requires careful consideration of computational complexity and memory access patterns. ParticleBox employs several optimization techniques:</p>
+            <h3>Optimizing for Real-Time Visualization</h3>
+            <p>ParticleBox carefully balances complexity and speed:</p>
             <ul>
-                <li><strong>Spatial Partitioning:</strong> Reduces the number of collision checks from \( \mathcal{O}(n^2) \) to approximately \( \mathcal{O}(n) \) by only considering nearby particles.</li>
-                <li><strong>Data Locality:</strong> Organizes data structures to improve cache performance, minimizing memory latency during particle updates.</li>
-                <li><strong>Parallel Execution:</strong> Utilizes multithreading to distribute the workload across multiple CPU cores, making full use of available hardware resources.</li>
-                <li><strong>Efficient Algorithms:</strong> Implements algorithms with lower computational complexity where possible, such as using efficient data structures for quick lookups.</li>
+                <li><strong>Spatial Partitioning:</strong> Near-linear scaling in collision detection.</li>
+                <li><strong>Multithreading:</strong> Parallelized updates fully utilize multi-core CPUs.</li>
+                <li><strong>Early Bail-Outs & Data Locality:</strong> Checks for invalid states and groups data contiguously, improving cache utilization.</li>
             </ul>
-            <p>These optimizations are critical for achieving high frame rates necessary for real-time interaction and visualization. By balancing the computational load and optimizing data handling, ParticleBox can simulate a vast number of particles smoothly.</p>
-    
-            <h3>Theoretical Foundations</h3>
-            <p>The optimizations in ParticleBox are grounded in theoretical computer science concepts:</p>
-            <ul>
-                <li><strong>Algorithmic Complexity:</strong> Understanding and minimizing the time complexity of algorithms to ensure scalability.</li>
-                <li><strong>Parallel Computing:</strong> Applying principles of parallelism to divide and conquer the computational workload.</li>
-                <li><strong>Computational Geometry:</strong> Using geometric algorithms for collision detection and spatial partitioning.</li>
-                <li><strong>Numerical Methods:</strong> Implementing stable numerical integration techniques for updating particle positions and velocities.</li>
-            </ul>
-            <p>By leveraging these principles, ParticleBox achieves a balance between accuracy and performance, essential for real-time simulations.</p>
-    
-            <h3>Future Enhancements</h3>
-            <p>Potential improvements to further enhance ParticleBox include:</p>
-            <ul>
-                <li><strong>GPU Acceleration:</strong> Offloading computations to the GPU using technologies like CUDA or OpenCL to handle even larger particle counts with higher performance.</li>
-                <li><strong>Advanced Collision Algorithms:</strong> Implementing algorithms like Sweep and Prune or Bounding Volume Hierarchies (BVH) for more efficient collision detection in complex scenes.</li>
-                <li><strong>Adaptive Time Stepping:</strong> Adjusting the simulation time step dynamically based on particle interactions to improve accuracy without sacrificing performance.</li>
-                <li><strong>Hybrid Parallelism:</strong> Combining multithreading with SIMD instructions and GPU computing to exploit all levels of parallelism available in modern hardware.</li>
-            </ul>
-            <p>These enhancements would push the capabilities of ParticleBox further, making it suitable for more demanding applications in scientific research, gaming, and visual effects.</p>
+            <p>Together, these techniques maintain interactive frame rates even with tens of thousands of particles.</p>
 
-            <h3>Conclusion</h3>
-            <p>The particle simulator demonstrates how combining optimal data structures, efficient algorithms, and multithreading can lead to substantial performance gains in computational simulations. By employing spatial partitioning and parallel processing, the simulator efficiently handles large numbers of particles with minimal computational overhead.</p>
-
-            <h3>References</h3>
-            <ol>
-                <li>Eberly, D. H. (2001). <em>Game Physics</em>. Morgan Kaufmann.</li>
-                <li>Mattson, T. G., Sanders, B. A., &amp; Massingill, B. L. (2004). <em>Patterns for Parallel Programming</em>. Addison-Wesley Professional.</li>
-                <li>Teschner, M., Heidelberger, B., Müller, M., Pomerantes, D., &amp; Gross, M. (2003). Optimized Spatial Hashing for Collision Detection of Deformable Objects. <em>Proceedings of Vision, Modeling, and Visualization</em>, 47–54.</li>
-            </ol>
         </section>    
 
         <section id="gallery" class="showcase__section">
-            <h2>Project Gallery</h2>
+            <h2>Visual Examples</h2>
             <div class="image-gallery">
                 <img src="images/p1.gif" alt="Particle simulation animation">
                 <img src="images/p2.png" alt="Particle simulation screenshot">
