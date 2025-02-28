@@ -1,4 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
-<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M19 4V7M19 14V20M19 14C20.1046 14 21 13.1046 21 12C21 10.8954 20.1046 10 19 10C17.8954 10 17 10.8954 17 12C17 13.1046 17.8954 14 19 14ZM12 10V16M12 16C10.8954 16 10 16.8954 10 18C10 19.1046 10.8954 20 12 20C13.1046 20 14 19.1046 14 18C14 16.8954 13.1046 16 12 16ZM12 4V7M5 11V20M7 6C7 7.10457 6.10457 8 5 8C3.89543 8 3 7.10457 3 6C3 4.89543 3.89543 4 5 4C6.10457 4 7 4.89543 7 6Z" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <circle cx="32" cy="32" r="4" fill="#FFF"/>
+  <circle cx="16" cy="16" r="3" fill="#FFF"/>
+  <circle cx="48" cy="16" r="3" fill="#FFF"/>
+  <circle cx="16" cy="48" r="3" fill="#FFF"/>
+  <circle cx="48" cy="48" r="3" fill="#FFF"/>
+  <line x1="32" y1="32" x2="16" y2="16" stroke="#FFF" stroke-width="2" stroke-linecap="round"/>
+  <line x1="32" y1="32" x2="48" y2="16" stroke="#FFF" stroke-width="2" stroke-linecap="round"/>
+  <line x1="32" y1="32" x2="16" y2="48" stroke="#FFF" stroke-width="2" stroke-linecap="round"/>
+  <line x1="32" y1="32" x2="48" y2="48" stroke="#FFF" stroke-width="2" stroke-linecap="round"/>
 </svg>
