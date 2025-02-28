@@ -11,9 +11,6 @@
     <link rel="stylesheet" href="css/styles.css" />
     <link rel="stylesheet" href="css/showcase.css" />
 
-    <!-- Prism for syntax highlighting -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet" />
-
     <!-- Polyfill -->
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 
@@ -34,11 +31,10 @@
         </div>
         <a href="index.html">Home</a>
         <a href="#overview">Overview</a>
-        <a href="#features">Features</a>
-        <a href="#methodology">Methodology</a>
-        <a href="#results">Results</a>
+        <a href="#background">Background</a>
         <a href="#implementation">Implementation</a>
-        <a href="#security">Security</a>
+        <a href="#performance">Performance</a>
+        <a href="#gallery">Gallery</a>
     </div>
 
     <!-- Hero Section -->
@@ -74,11 +70,8 @@
                 where n represents the number of nodes and m represents transactions per block. Performance analysis shows a 2.3x improvement
                 in transaction throughput and approximately 17x improvement in energy efficiency compared to classical implementations.
             </p>
-        </section>
-
-        <!-- Features Section -->
-        <section id="features" class="showcase__section">
-            <h2>Features</h2>
+            
+            <h3>Key Features</h3>
             <ul>
                 <li>Quantum-based block validation using fidelity checks instead of cryptographic puzzles</li>
                 <li>Reduction in computational complexity from <em>O(n·m)</em> to approximately <em>O(log n)</em></li>
@@ -88,54 +81,19 @@
                 <li>Entanglement-based quantum random number generation with public verification</li>
                 <li>Byzantine fault tolerance up to f &lt; n/3 malicious nodes</li>
             </ul>
-
-            <div class="code-sample">
-                <pre><code class="language-python">
-# Sample code snippet showing quantum-based block validation
-
-from qiskit import QuantumCircuit, Aer, execute
-import numpy as np
-
-def quantum_fidelity_check(theta_i, phi_i, theta_j, phi_j):
-    """
-    Computes quantum fidelity between two states given their
-    spherical coordinates (theta, phi).
-    Fidelity formula for pure states |psi_i>, |psi_j>:
-      F = |<psi_i|psi_j>|^2
-    """
-    # Convert angles to state vectors
-    state_i = np.array([
-        np.cos(theta_i / 2),
-        np.exp(1j * phi_i) * np.sin(theta_i / 2)
-    ])
-    state_j = np.array([
-        np.cos(theta_j / 2),
-        np.exp(1j * phi_j) * np.sin(theta_j / 2)
-    ])
-    
-    # Inner product
-    fidelity = np.abs(np.vdot(state_i, state_j))**2
-    return fidelity
-
-# Example usage with two hypothetical blocks mapped to quantum states
-theta_blockA, phi_blockA = 0.5, 0.2
-theta_blockB, phi_blockB = 1.1, 0.8
-
-fid = quantum_fidelity_check(theta_blockA, phi_blockA, theta_blockB, phi_blockB)
-print(f"Fidelity between blockA and blockB states: {fid:.4f}")
-                </code></pre>
-            </div>
         </section>
 
-        <!-- Methodology & Implementation Section -->
-        <section id="methodology" class="showcase__section">
-            <h2>Methodology & Implementation</h2>
+        <!-- Background Section -->
+        <section id="background" class="showcase__section">
+            <h2>Background</h2>
             <p>
                 The core innovation in this project is the integration of quantum state fidelity measurements into a 
                 decentralized consensus mechanism. Instead of a proof-of-work puzzle, each node prepares a unique quantum 
                 state derived from its candidate block (via a <em>quantum hashing function</em>), then teleports that state 
                 to other nodes for verification.
             </p>
+            
+            <h3>Quantum Principles</h3>
             <p>
                 We rely on mathematical constructs such as:
             </p>
@@ -167,14 +125,8 @@ print(f"Fidelity between blockA and blockB states: {fid:.4f}")
                     where p(x) is the parity function, providing verifiable randomness for the protocol.
                 </li>
             </ul>
-            <p>
-                Each node generates a candidate block, encodes it into a quantum state, and shares that state with others. 
-                Nodes then measure the fidelity of all incoming candidate-block states against their own. The network selects 
-                the block with the highest total fidelity as the winner, leveraging quantum parallelism to streamline the 
-                process while preserving consensus integrity.
-            </p>
-
-            <h3>Quantum Consensus Algorithm</h3>
+            
+            <h3>Quantum Consensus Algorithm Steps</h3>
             <ol>
                 <li><strong>Quantum Random Number Generation:</strong> Each node generates verifiable random numbers using quantum entanglement.</li>
                 <li><strong>Candidate Block Creation:</strong> Nodes form blocks containing valid transactions, previous block hash, timestamp, and random numbers.</li>
@@ -192,17 +144,8 @@ print(f"Fidelity between blockA and blockB states: {fid:.4f}")
                 <li><strong>Winner Selection:</strong> The block with highest total fidelity is selected for addition to the blockchain.</li>
                 <li><strong>Ledger Update:</strong> All nodes update their local copy of the blockchain with the winning block.</li>
             </ol>
-        </section>
-
-        <!-- Quantum Circuits Section -->
-        <section id="quantum-circuits" class="showcase__section">
-            <h2>Quantum Circuits</h2>
-            <p>
-                The protocol utilizes several quantum circuits, each designed for specific operations within the consensus mechanism.
-                These circuits are optimized for execution on near-term quantum hardware, with shallow depths and minimal qubit requirements.
-            </p>
             
-            <h3>Circuit Requirements</h3>
+            <h3>Quantum Circuit Requirements</h3>
             <div class="table-container">
                 <table>
                     <thead>
@@ -241,51 +184,120 @@ print(f"Fidelity between blockA and blockB states: {fid:.4f}")
                     </tbody>
                 </table>
             </div>
-            
-            <p>
-                The total qubit requirement for a network with N nodes is approximately N² + 2N in the fully parallel implementation.
-                However, the protocol can be executed sequentially, reducing the requirement to approximately 15-20 qubits for typical
-                blockchain implementations, making it feasible for current-generation quantum processors.
-            </p>
-
-            <div class="code-sample">
-                <pre><code class="language-python">
-# Bell pair generation circuit
-def create_bell_pair():
-    circuit = QuantumCircuit(2)
-    circuit.h(0)
-    circuit.cx(0, 1)
-    return circuit
-
-# Quantum teleportation circuit
-def quantum_teleportation(theta, phi):
-    # Create circuit with 3 qubits
-    circuit = QuantumCircuit(3, 2)
-    
-    # Initialize the state to be teleported
-    circuit.initialize([np.cos(theta/2), np.exp(1j*phi)*np.sin(theta/2)], 0)
-    
-    # Create entanglement between qubits 1 and 2
-    circuit.h(1)
-    circuit.cx(1, 2)
-    
-    # Bell measurement between qubits 0 and 1
-    circuit.cx(0, 1)
-    circuit.h(0)
-    circuit.measure([0, 1], [0, 1])
-    
-    # Apply corrections to qubit 2 based on measurements
-    circuit.x(2).c_if(1, 1)
-    circuit.z(2).c_if(0, 1)
-    
-    return circuit
-                </code></pre>
-            </div>
         </section>
 
-        <!-- Results Section -->
-        <section id="results" class="showcase__section">
-            <h2>Results</h2>
+        <!-- Implementation Section -->
+        <section id="implementation" class="showcase__section">
+            <h2>Implementation</h2>
+            <p>
+                The quantum-assisted consensus protocol was implemented using Python with Qiskit for quantum simulations
+                and custom blockchain components for the classical aspects of the system.
+            </p>
+            
+            <h3>System Architecture</h3>
+            <p>
+                The architecture consists of both classical and quantum components working together:
+            </p>
+            
+            <h4>Classical Components:</h4>
+            <ul>
+                <li><strong>Transaction Pool:</strong> Collects and validates transaction requests from users</li>
+                <li><strong>Block Structure:</strong> Contains transaction data, timestamps, and references to previous blocks</li>
+                <li><strong>Node Network:</strong> Distributed participants maintaining copies of the ledger</li>
+                <li><strong>Ledger Management:</strong> Updates and maintains the blockchain state based on consensus results</li>
+            </ul>
+            
+            <h4>Quantum Components:</h4>
+            <ul>
+                <li><strong>Quantum Random Number Generator:</strong> Provides true randomness for protocol operations</li>
+                <li><strong>Quantum Hashing Module:</strong> Maps classical block data to unique quantum states</li>
+                <li><strong>Entanglement Manager:</strong> Creates and distributes Bell pairs between nodes</li>
+                <li><strong>Teleportation Protocol:</strong> Enables quantum state sharing across the network</li>
+                <li><strong>Fidelity Check System:</strong> Measures quantum state overlap to determine consensus</li>
+            </ul>
+            
+            <h3>Key Implementation Detail</h3>
+            <p>
+                The core of the system lies in mapping blockchain data to quantum states:
+            </p>
+            
+            <pre><code class="language-python">
+# Simplified block-to-quantum-state mapping
+def block_to_quantum_state(block_data):
+    # Hash the block and convert to angles θ and φ
+    block_hash = hashlib.sha256(block_data.encode()).digest()
+    theta = (int.from_bytes(block_hash[0:8], byteorder='big') / (2**64)) * 2 * np.pi
+    phi = (int.from_bytes(block_hash[8:16], byteorder='big') / (2**64)) * 2 * np.pi
+    return theta, phi
+            </code></pre>
+            
+            <h3>Security Analysis</h3>
+            <p>
+                We conducted a comprehensive security analysis of the quantum-assisted consensus protocol against
+                various attack vectors, including classical blockchain attacks and quantum-specific threats.
+            </p>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Attack Vector</th>
+                            <th>Detection Probability</th>
+                            <th>Mitigation Strategy</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Entanglement Hijacking</td>
+                            <td>99.8%</td>
+                            <td>Bell Inequality Verification</td>
+                        </tr>
+                        <tr>
+                            <td>Measurement Tampering</td>
+                            <td>94.3%</td>
+                            <td>Multi-party Verification</td>
+                        </tr>
+                        <tr>
+                            <td>State Preparation Attacks</td>
+                            <td>86.2%</td>
+                            <td>Consistency Checks</td>
+                        </tr>
+                        <tr>
+                            <td>Sybil Attacks</td>
+                            <td>99.9%</td>
+                            <td>Quantum Identity Binding</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <h3>Limitations & Future Work</h3>
+            <p>
+                While the quantum-assisted consensus protocol demonstrates significant advantages over classical approaches,
+                several limitations and areas for future research remain:
+            </p>
+            
+            <h4>Current Limitations</h4>
+            <ul>
+                <li>Requires reliable quantum channels between nodes, which may not be practical for geographically distributed networks</li>
+                <li>Quantum state fidelity verification requires sophisticated quantum measurement capabilities at each node</li>
+                <li>Performance advantage diminishes in networks with very few nodes (N &lt; 5)</li>
+                <li>Current quantum hardware noise levels remain slightly above the optimal threshold for the protocol</li>
+            </ul>
+            
+            <h4>Future Research Directions</h4>
+            <ul>
+                <li>Development of more noise-resistant quantum consensus algorithms suitable for NISQ-era hardware</li>
+                <li>Integration with quantum key distribution networks to enhance security guarantees</li>
+                <li>Exploration of hybrid classical-quantum approaches that maintain performance advantages while reducing quantum resource requirements</li>
+                <li>Investigation of quantum-resistant verification mechanisms to ensure long-term security against future quantum attacks</li>
+                <li>Implementation of quantum smart contracts that leverage the quantum state representation for enhanced functionality</li>
+            </ul>
+        </section>
+
+        <!-- Performance Section -->
+        <section id="performance" class="showcase__section">
+            <h2>Performance</h2>
             <p>
                 The simulated environment uses Qiskit Aer to account for realistic noise models resembling current 
                 IBM Quantum hardware. In this setup, we benchmarked our quantum consensus protocol against classical
@@ -372,194 +384,8 @@ def quantum_teleportation(theta, phi):
                     </tbody>
                 </table>
             </div>
-
-            <div class="code-sample">
-                <pre><code class="language-python">
-# Benchmark parameters
-NUM_NODES = 10
-TRANSACTIONS_PER_BLOCK = 200
-NOISE_MODEL = "ibmq_montreal_noise_sim"
-
-print("Starting quantum-assisted consensus simulation...")
-print(f"Number of nodes: {NUM_NODES}")
-print(f"Transactions per block: {TRANSACTIONS_PER_BLOCK}")
-print(f"Noise model: {NOISE_MODEL}")
-
-# Simulation with realistic noise modeling
-simulator = Aer.get_backend('qasm_simulator')
-noise_model = NoiseModel.from_backend(provider.get_backend('ibmq_montreal'))
-
-# Configure the simulation
-simulation_config = {
-    'noise_model': noise_model,
-    'basis_gates': noise_model.basis_gates,
-    'coupling_map': CouplingMap(provider.get_backend('ibmq_montreal').configuration().coupling_map),
-    'shots': 1024
-}
-
-# Run the simulation
-results = execute(quantum_consensus_circuits, 
-                  simulator, 
-                  **simulation_config).result()
-
-print("Simulation complete. Generating metrics...")
-                </code></pre>
-            </div>
-        </section>
-
-        <!-- Security Analysis Section -->
-        <section id="security" class="showcase__section">
-            <h2>Security Analysis</h2>
-            <p>
-                We conducted a comprehensive security analysis of the quantum-assisted consensus protocol against
-                various attack vectors, including classical blockchain attacks and quantum-specific threats.
-            </p>
-
-            <h3>Attack Resistance</h3>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Attack Vector</th>
-                            <th>Detection Probability</th>
-                            <th>Mitigation Strategy</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Entanglement Hijacking</td>
-                            <td>99.8%</td>
-                            <td>Bell Inequality Verification</td>
-                        </tr>
-                        <tr>
-                            <td>Measurement Tampering</td>
-                            <td>94.3%</td>
-                            <td>Multi-party Verification</td>
-                        </tr>
-                        <tr>
-                            <td>State Preparation Attacks</td>
-                            <td>86.2%</td>
-                            <td>Consistency Checks</td>
-                        </tr>
-                        <tr>
-                            <td>Sybil Attacks</td>
-                            <td>99.9%</td>
-                            <td>Quantum Identity Binding</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
             
-            <p>
-                The protocol demonstrates Byzantine fault tolerance up to f &lt; n/3 nodes, consistent with the
-                theoretical bounds for asynchronous consensus systems. This means the system can tolerate up to 33%
-                of nodes being malicious or faulty while still maintaining consensus integrity.
-            </p>
-            
-            <p>
-                A quantum-equipped attacker gains modest advantages in optimizing state preparation, but the protocol's
-                design prevents attackers from gaining majority influence without controlling a substantial portion
-                of the network (>33% of nodes).
-            </p>
-        </section>
-
-        <!-- Implementation Details Section -->
-        <section id="implementation" class="showcase__section">
-            <h2>Implementation Details</h2>
-            <p>
-                The quantum-assisted consensus protocol was implemented using Python with Qiskit for quantum simulations
-                and custom blockchain components for the classical aspects of the system.
-            </p>
-            
-            <h3>System Architecture</h3>
-            <p>
-                The architecture consists of both classical and quantum components working together:
-            </p>
-            
-            <h4>Classical Components:</h4>
-            <ul>
-                <li><strong>Transaction Pool:</strong> Collects and validates transaction requests from users</li>
-                <li><strong>Block Structure:</strong> Contains transaction data, timestamps, and references to previous blocks</li>
-                <li><strong>Node Network:</strong> Distributed participants maintaining copies of the ledger</li>
-                <li><strong>Ledger Management:</strong> Updates and maintains the blockchain state based on consensus results</li>
-            </ul>
-            
-            <h4>Quantum Components:</h4>
-            <ul>
-                <li><strong>Quantum Random Number Generator:</strong> Provides true randomness for protocol operations</li>
-                <li><strong>Quantum Hashing Module:</strong> Maps classical block data to unique quantum states</li>
-                <li><strong>Entanglement Manager:</strong> Creates and distributes Bell pairs between nodes</li>
-                <li><strong>Teleportation Protocol:</strong> Enables quantum state sharing across the network</li>
-                <li><strong>Fidelity Check System:</strong> Measures quantum state overlap to determine consensus</li>
-            </ul>
-
-            <div class="code-sample">
-                <pre><code class="language-python">
-# Mapping a block to a quantum state
-def block_to_quantum_state(block_data):
-    """
-    Maps block data to a quantum state vector represented by angles θ and φ
-    """
-    # Hash the block data
-    block_hash = hashlib.sha256(block_data.encode()).digest()
-    
-    # Convert first 8 bytes to a float between 0 and 2π for θ
-    theta = (int.from_bytes(block_hash[0:8], byteorder='big') / (2**64)) * 2 * np.pi
-    
-    # Convert next 8 bytes to a float between 0 and 2π for φ
-    phi = (int.from_bytes(block_hash[8:16], byteorder='big') / (2**64)) * 2 * np.pi
-    
-    # Create quantum circuit to prepare the state
-    qc = QuantumCircuit(1)
-    qc.ry(theta, 0)
-    qc.rz(phi, 0)
-    
-    return qc, theta, phi
-                </code></pre>
-            </div>
-            
-            <p>
-                The implementation was tested on IBM Quantum simulators with realistic noise models to assess performance
-                under conditions resembling current quantum hardware capabilities. For a network with 10 nodes processing
-                200 transactions per block, the quantum protocol achieved approximately 124.5 transactions per second,
-                significantly outperforming classical Proof of Work (7.3 TPS).
-            </p>
-        </section>
-
-        <!-- Limitations & Future Work Section -->
-        <section id="limitations" class="showcase__section">
-            <h2>Limitations & Future Work</h2>
-            <p>
-                While the quantum-assisted consensus protocol demonstrates significant advantages over classical approaches,
-                several limitations and areas for future research remain:
-            </p>
-            
-            <h3>Current Limitations</h3>
-            <ul>
-                <li>Requires reliable quantum channels between nodes, which may not be practical for geographically distributed networks</li>
-                <li>Quantum state fidelity verification requires sophisticated quantum measurement capabilities at each node</li>
-                <li>Performance advantage diminishes in networks with very few nodes (N &lt; 5)</li>
-                <li>Current quantum hardware noise levels remain slightly above the optimal threshold for the protocol</li>
-            </ul>
-            
-            <h3>Future Research Directions</h3>
-            <ul>
-                <li>Development of more noise-resistant quantum consensus algorithms suitable for NISQ-era hardware</li>
-                <li>Integration with quantum key distribution networks to enhance security guarantees</li>
-                <li>Exploration of hybrid classical-quantum approaches that maintain performance advantages while reducing quantum resource requirements</li>
-                <li>Investigation of quantum-resistant verification mechanisms to ensure long-term security against future quantum attacks</li>
-                <li>Implementation of quantum smart contracts that leverage the quantum state representation for enhanced functionality</li>
-            </ul>
-            
-            <p>
-                As quantum hardware capabilities continue to improve, the performance advantages demonstrated in this work could
-                enable more scalable and resource-efficient blockchain implementations suitable for widespread adoption.
-            </p>
-        </section>
-
-        <!-- Tech Stack Section -->
-        <section id="tech-stack" class="showcase__section">
-            <h2>Stack</h2>
+            <h3>Technical Stack</h3>
             <div class="tech-icons">
                 <i class="fab fa-python" title="Python"></i>
                 <i class="fab fa-aws" title="Amazon Web Services"></i>
@@ -611,7 +437,5 @@ def block_to_quantum_state(block_data):
     <!-- Scripts -->
     <script src="js/photo.js"></script>
     <script src="js/showcase.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
 </body>
 </html>

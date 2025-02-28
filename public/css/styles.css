@@ -136,7 +136,7 @@ body {
 
 .download-btn {
   padding: var(--space-xs) var(--space-md);
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(18, 18, 18, 0.6);
   color: var(--text-primary);
   margin: var(--space-xs);
   border-radius: var(--radius-md);
