@@ -18,12 +18,16 @@
         </div>
         <a href="index.html">Home</a>
         <a href="#overview">Overview</a>
+        <a href="#features">Features</a>
+        <a href="#api-endpoints">API</a>
+        <a href="#security">Security</a>
+        <a href="#architecture">Architecture</a>
     </div>
 
     <div class="showcase__hero">
         <div class="showcase__wrapper">
             <h1 class="animate__animated animate__fadeIn">RepBook</h1>
-            <p class="animate__animated animate__fadeIn animate__delay-1s">Full Stack iOS Fitness Tracking Application with RESTful API support.</p>
+            <p class="animate__animated animate__fadeIn animate__delay-1s">Full Stack iOS Fitness Tracking Application with RESTful API and Enhanced Security.</p>
         </div>
     </div>
 
@@ -32,8 +36,9 @@
             <h2>Project Overview</h2>
             <p>
                 RepBook is a comprehensive full-stack iOS application designed to revolutionize personal fitness tracking and workout planning. Developed using Objective-C, Swift, Node.js, and PostgreSQL, the application offers a seamless experience for users to monitor their fitness journey. Users can access a personalized dashboard to view real-time metrics, build custom workouts, and interact with an AI assistant that provides tailored fitness recommendations based on their exercise history.
-
-                The backend is powered by a robust RESTful API, ensuring secure data management and real-time synchronization between the client and server. User authentication is fortified using bcrypt for password hashing, and sensitive data is securely stored using Apple’s Keychain on iOS devices. The application emphasizes modular design principles, employing a Network Manager utility to abstract and optimize network interactions, enhancing scalability and maintainability.
+            </p>
+            <p>
+                The backend is powered by a robust RESTful API, ensuring secure data management and real-time synchronization between the client and server. User authentication is fortified using bcrypt for password hashing, and sensitive data is securely stored using Apple's Keychain on iOS devices. The application emphasizes modular design principles, employing a Network Manager utility to abstract and optimize network interactions, enhancing scalability and maintainability.
             </p>
         </section>
 
@@ -74,7 +79,7 @@ app.post('/login', async (req, res) => {
             res.status(401).send('Invalid credentials');
         }
     } catch (err) {
-        console.error(\`Error during login: \${err.message}\`);
+        console.error(`Error during login: ${err.message}`);
         res.status(500).send(err.message);
     }
 });
@@ -119,6 +124,16 @@ class KeychainManager {
 
         return (item as? Data)
     }
+    
+    static func delete(service: String, account: String) -> OSStatus {
+        let query = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrService as String: service,
+            kSecAttrAccount as String: account
+        ] as [String: Any]
+
+        return SecItemDelete(query as CFDictionary)
+    }
 
     static func loadAuthKey() -> String? {
         guard let authKeyData = load(service: "YourAppService", account: "authKey"),
@@ -133,11 +148,58 @@ class KeychainManager {
                 <li>
                     <strong>Modular Network Manager:</strong> Designed a modular Network Manager utility in Swift to abstract network interactions. This enhances code reusability and simplifies API calls throughout the iOS application.
                 </li>
+                <div class="code-sample">
+                    <pre><code class="language-swift">
+// Swift Network Manager implementation
+static func createWorkout(memberId: Int, workoutName: String, exerciseIds: [Int], authKey: String, completion: @escaping (Result<Void, Error>) -> Void) {
+    guard let url = URL(string: "http://192.168.0.176:3000/createWorkout/\(memberId)") else {
+        print("Invalid URL")
+        completion(.failure(NetworkError.invalidURL))
+        return
+    }
+    
+    var request = URLRequest(url: url)
+    request.httpMethod = "POST"
+    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+    request.addValue(authKey, forHTTPHeaderField: "Auth-Key")
+    
+    let body: [String: Any] = [
+        "workoutName": workoutName,
+        "exerciseIds": exerciseIds
+    ]
+    
+    do {
+        request.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
+    } catch {
+        print("Error encoding request body: \(error)")
+        completion(.failure(error))
+        return
+    }
+    
+    URLSession.shared.dataTask(with: request) { data, response, error in
+        if let error = error {
+            print("Error creating workout: \(error.localizedDescription)")
+            completion(.failure(error))
+            return
+        }
+        
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+            print("Unexpected response status code")
+            completion(.failure(NetworkError.serverError))
+            return
+        }
+        
+        completion(.success(()))
+    }.resume()
+}
+                    </code></pre>
+                </div>
             </ul>
         </section>
+
         <section id="api-endpoints" class="showcase__section">
             <h2>API Endpoints</h2>
-            <p>The backend provides the following API endpoints:</p>
+            <p>The backend provides the following RESTful API endpoints:</p>
             <div class="table-responsive">
                 <table>
                     <thead>
@@ -205,6 +267,16 @@ class KeychainManager {
                             <td>Retrieve user data and physical metrics.</td>
                             <td>
                                 <strong>Path Parameter</strong>: <code>memberId</code><br>
+                                <strong>Header</strong>: <code>Auth-Key</code>
+                            </td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>GET</td>
+                            <td><code>/detailedWorkout/:workoutId</code></td>
+                            <td>Retrieve detailed information about a specific workout.</td>
+                            <td>
+                                <strong>Path Parameter</strong>: <code>workoutId</code><br>
                                 <strong>Header</strong>: <code>Auth-Key</code>
                             </td>
                             <td>Yes</td>
@@ -314,49 +386,271 @@ class KeychainManager {
             <p><em>Note:</em> Endpoints requiring authentication expect the <code>Auth-Key</code> header and the <code>memberId</code> (either as a path parameter or in the request body). The authentication middleware checks if the provided <code>Auth-Key</code> matches the one stored for the given <code>memberId</code>.</p>
         </section>
 
-        <section id="methodology" class="showcase__section">
-            <h2>Methodology and Architecture</h2>
+        <section id="security" class="showcase__section">
+            <h2>Security Implementation</h2>
             <p>
-                The architecture of RepBook is grounded in modern software engineering principles, emphasizing modularity, scalability, and security. The backend employs a RESTful API design, allowing stateless communication between the client and server. This design choice facilitates easier scaling and maintenance, as well as integration with potential future platforms.
-
-                User authentication is a critical component, secured using bcrypt hashing for passwords. By leveraging bcrypt's adaptive hash function, the system mitigates the risk of password cracking through computationally intensive hashing processes:
-
-                \[
-                \text{Hashed Password} = \text{bcrypt}(\text{Plain Password}, \text{Salt})
-                \]
-
-                The application ensures ACID compliance in its PostgreSQL database schema, providing reliable transactions and data integrity. Database normalization techniques are applied to reduce redundancy and improve data consistency.
-
-                On the client side, the iOS application is developed using Swift and SwiftUI, providing a responsive and intuitive user interface. The Network Manager utility abstracts API calls, handling asynchronous network requests and parsing JSON responses efficiently.
-
-                The AI assistant feature is built upon machine learning models that analyze user data to generate personalized workout plans and fitness recommendations. This microservices-based approach allows the AI component to scale independently and integrate seamlessly with the main application.
+                Security is a paramount concern in RepBook's architecture. The application implements multiple layers of protection to ensure data integrity and user privacy:
             </p>
-
-            <h2>Stack</h2>
-            <div class="tech-icons">
-                <i class="fab fa-node-js"></i>
-                <i class="fab fa-swift"></i>
-                <i class="fas fa-database"></i>
+            
+            <h3>Password Security with Bcrypt</h3>
+            <p>
+                User passwords are secured using the bcrypt hashing algorithm, which provides several critical security advantages:
+            </p>
+            <ul>
+                <li><strong>Slow Hash Computation:</strong> Bcrypt is deliberately designed to be computationally intensive, making brute-force attacks impractical by increasing the time required to hash each password.</li>
+                <li><strong>Salt Integration:</strong> Each password is automatically combined with a unique salt before hashing, preventing rainbow table attacks and ensuring that identical passwords produce different hash values.</li>
+                <li><strong>Adaptive Work Factor:</strong> The cost parameter can be adjusted over time to maintain security as computing power increases, ensuring long-term protection against evolving threats.</li>
+            </ul>
+            
+            <div class="code-sample">
+                <pre><code class="language-javascript">
+// Server-side implementation of password hashing with bcrypt
+app.post('/signup', async (req, res) => {
+    try {
+        const { firstName, lastName, dateOfBirth, email, password, username, 
+                heightCm, weightKg, gender, workoutFrequency } = req.body;
+        
+        // Validate required fields
+        if (!firstName || !lastName || !dateOfBirth || !email || !password || 
+            !username || !heightCm || !weightKg || !gender || !workoutFrequency) {
+            return res.status(400).json({ error: 'Missing required fields' });
+        }
+        
+        // Generate a strong salt and hash the password
+        const saltRounds = 12;
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+        
+        // Generate a unique authentication key
+        const authKey = crypto.randomBytes(32).toString('hex');
+        
+        // Store user data with hashed password in database
+        const result = await pool.query(
+            'INSERT INTO members (first_name, last_name, date_of_birth, email, password, username, auth_key) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING member_id',
+            [firstName, lastName, dateOfBirth, email, hashedPassword, username, authKey]
+        );
+        
+        // Return success response with member_id and auth_key
+        res.status(201).json({ 
+            member_id: result.rows[0].member_id, 
+            auth_key: authKey 
+        });
+    } catch (err) {
+        console.error(`Error during sign up: ${err.message}`);
+        res.status(500).send(err.message);
+    }
+});
+                </code></pre>
             </div>
+            
+            <h3>Apple Keychain Integration</h3>
             <p>
-                The project leverages a robust technology stack:
-
-                <strong>Node.js:</strong> Serves as the backend environment, handling server-side logic, API endpoints, and database interactions with PostgreSQL.
-
-                <strong>Swift and SwiftUI:</strong> Used for developing the iOS client application, providing high performance and a modern user interface.
-
-                <strong>PostgreSQL:</strong> Manages data storage with advanced features like ACID compliance and strong support for complex queries.
-
-                Security is a paramount concern throughout the stack. Bcrypt ensures secure password hashing on the server, while Apple's Keychain services provide encrypted storage for sensitive data on the client side.
+                On the iOS client, sensitive data like authentication tokens are stored using Apple's Keychain Services framework, which provides:
             </p>
+            <ul>
+                <li><strong>Encrypted Storage:</strong> Data is encrypted at rest using hardware-backed encryption on device.</li>
+                <li><strong>Secure Access Control:</strong> Access to Keychain items can be restricted to specific applications and protected by biometric authentication if needed.</li>
+                <li><strong>Secure Enclaves:</strong> On devices with Secure Enclaves, cryptographic operations are performed in isolated hardware, providing an additional security layer.</li>
+            </ul>
+            
+            <h3>Authentication Token Management</h3>
+            <p>
+                The application implements a custom authentication token system:
+            </p>
+            <ul>
+                <li><strong>Unique Token Generation:</strong> Each user receives a unique authentication key generated using cryptographically secure random bytes.</li>
+                <li><strong>Token Verification:</strong> All protected API endpoints validate the Auth-Key header against the stored token for the user before processing requests.</li>
+                <li><strong>Secure Storage:</strong> The token is stored securely in the Keychain on the client device and in the database on the server.</li>
+            </ul>
+            
+            <div class="code-sample">
+                <pre><code class="language-swift">
+// iOS client implementation of saving auth token to Keychain
+class AuthManager {
+    static func saveAuthCredentials(memberId: Int, authKey: String) -> Bool {
+        // Convert auth key to Data
+        guard let authKeyData = authKey.data(using: .utf8) else {
+            print("Error converting auth key to data")
+            return false
+        }
+        
+        // Save auth key to Keychain
+        let authKeyStatus = KeychainManager.save(authKeyData, service: "YourAppService", account: "authKey")
+        
+        // Save member ID to Keychain
+        let memberIdString = String(memberId)
+        guard let memberIdData = memberIdString.data(using: .utf8) else {
+            print("Error converting member ID to data")
+            return false
+        }
+        let memberIdStatus = KeychainManager.save(memberIdData, service: "YourAppService", account: "memberId")
+        
+        return authKeyStatus == errSecSuccess && memberIdStatus == errSecSuccess
+    }
+    
+    static func getAuthCredentials() -> (memberId: Int?, authKey: String?) {
+        // Retrieve auth key from Keychain
+        let authKey = KeychainManager.loadAuthKey()
+        
+        // Retrieve member ID from Keychain
+        guard let memberIdData = KeychainManager.load(service: "YourAppService", account: "memberId"),
+              let memberIdString = String(data: memberIdData, encoding: .utf8),
+              let memberId = Int(memberIdString) else {
+            return (nil, authKey)
+        }
+        
+        return (memberId, authKey)
+    }
+    
+    static func clearAuthCredentials() -> Bool {
+        let authKeyStatus = KeychainManager.delete(service: "YourAppService", account: "authKey")
+        let memberIdStatus = KeychainManager.delete(service: "YourAppService", account: "memberId")
+        
+        return authKeyStatus == errSecSuccess && memberIdStatus == errSecSuccess
+    }
+}
+                </code></pre>
+            </div>
+        </section>
+
+        <section id="architecture" class="showcase__section">
+            <h2>Architecture and Implementation</h2>
+            <p>
+                The architecture of RepBook is grounded in modern software engineering principles, emphasizing modularity, scalability, and security. The system is built on a client-server model with a clear separation of concerns:
+            </p>
+            
+            <h3>Backend Architecture</h3>
+            <ul>
+                <li><strong>RESTful API:</strong> The backend employs a RESTful API design, allowing stateless communication between the client and server. This facilitates easier scaling and maintenance.</li>
+                <li><strong>Express.js Framework:</strong> Built on Node.js using Express.js to handle HTTP requests and routing in a lightweight and efficient manner.</li>
+                <li><strong>PostgreSQL Database:</strong> Implements a relational database with normalized schema design for efficient data storage and retrieval.</li>
+                <li><strong>Connection Pooling:</strong> Utilizes connection pooling to efficiently manage database connections and improve performance under load.</li>
+                <li><strong>Middleware Architecture:</strong> Implements middleware for cross-cutting concerns like logging, CORS handling, and authentication verification.</li>
+            </ul>
+            
+            <div class="code-sample">
+                <pre><code class="language-javascript">
+// Express.js middleware for authentication verification
+const authMiddleware = async (req, res, next) => {
+    try {
+        const authKey = req.headers['auth-key'];
+        const memberId = req.params.memberId || req.body.memberId;
+        
+        if (!authKey || !memberId) {
+            return res.status(401).send('Authentication required');
+        }
+        
+        const result = await pool.query(
+            'SELECT auth_key FROM members WHERE member_id = $1',
+            [memberId]
+        );
+        
+        if (result.rows.length === 0) {
+            return res.status(404).send('Member not found');
+        }
+        
+        if (result.rows[0].auth_key !== authKey) {
+            return res.status(401).send('Invalid authentication');
+        }
+        
+        next();
+    } catch (err) {
+        console.error(`Authentication error: ${err.message}`);
+        res.status(500).send('Internal server error');
+    }
+};
+
+// Apply middleware to protected routes
+app.get('/userDataAndMetrics/:memberId', authMiddleware, async (req, res) => {
+    // Route handler implementation
+});
+                </code></pre>
+            </div>
+            
+            <h3>iOS Client Architecture</h3>
+            <ul>
+                <li><strong>Model-View-Controller (MVC) Pattern:</strong> Organizes code into Models (data structures), Views (UI components), and Controllers (business logic).</li>
+                <li><strong>Network Abstraction Layer:</strong> Implements a dedicated NetworkManager class to handle all API communication, decoupling networking from business logic.</li>
+                <li><strong>Security Services:</strong> Uses the KeychainManager to securely store and retrieve sensitive credentials.</li>
+                <li><strong>Data Models:</strong> Defines clear data models with Codable conformance for seamless JSON serialization/deserialization.</li>
+                <li><strong>Error Handling:</strong> Implements robust error handling with custom error types and user-friendly error messages.</li>
+            </ul>
+            
+            <div class="code-sample">
+                <pre><code class="language-swift">
+// Swift data models with Codable conformance
+struct UserInfo: Codable {
+    let firstName: String
+    let lastName: String
+    let username: String
+    let email: String
+    let dateOfBirth: String
+    let memberId: Int
+    let metrics: UserMetrics?
+    
+    enum CodingKeys: String, CodingKey {
+        case firstName = "first_name"
+        case lastName = "last_name"
+        case username
+        case email
+        case dateOfBirth = "date_of_birth"
+        case memberId = "member_id"
+        case metrics
+    }
+}
+
+struct UserMetrics: Codable {
+    let heightCm: Double
+    let weightKg: Double
+    let gender: String
+    let workoutFrequency: String
+    let bodyFatPercentage: Double?
+    let goalType: String?
+    let activityLevel: String?
+    let restingHeartRate: Int?
+    let bmrCalories: Int?
+    
+    enum CodingKeys: String, CodingKey {
+        case heightCm = "height_cm"
+        case weightKg = "weight_kg"
+        case gender
+        case workoutFrequency = "workout_frequency"
+        case bodyFatPercentage = "body_fat_percentage"
+        case goalType = "goal_type"
+        case activityLevel = "activity_level"
+        case restingHeartRate = "resting_heart_rate"
+        case bmrCalories = "bmr_calories"
+    }
+}
+                </code></pre>
+            </div>
+            
+            <h3>Data Flow Architecture</h3>
+            <p>
+                The application implements a clear data flow pattern:
+            </p>
+            <ol>
+                <li><strong>Request Initiation:</strong> User interactions trigger view controllers to request data or actions.</li>
+                <li><strong>Network Layer:</strong> The NetworkManager class constructs appropriate API requests with authentication headers.</li>
+                <li><strong>Server Processing:</strong> The Express.js server validates requests, processes them, and interacts with the PostgreSQL database.</li>
+                <li><strong>Response Handling:</strong> Responses are parsed into Swift model objects and used to update the UI.</li>
+                <li><strong>Error Handling:</strong> Errors at any stage are caught, logged, and presented to the user when appropriate.</li>
+            </ol>
+            
+            <h2>Computer Science Concepts Explored</h2>
+            <ul>
+                <li><strong>Cryptography:</strong> Implementation of secure hashing algorithms (bcrypt) and random token generation for authentication.</li>
+                <li><strong>Database Normalization:</strong> Proper schema design with normalized tables to minimize redundancy and improve data integrity.</li>
+                <li><strong>REST Architecture:</strong> Implementation of RESTful API principles for stateless client-server communication.</li>
+                <li><strong>Object-Oriented Design:</strong> Use of classes, inheritance, and encapsulation to create modular, maintainable code.</li>
+                <li><strong>Asynchronous Programming:</strong> Implementation of asynchronous programming paradigms to ensure non-blocking operations and efficient handling of API requests.</li>
+            </ul>
         </section>
 
         <section id="gallery" class="showcase__section">
-            <h2>Project Gallery</h2>
+            <h2>Visual Examples</h2>
             <div class="image-gallery">
-                <img src="images/ios1.png" alt="Dashboard View">
-                <img src="images/ios2.png" alt="Workout Builder">
-                <img src="images/ios3.png" alt="AI Assistant Chat">
+                <img src="images/p1.gif" alt="Particle simulation animation">
+                <img src="images/p2.png" alt="Particle simulation screenshot">
             </div>
         </section>
     </div>
@@ -381,6 +675,6 @@ class KeychainManager {
 
     <script src="js/photo.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-cpp.min.js"></script>
 </body>
 </html>

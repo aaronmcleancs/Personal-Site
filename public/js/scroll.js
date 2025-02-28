@@ -20,3 +20,5 @@ $(window).scroll(function() {
     }, 150);
   }
 });
+
+
