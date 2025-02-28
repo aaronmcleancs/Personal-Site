@@ -25,8 +25,44 @@
 
     <div class="showcase__hero">
         <div class="showcase__wrapper">
-            <h1 class="animate__animated animate__fadeIn">RepBook</h1>
-            <p class="animate__animated animate__fadeIn animate__delay-1s">Full Stack iOS Fitness Tracking Application with RESTful API and Enhanced Security</p>
+            <div class="project-card">
+                <!-- GitHub Stats Section -->
+                <div class="project-card__header">
+                    <div class="project-card__header-left">
+                        <h1 class="project-title"></h1>
+                        <div class="project-meta">
+                            <span class="project-language"></span>
+                            <span class="project-license"></span>
+                        </div>
+                    </div>
+                    <div class="project-card__header-right">
+                        <div class="project-stats">
+                            <div class="stat-item">
+                                <i class="fas fa-star"></i>
+                                <span class="stat-count stars-count">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-code-branch"></i>
+                                <span class="stat-count forks-count">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-eye"></i>
+                                <span class="stat-count watchers-count">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project Description Section -->
+                <div class="project-card__body">
+                    <p class="project-description"></p>
+                </div>
+                
+                <!-- Last Updated Badge -->
+                <div class="project-updated">
+                    <span>Updated <span class="updated-date">Recently</span></span>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -223,5 +259,7 @@ const authMiddleware = async (req, res, next) => {
     </div>
 
     <script src="js/photo.js"></script>
+    <script src="js/showcase.js"></script>
+    <script src="js/github.js"></script>
 </body>
 </html>

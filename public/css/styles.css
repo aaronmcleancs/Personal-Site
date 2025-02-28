@@ -284,7 +284,6 @@ body {
     font-size: 12px;
   }
 }
-
 .hero2__section {
   border-radius: var(--radius-3xl);
   margin: var(--space-lg);
@@ -1092,11 +1091,11 @@ body {
 }
 
 .social-menu ul li:nth-child(1) a:hover {
-  background-color: rgb(99, 14, 202);
+  background-color: rgb(194, 194, 194);
 }
 
 .social-menu ul li:nth-child(2) a:hover {
-  background-color: #f3a11c;
+  background-color: #cb9c50;
 }
 
 .social-menu ul li:nth-child(3) a:hover {
@@ -1104,7 +1103,7 @@ body {
 }
 
 .social-menu ul li:nth-child(4) a:hover {
-  background-color: rgb(146, 146, 146);
+  background-color: rgb(49, 49, 49);
 }
 
 @media (max-width: 768px) {
@@ -1369,9 +1368,6 @@ body {
   transition: transform 0.3s ease;
 }
 
-.timeline-content:hover {
-  transform: translateY(-5px);
-}
 
 .timeline-content.left {
   left: 0;
