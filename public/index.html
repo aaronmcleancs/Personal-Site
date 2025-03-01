@@ -184,24 +184,33 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
     <script>
-        var typed = new Typed('.auto-type', {
-            strings: [
-                "frontend",
-                "mobile app",
-                "database ",
-                "neural network ",
-                "UI/UX design",
-                "deployment",
-                "blockchain",
-                "iOS SDK",
-                "secure cloud",
-                "embedded system",
-                "system optimization",
-            ],
-            typeSpeed: 80,
-            backSpeed: 40,
-            loop: true
-        });
+    var typed = new Typed('.auto-type', {
+        strings: [
+            "frontend development",
+            "mobile app architecture",
+            "iOS development",
+            "React.js applications",
+            "quantum computing",
+            "machine learning",
+            "neural networks",
+            "blockchain solutions",
+            "secure authentication",
+            "API integration",
+            "database management",
+            "full-stack development",
+            "cloud services",
+            "embedded systems",
+            "compiler construction",
+            "algorithm design",
+            "UI/UX design",
+            "system optimization",
+            "distributed systems",
+            "cryptography"
+        ],
+        typeSpeed: 80,
+        backSpeed: 40,
+        loop: true
+    });
     </script>
     <script>
             document.addEventListener('DOMContentLoaded', function() {
@@ -225,15 +234,35 @@
     });
     </script>
     <script>
-        window.addEventListener('scroll', function() {
-            let heroSection = document.querySelector('.hero__section');
-            let scrollPercent = 400 * window.scrollY / (document.body.offsetHeight - window.innerHeight);
-            if (window.innerWidth < 1300) {
-                heroSection.style.backgroundSize = `1300px`;
-            } else {
-                heroSection.style.backgroundSize = `${220 + scrollPercent}%`;
-            }
-        });
+(function() {
+  const heroSection = document.querySelector('.hero__section');
+  let ticking = false;
+  function getBaseScale(width) {
+    const minWidth = 300, maxWidth = 1300;
+    if (width <= minWidth) return 1300;
+    if (width >= maxWidth) return 220;
+    // Linear interpolation:
+    return 1300 - (width - minWidth) * ((1300 - 220) / (maxWidth - minWidth));
+  }
+
+  function updateBackground() {
+    const scrollPercent = window.scrollY / (document.body.offsetHeight - window.innerHeight);
+    const baseScale = getBaseScale(window.innerWidth);
+    const dynamicScale = baseScale + scrollPercent * 400;
+    heroSection.style.backgroundSize = `${dynamicScale}%`;
+    ticking = false;
+  }
+
+  function onScroll() {
+    if (!ticking) {
+      window.requestAnimationFrame(updateBackground);
+      ticking = true;
+    }
+  }
+  window.addEventListener('scroll', onScroll);
+  window.addEventListener('resize', updateBackground);
+  updateBackground();
+})();
     </script>
     <script>
         document.getElementById('projects-link').addEventListener('click', function(e) {
