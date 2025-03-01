@@ -227,7 +227,7 @@ body {
 }
 
 .column__left h1 {
-  font-size: 7rem;
+  font-size: 6rem;
   margin-bottom: var(--space-sm);
   background: linear-gradient(135deg, var(--text-primary), var(--primary));
   -webkit-background-clip: text;
