@@ -89,7 +89,7 @@ img {
   text-decoration: none;
   font-weight: 300;
   font-size: var(--font-size-md);
-  margin: 0 var(--space-md);
+  margin: 0 var(--space-sm);
   transition: all var(--transition-medium);
   position: relative;
 }
@@ -153,7 +153,6 @@ img {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(113, 146, 227, 0.15);
 }
-
 
 .showcase__hero {
   position: relative;
@@ -289,8 +288,10 @@ img {
 }
 
 
+/* Update the code-sample class to properly handle overflow */
 .code-sample {
   overflow-x: auto;
+  max-width: 100%;
   background-color: rgba(15, 15, 17, 0.7);
   border-radius: 12px;
   padding: var(--space-md) var(--space-lg);
@@ -298,14 +299,21 @@ img {
   border: 1px solid var(--border-color);
   font-size: 0.9rem;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  white-space: pre;
+  word-wrap: normal;
 }
 
+/* Also update the inline code styling for LaTeX elements */
 code {
   font-family: 'SF Mono', SFMono-Regular, ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', monospace;
   background-color: rgba(44, 44, 46, 0.5);
   padding: 0.2em 0.4em;
   border-radius: 4px;
   font-size: 0.85em;
+  max-width: 100%;
+  overflow-x: auto;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 
@@ -901,4 +909,99 @@ tbody tr:hover {
     margin-top: var(--space-md);
     display: inline-block;
   }
+}
+
+/* Progress Tracker Styles */
+.progress-tracker {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9000;
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 40px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0;
+  transform: translateX(-50%) translateY(20px);
+}
+
+.progress-tracker.visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.progress-tracker__item {
+  height: 8px;
+  width: 8px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  cursor: pointer;
+}
+
+.progress-tracker__item:hover {
+  background: var(--text-secondary);
+}
+
+.progress-tracker__item.active {
+  background: var(--primary);
+  width: 32px;
+  border-radius: 4px;
+}
+
+.progress-tracker__item::after {
+  content: attr(data-section);
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.progress-tracker__item:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+@media (max-width: 768px) {
+  .progress-tracker {
+    bottom: 1rem;
+    padding: 0.5rem 1rem;
+  }
+  
+  .progress-tracker__item {
+    height: 6px;
+    width: 6px;
+  }
+  
+  .progress-tracker__item.active {
+    width: 24px;
+  }
+}
+
+/* Optional flourish: pulsing animation for active dot */
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(113, 146, 227, 0.4); }
+  70% { box-shadow: 0 0 0 6px rgba(113, 146, 227, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(113, 146, 227, 0); }
+}
+
+.progress-tracker__item.active {
+  animation: pulse 2s infinite;
 }
