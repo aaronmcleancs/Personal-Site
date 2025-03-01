@@ -4,14 +4,14 @@ const projectConfig = {
     repo: 'CVV_15M_SARS-CoV-2',
     description: 'TensorFlow Vision model for detecting cases of COVID-19 from lung x-rays, deployable on mobile hardware.',
     section: 0,
-    skills: ['Jupyter', 'Python', 'Computer Vision', 'Software Development', 'TensorFlow', 'Machine Learning', 'Amazon Web Services (AWS)']
+    skills: ['Python', 'TensorFlow', 'Machine Learning', 'Computer Vision', 'Amazon Web Services (AWS)']
   },
   'RepBook': {
     owner: 'aaronmcleancs',
     repo: 'RepBook-DemoServer',
     description: 'iOS Fitness Dashboard, user auth and secure storage with node and postgreSQL. Workout builder, AI Assistant with dynamic semantics fetching.',
     section: 1,
-    skills: ['Secure Authentication', 'Swift', 'REST', 'DBMS', 'Objective-C', 'Mobile Applications', 'API', 'Express.js', 'iOS', 'iOS Development', 'Application Architecture', 'Version Control', 'Node.js', 'Software Development', 'Unit Testing', 'Xcode', 'User Interface Design']
+    skills: ['Swift', 'iOS Development', 'Node.js', 'Secure Authentication', 'REST']
   },
   'ParticleBox': {
     owner: 'aaronmcleancs',
@@ -25,7 +25,7 @@ const projectConfig = {
     repo: 'FidelityChain',
     description: 'Quantum-enhanced blockchain consensus protocol replacing proof-of-work with quantum state fidelity checks, reducing computational complexity from O(n·m) to O(log n).',
     section: 3,
-    skills: ['Quantum Computing', 'Distributed Systems', 'Software Development', 'Secure Communications', 'Qiskit', 'Blockchain']
+    skills: ['Quantum Computing', 'Distributed Systems', 'Qiskit', 'Blockchain', 'Secure Communications']
   }
 };
 
