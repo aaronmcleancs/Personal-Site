@@ -116,7 +116,7 @@
                 <div class="timeline-content left">
                     <h3>Ontario Secondary School Diploma</h3>
                     <img src="images/cci.png" alt="Collingwood Collegiate Institute Logo">
-                    <p>Graduated from Collingwood Collegiate Institute obtaining Honours with distinction.</p>
+                    <p>Graduated from Collingwood Collegiate Institute with Honours with distinction. Maintained academic excellence throughout secondary education while participating in extracurricular activities and developing technical skills.</p>
                 </div>
                 <div class="timeline-dot"></div>
             </div>
@@ -132,7 +132,7 @@
                 <div class="timeline-content left">
                     <h3>Bachelor of Science in Computer Science</h3>
                     <img src="images/carleton.png" alt="Carleton University Logo">
-                    <p>Pursuing a B.C.S at Carleton University with the C.J. Mackenzie Scholarship award. Active member of both the Computer Science and Artificial Intelligence Societies. Conducted Quantum Computing research in the blockchain domain under the supervision of Dr. Barbeau.</p>
+                    <p>Pursuing a B.C.S at Carleton University with the C.J. Mackenzie Scholarship. Active in Computer Science and AI Societies while conducting Quantum Computing research in blockchain under Dr. Barbeau's supervision.</p>
                 </div>
                 <div class="timeline-dot"></div>
             </div>
@@ -140,7 +140,7 @@
                 <div class="timeline-content right">
                     <h3>IT Infrastructure Consultant</h3>
                     <img src="images/stonetree.png" alt="StoneTree Naturopathic Clinic Logo">
-                    <p>Designed and implemented a secure file-sharing system using network-attached storage with role-based access control (RBAC) and encrypted data transfer protocols. Performed diagnostics and resolved critical point-of-sale functionality issues.</p>
+                    <p>Designed and implemented secure file-sharing systems using network-attached storage with role-based access control and encrypted protocols. Resolved critical point-of-sale issues and upgraded legacy systems.</p>
                 </div>
                 <div class="timeline-dot"></div>
             </div>
@@ -148,7 +148,7 @@
                 <div class="timeline-content left">
                     <h3>Neural Network Architecture</h3>
                     <img src="images/tensorflow.png" alt="TensorFlow Logo">
-                    <p>Engineered a Neural Network for SARS-CoV-2 diagnosis from chest X-rays with 97.55% classification accuracy. Designed a robust architecture with progressive feature extraction (64→512 filters) and regularization techniques for deployment on Apple M-Series CPUs.</p>
+                    <p>Engineered a Neural Network for SARS-CoV-2 diagnosis with 97.55% accuracy. Created architecture with progressive feature extraction and regularization techniques optimized for Apple M-Series CPU deployment.</p>
                 </div>
                 <div class="timeline-dot"></div>
             </div>
@@ -156,7 +156,7 @@
                 <div class="timeline-content right">
                     <h3>Software Developer at Chimoney</h3>
                     <img src="images/chimoney.png" alt="Chimoney Logo">
-                    <p>Contributed to Chimoney's global payment processing platform by developing a modular iOS SDK in Swift. Leveraged Alamofire for networking, implemented XCTest for unit testing, and created extensive documentation for developer integration. Gained expierence developing developing within a deployment-scale architecture</p>
+                    <p>Contributed to Chimoney's global payment platform by developing a modular iOS SDK in Swift. Used Alamofire for networking, implemented XCTest, and created documentation for developer integration.</p>
                 </div>
                 <div class="timeline-dot"></div>
             </div>
@@ -164,17 +164,16 @@
                 <div class="timeline-content left">
                     <h3>Quantum Computing Capstone Project</h3>
                     <img src="images/qiskit.png" alt="Qiskit Logo">
-                    <p>Developed a quantum-enhanced blockchain consensus protocol achieving 2.3x higher transaction throughput and 17x better energy efficiency. Implemented quantum hashing, teleportation, and entanglement for block validation with 98%+ consensus accuracy under realistic noise conditions. Published a whitepaper under the supervision of Dr. Barbeau.</p>
+                    <p>Developed a quantum-enhanced blockchain protocol with 2.3x higher throughput and 17x better energy efficiency. Implemented quantum hashing and entanglement for validation with 98%+ consensus accuracy.</p>
                 </div>
                 <div class="timeline-dot"></div>
             </div>
         </div>
-    </div>  
-    
+    </div>
     <div class="contact__section">
         <div class="contact__wrapper">
             <h2>Contact Me</h2>
-            <form id="contact-form" action="https://formspree.io/f/your-formspree-endpoint" method="POST">
+            <form id="contact-form" action="https://formspree.io/f/mvgzealp" method="POST">
                 <input type="text" name="name" placeholder="Your Name" required>
                 <input type="email" name="email" placeholder="Your Email" required>
                 <textarea name="message" placeholder="Your Message" required></textarea>
@@ -213,25 +212,35 @@
     });
     </script>
     <script>
-            document.addEventListener('DOMContentLoaded', function() {
-    // For mobile devices only
-    if (window.innerWidth <= 768) {
-        const timelineItems = document.querySelectorAll('.timeline-item');
+    document.addEventListener('DOMContentLoaded', function() {
+    const timelineContents = document.querySelectorAll('.timeline-content');
+    
+    timelineContents.forEach(content => {
+        const heading = content.querySelector('h3');
+        let touchTriggered = false;
         
-        timelineItems.forEach(item => {
-        item.addEventListener('click', function(e) {
-            // Toggle active class on the timeline item
-            this.classList.toggle('active');
-            
-            // Find the content element within this timeline item and toggle active class
-            const content = this.querySelector('.timeline-content');
-            if (content) {
-            content.classList.toggle('active');
+        if (heading) {
+            heading.addEventListener('click', function(e) {
+                // Only toggle if the touch event hasn't recently triggered a toggle
+                if (!touchTriggered) {
+                    content.classList.toggle('active');
+                }
+                e.stopPropagation();
+            });
+        }
+        
+        content.addEventListener('touchstart', function(e) {
+            if (e.target !== heading && !heading.contains(e.target)) {
+                touchTriggered = true;
+                content.classList.toggle('active');
+                // Reset the flag after a short delay to allow the click event to be ignored
+                setTimeout(function() {
+                    touchTriggered = false;
+                }, 300);
             }
-        });
-        });
-    }
+        }, { passive: true });
     });
+});
     </script>
     <script>
         (function() {
@@ -279,48 +288,6 @@
                 top: targetPosition,
                 behavior: 'smooth'
             });
-        });
-
-        function updateProjectStats() {
-            fetch('https://api.github.com/repos/aaronmcleancs/CVV_15M_SARS-CoV-2')
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('lineCount1').textContent = data.size ? Math.round(data.size * 0.8) + ' lines' : 'Available on GitHub';
-                })
-                .catch(() => {
-                    document.getElementById('lineCount1').textContent = 'Available on GitHub';
-                });
-
-            fetch('https://api.github.com/repos/aaronmcleancs/RepBook-DemoServer')
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('lineCount2').textContent = data.size ? Math.round(data.size * 0.8) + ' lines' : 'Available on GitHub';
-                })
-                .catch(() => {
-                    document.getElementById('lineCount2').textContent = 'Available on GitHub';
-                });
-
-            fetch('https://api.github.com/repos/aaronmcleancs/ParticleBox')
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('lineCount3').textContent = data.size ? Math.round(data.size * 0.8) + ' lines' : 'Available on GitHub';
-                })
-                .catch(() => {
-                    document.getElementById('lineCount3').textContent = 'Available on GitHub';
-                });
-
-            fetch('https://api.github.com/repos/aaronmcleancs/QuantumConsensus')
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('lineCount4').textContent = data.size ? Math.round(data.size * 0.8) + ' lines' : 'Available on GitHub';
-                })
-                .catch(() => {
-                    document.getElementById('lineCount4').textContent = 'Available on GitHub';
-                });
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            updateProjectStats();
         });
     </script>
 </body>
