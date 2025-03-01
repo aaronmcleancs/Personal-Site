@@ -286,6 +286,8 @@ body {
 .hero2__section {
   border-radius: var(--radius-3xl);
   margin: var(--space-lg);
+  margin-top: 400px;
+  margin-bottom: 200px;
   color: rgb(17, 17, 17);
   background: var(--bg-primary);
   background-image: radial-gradient(rgb(32, 32, 32) 5%, transparent 0);
@@ -1295,6 +1297,81 @@ body {
 
 .white-card p:nth-child(4) {
   color: #525252;
+}
+
+.section-separator {
+  position: relative;
+  height: 120px;
+  margin: 0 var(--space-lg);
+  overflow: hidden;
+}
+
+.section-separator::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(113, 146, 227, 0.3) 20%, 
+    rgba(113, 146, 227, 0.5) 50%,
+    rgba(113, 146, 227, 0.3) 80%,
+    transparent
+  );
+}
+
+.section-separator::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  background-color: var(--bg-primary);
+  border: 1px solid rgba(113, 146, 227, 0.3);
+  border-radius: 50%;
+  box-shadow: 0 0 15px rgba(113, 146, 227, 0.2);
+}
+
+.separator-dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  background-color: var(--primary);
+  border-radius: 50%;
+  z-index: 2;
+  animation: pulse-separator 3s infinite alternate;
+}
+
+@keyframes pulse-separator {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 1;
+  }
+}
+
+@media screen and (max-width: 1300px) {
+  .section-separator {
+    margin: 0 var(--space-md);
+    height: 80px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .section-separator {
+    margin: 0 var(--space-sm);
+    height: 60px;
+  }
 }
 
 .contact__section {
