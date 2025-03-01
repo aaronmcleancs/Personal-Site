@@ -288,7 +288,7 @@ img {
 }
 
 
-/* Update the code-sample class to properly handle overflow */
+
 .code-sample {
   overflow-x: auto;
   max-width: 100%;
@@ -303,7 +303,7 @@ img {
   word-wrap: normal;
 }
 
-/* Also update the inline code styling for LaTeX elements */
+
 code {
   font-family: 'SF Mono', SFMono-Regular, ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', monospace;
   background-color: rgba(44, 44, 46, 0.5);
@@ -911,7 +911,7 @@ tbody tr:hover {
   }
 }
 
-/* Progress Tracker Styles */
+
 .progress-tracker {
   position: fixed;
   bottom: 2rem;
@@ -995,7 +995,7 @@ tbody tr:hover {
   }
 }
 
-/* Optional flourish: pulsing animation for active dot */
+
 @keyframes pulse {
   0% { box-shadow: 0 0 0 0 rgba(113, 146, 227, 0.4); }
   70% { box-shadow: 0 0 0 6px rgba(113, 146, 227, 0); }
