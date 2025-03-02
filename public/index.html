@@ -1,313 +1,193 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aaron McLean - Portfolio</title>
-    <link rel="stylesheet" href="css/styles.css"> 
-    <link rel="stylesheet" href="css/social-media-icons.css"> 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.14.0/devicon.min.css">
-    <script src="https://kit.fontawesome.com/ca7f2ffa51.js" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="/js/github.js"></script>
-    <script src="js/scroll.js"></script> 
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aaron McLean - Portfolio</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/social-media-icons.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.14.0/devicon.min.css">
+  <script src="https://kit.fontawesome.com/ca7f2ffa51.js" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="/js/github.js"></script>
+  <script src="js/scroll.js"></script>
 </head>
 <body>
-    <div class="main-nav"></div>
-    <div class="navbar">
-        <div class="logo">
-            <div class="icon"><img src="images/blurIcon.png" height="27px" width="27px" alt="Logo"></div> 
-        </div>
-        <a href="#home">Home</a>
-        <a href="#projects" id="projects-link">Projects</a>
-        <a href="#experience" id="experience-link">Experience</a>
-        <div class="right-nav">
-            <a href="/images/CV.pdf" class="download-btn" download="AaronMcLean_CV.pdf">
-                <i class="fas fa-file"></i>
-              </a>
-        </div>
+  <div class="main-nav"></div>
+  <div class="navbar">
+    <div class="logo">
+      <div class="icon"><img src="images/blurIcon.png" height="27px" width="27px" alt="Logo"></div>
     </div>
-    <div class="hero__section">
-        <div class="hero__wrapper">
-            <div class="column__left">
-                <h1>Aaron McLean</h1>
-                <div class="text-wrapper">
-                    <p> % Ready to work on your <span class="auto-type"></span></p>
-                </div>
-                <div class="social-menu">
-                    <ul>
-                        <li><a href="https://github.com/aaronmcleancs" target="blank"><i class="fab fa-github"></i></a></li>
-                        <li><a href="https://www.instagram.com/aaronnmclean/" target="blank"><i class="fab fa-instagram"></i></a></li>
-                        <li><a href="https://www.linkedin.com/in/aaronmclean26/" target="blank"><i class="fab fa-linkedin-in"></i></a></li>
-                        <li><a href="https://codepen.io/aaromclean26"><i class="fab fa-codepen" target="blank"></i></a></li>
-                   </ul>
-                </div>
-            </div>
+    <a href="#home">Home</a>
+    <a href="#projects" id="projects-link">Projects</a>
+    <a href="#experience" id="experience-link">Experience</a>
+    <div class="right-nav">
+      <a href="/images/CV.pdf" class="download-btn" download="AaronMcLean_CV.pdf">
+        <i class="fas fa-file"></i>
+      </a>
+    </div>
+  </div>
+  <div class="hero__section">
+    <div class="hero__wrapper">
+      <div class="column__left">
+        <h1>Aaron McLean</h1>
+        <div class="text-wrapper">
+          <p>% Ready to work on your <span class="auto-type"></span></p>
         </div>
-    </div>
-    <div class="hero2__section">
-        <div class="hero2__wrapper">
-            <div class="column2__left">
-                <h1 id="scroll" class="animate__animated"><span>Open Source</span> Projects</h1>
-            </div>
-            <div id="column2__right" class="column2__right">
-                <div id="card1" class="card-props white-card animate__animated">
-                    <div class="card-content">
-                        <img src="icon/1.svg" alt="Icon 1" style="width: 30px; height: 30px;" />
-                        <p>Machine Learning Model</p>
-                        <p><strong>Skills:</strong> Machine Learning, TensorFlow, AWS, CNN</p>
-                        <p>Trained and optimized vision model for accurately detecting cases of COVID-19 and viral pneumonia from lung x-rays, deployable on mobile hardware.</p>
-                        <div class="project-stats">
-                            <p>
-                                <a href="/cnn.html" class="button" style="color: #ffffff;" target="_blank">Details</a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div id="card2" class="card-props white-card animate__animated">
-                    <div class="card-content">
-                        <img src="icon/2.svg" alt="Icon 2" style="width: 30px; height: 30px;" />
-                        <p>Full Stack Application</p>
-                        <p><strong>Skills:</strong> Swift, Objective-C, Node.js, SQL</p>
-                        <p>iOS Fitness Platform, featuring user auth and secure storage with Node.js and PostgreSQL. Workout builder, dashboard, and AI Assistant with dynamic semantics fetching.</p>
-                        <div class="project-stats">
-                            <p>
-                                <a href="/ios.html" class="button" style="color: #ffffff;" target="_blank">Details</a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div id="card3" class="card-props white-card animate__animated">
-                    <div class="card-content">
-                        <img src="icon/3.svg" alt="Icon 3" style="width: 30px; height: 30px;" />
-                        <p>High-Performance Computing</p>
-                        <p><strong>Skills:</strong> C++, Multithreading, Real-time Simulation, Linear Algebra</p>
-                        <p>Multithreaded particle dynamics engine for visualizing forces among thousands of particles in real-time. Low-level Optimized for efficient rendering.</p>
-                        <div class="project-stats">
-                            <p>
-                                <a href="/particle.html" class="button" style="color: #ffffff;" target="_blank">Details</a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div id="card4" class="card-props white-card animate__animated">
-                    <div class="card-content">
-                        <img src="icon/4.svg" alt="Icon 4" style="width: 30px; height: 30px;" />
-                        <p>Quantum Computing</p>
-                        <p><strong>Skills:</strong> Qiskit, Quantum Mechanics, Blockchain, Distributed Systems</p>
-                        <p>Quantum-enhanced blockchain consensus protocol replacing proof-of-work with quantum state fidelity checks, reducing computational complexity from O(n·m) to O(log n).</p>
-                        <div class="project-stats">
-                            <p>
-                                <a href="/quantum.html" class="button" style="color: #ffffff;" target="_blank">Details</a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> 
-    </div>
-    <div class="section-separator">
-        <div class="separator-dot"></div>
+        <div class="social-menu">
+          <ul>
+            <li><a href="https://github.com/aaronmcleancs" target="blank"><i class="fab fa-github"></i></a></li>
+            <li><a href="https://www.instagram.com/aaronnmclean/" target="blank"><i class="fab fa-instagram"></i></a></li>
+            <li><a href="https://www.linkedin.com/in/aaronmclean26/" target="blank"><i class="fab fa-linkedin-in"></i></a></li>
+            <li><a href="https://codepen.io/aaromclean26" target="blank"><i class="fab fa-codepen"></i></a></li>
+          </ul>
+        </div>
       </div>
-    <div class="timeline__section">
-        <div class="timeline__wrapper">
-            <div class="timeline-line"></div>
-            <div class="timeline-item">
-                <div class="timeline-content left">
-                    <h3>Ontario Secondary School Diploma</h3>
-                    <img src="images/cci.png" alt="Collingwood Collegiate Institute Logo">
-                    <p>Graduated from Collingwood Collegiate Institute obtaining Honours with distinction. Took as many computer related courses as I could along the way.</p>
-                </div>
-                <div class="timeline-dot"></div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-content right">
-                    <h3>Technology Associate at Staples</h3>
-                    <img src="images/staples.png" alt="Staples Logo">
-                    <p>Got my first job by talking to the interviewer about the process of building my personal computer. Refined my diagnostic and technical skills by assisting customers with a broad spectrum of technology issues.</p>
-                </div>
-                <div class="timeline-dot"></div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-content left">
-                    <h3>Bachelor of Computer Science</h3>
-                    <img src="images/carleton.png" alt="Carleton University Logo">
-                    <p>Pursued a B.C.S at Carleton University with the C.J. Mackenzie Scholarship. Was a member of the Computer Science and AI Societies while conducting Quantum Computing research under Dr. Barbeau.</p>
-                </div>
-                <div class="timeline-dot"></div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-content right">
-                    <h3>IT Infrastructure Consultant</h3>
-                    <img src="images/stonetree.png" alt="StoneTree Naturopathic Clinic Logo">
-                    <p>Designed and implemented secure file-sharing systems using network-attached storage with role-based access control and encrypted protocols. Resolved critical point-of-sale issues and upgraded legacy systems.</p>
-                </div>
-                <div class="timeline-dot"></div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-content left">
-                    <h3>Neural Network Architecture</h3>
-                    <img src="images/tensorflow.png" alt="TensorFlow Logo">
-                    <p>Engineered a Neural Network for covid and viral pneumonia diagnosis with 97.55% accuracy at a model size that is deployable on mobile hardware.</p>
-                </div>
-                <div class="timeline-dot"></div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-content right">
-                    <h3>Software Developer at Chimoney</h3>
-                    <img src="images/chimoney.png" alt="Chimoney Logo">
-                    <p>Contributed to Chimoney's global payment platform by developing a modular iOS SDK in Swift. Used Alamofire for networking, implemented XCTest, and created documentation for developer integration.</p>
-                </div>
-                <div class="timeline-dot"></div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-content left">
-                    <h3>Quantum Computing Capstone Project</h3>
-                    <img src="images/qiskit.png" alt="Qiskit Logo">
-                    <p>Developed a quantum assisted blockchain protocol with higher throughput and better energy efficiency. Implemented quantum hashing and entanglement for validation with 98%+ consensus accuracy.</p>
-                </div>
-                <div class="timeline-dot"></div>
-            </div>
-        </div>
     </div>
-    <div class="contact__section">
-        <div class="contact__wrapper">
-            <h2>Contact Me</h2>
-            <form id="contact-form" action="https://formspree.io/f/mvgzealp" method="POST">
-                <input type="text" name="name" placeholder="Your Name" required>
-                <input type="email" name="email" placeholder="Your Email" required>
-                <textarea name="message" placeholder="Your Message" required></textarea>
-                <button type="submit">Send Message</button>
-            </form>
+  </div>
+  <div class="hero2__section">
+    <div class="hero2__wrapper">
+      <div class="column2__left">
+        <h1 id="scroll" class="animate__animated"><span>Open Source</span> Projects</h1>
+      </div>
+      <div id="column2__right" class="column2__right">
+        <div id="card1" class="card-props white-card animate__animated">
+          <div class="card-content">
+            <img src="icon/1.svg" alt="Icon 1" style="width: 30px; height: 30px;" />
+            <p>Machine Learning Model</p>
+            <p><strong>Skills:</strong> Machine Learning, TensorFlow, AWS, CNN</p>
+            <p>Trained and optimized vision model for accurately detecting cases of COVID-19 and viral pneumonia from lung x-rays, deployable on mobile hardware.</p>
+            <div class="project-stats">
+              <p>
+                <a href="/cnn.html" class="button" style="color: #ffffff;" target="_blank">Details</a>
+              </p>
+            </div>
+          </div>
         </div>
+        <div id="card2" class="card-props white-card animate__animated">
+          <div class="card-content">
+            <img src="icon/2.svg" alt="Icon 2" style="width: 30px; height: 30px;" />
+            <p>Full Stack Application</p>
+            <p><strong>Skills:</strong> Swift, Objective-C, Node.js, SQL</p>
+            <p>iOS Fitness Platform, featuring user auth and secure storage with Node.js and PostgreSQL. Workout builder, dashboard, and AI Assistant with dynamic semantics fetching.</p>
+            <div class="project-stats">
+              <p>
+                <a href="/ios.html" class="button" style="color: #ffffff;" target="_blank">Details</a>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div id="card3" class="card-props white-card animate__animated">
+          <div class="card-content">
+            <img src="icon/3.svg" alt="Icon 3" style="width: 30px; height: 30px;" />
+            <p>High-Performance Computing</p>
+            <p><strong>Skills:</strong> C++, Multithreading, Real-time Simulation, Linear Algebra</p>
+            <p>Multithreaded particle dynamics engine for visualizing forces among thousands of particles in real-time. Low-level Optimized for efficient rendering.</p>
+            <div class="project-stats">
+              <p>
+                <a href="/particle.html" class="button" style="color: #ffffff;" target="_blank">Details</a>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div id="card4" class="card-props white-card animate__animated">
+          <div class="card-content">
+            <img src="icon/4.svg" alt="Icon 4" style="width: 30px; height: 30px;" />
+            <p>Quantum Computing</p>
+            <p><strong>Skills:</strong> Qiskit, Quantum Mechanics, Blockchain, Distributed Systems</p>
+            <p>Quantum-enhanced blockchain consensus protocol replacing proof-of-work with quantum state fidelity checks, reducing computational complexity from O(n·m) to O(log n).</p>
+            <div class="project-stats">
+              <p>
+                <a href="/quantum.html" class="button" style="color: #ffffff;" target="_blank">Details</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-    <script>
-    var typed = new Typed('.auto-type', {
-        strings: [
-            "frontend development",
-            "mobile app architecture",
-            "iOS development",
-            "React.js applications",
-            "quantum computing",
-            "machine learning",
-            "neural networks",
-            "blockchain solutions",
-            "secure authentication",
-            "API integration",
-            "database management",
-            "full-stack development",
-            "cloud services",
-            "embedded systems",
-            "compiler construction",
-            "algorithm design",
-            "UI/UX design",
-            "system optimization",
-            "distributed systems",
-            "cryptography"
-        ],
-        typeSpeed: 80,
-        backSpeed: 40,
-        loop: true
-    });
-    </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-        const timelineContents = document.querySelectorAll('.timeline-content');
-        
-        timelineContents.forEach(content => {
-            const heading = content.querySelector('h3');
-            let touchStartX = 0;
-            let touchStartY = 0;
-            let touchMoved = false;
-            let touchHandled = false;
-            
-            if (heading) {
-                heading.addEventListener('click', function(e) {
-                    if (touchHandled) {
-                        touchHandled = false;
-                        return;
-                    }
-                    if (!touchMoved) {
-                        content.classList.toggle('active');
-                    }
-                    e.stopPropagation();
-                });
-            }
-            
-            content.addEventListener('touchstart', function(e) {
-                const touch = e.touches[0];
-                touchStartX = touch.clientX;
-                touchStartY = touch.clientY;
-                touchMoved = false;
-            }, { passive: true });
-            
-            content.addEventListener('touchmove', function(e) {
-                const touch = e.touches[0];
-                if (Math.abs(touch.clientX - touchStartX) > 10 || Math.abs(touch.clientY - touchStartY) > 10) {
-                    touchMoved = true;
-                }
-            }, { passive: true });
-            
-            content.addEventListener('touchend', function(e) {
-                if (!touchMoved && heading && !heading.contains(e.target)) {
-                    content.classList.toggle('active');
-                    touchHandled = true;
-                }
-            });
-        });
-    });
-    </script>
-    <script>
-        (function() {
-            const heroSection = document.querySelector('.hero__section');
-            let ticking = false;
-            function getBaseScale(width) {
-                const minWidth = 300, maxWidth = 1300;
-                if (width <= minWidth) return 1300;
-                if (width >= maxWidth) return 220;
-                return 1300 - (width - minWidth) * ((1300 - 220) / (maxWidth - minWidth));
-            }
-            function updateBackground() {
-                const scrollPercent = window.scrollY / (document.body.offsetHeight - window.innerHeight);
-                const baseScale = getBaseScale(window.innerWidth);
-                const dynamicScale = baseScale + scrollPercent * 800;
-                heroSection.style.backgroundSize = `${dynamicScale}%`;
-                ticking = false;
-            }
-            function onScroll() {
-                if (!ticking) {
-                    window.requestAnimationFrame(updateBackground);
-                    ticking = true;
-                }
-            }
-            window.addEventListener('scroll', onScroll);
-            window.addEventListener('resize', updateBackground);
-            updateBackground();
-        })();
-        </script>
-    <script>
-        document.getElementById('projects-link').addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetElement = document.getElementById('column2__right');
-            const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - 250;
-            window.scrollTo({
-                top: targetPosition,
-                behavior: 'smooth'
-            });
-        });
-        document.getElementById('experience-link').addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetElement = document.getElementById('column2__right');
-            const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset + 550;
-            window.scrollTo({
-                top: targetPosition,
-                behavior: 'smooth'
-            });
-        });
-    </script>
+  </div>
+  <div class="section-separator">
+    <div class="separator-dot"></div>
+  </div>
+  <div class="timeline__section">
+    <div class="timeline__wrapper">
+      <div class="timeline-line"></div>
+      <div class="timeline-item">
+        <div class="timeline-content left">
+          <h3>Ontario Secondary School Diploma</h3>
+          <img src="images/cci.png" alt="Collingwood Collegiate Institute Logo">
+          <p>Graduated from Collingwood Collegiate Institute obtaining Honours with distinction. Took as many computer related courses as I could along the way.</p>
+        </div>
+        <div class="timeline-dot"></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-content right">
+          <h3>Technology Associate at Staples</h3>
+          <img src="images/staples.png" alt="Staples Logo">
+          <p>Got my first job by talking to the interviewer about the process of building my personal computer. Refined my diagnostic and technical skills by assisting customers with a broad spectrum of technology issues.</p>
+        </div>
+        <div class="timeline-dot"></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-content left">
+          <h3>Bachelor of Computer Science</h3>
+          <img src="images/carleton.png" alt="Carleton University Logo">
+          <p>Pursued a B.C.S at Carleton University with the C.J. Mackenzie Scholarship. Was a member of the Computer Science and AI Societies while conducting Quantum Computing research under Dr. Barbeau.</p>
+        </div>
+        <div class="timeline-dot"></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-content right">
+          <h3>IT Infrastructure Consultant</h3>
+          <img src="images/stonetree.png" alt="StoneTree Naturopathic Clinic Logo">
+          <p>Designed and implemented secure file-sharing systems using network-attached storage with role-based access control and encrypted protocols. Resolved critical point-of-sale issues and upgraded legacy systems.</p>
+        </div>
+        <div class="timeline-dot"></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-content left">
+          <h3>Neural Network Architecture</h3>
+          <img src="images/tensorflow.png" alt="TensorFlow Logo">
+          <p>Engineered a Neural Network for covid and viral pneumonia diagnosis with 97.55% accuracy at a model size that is deployable on mobile hardware.</p>
+        </div>
+        <div class="timeline-dot"></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-content right">
+          <h3>Software Developer at Chimoney</h3>
+          <img src="images/chimoney.png" alt="Chimoney Logo">
+          <p>Contributed to Chimoney's global payment platform by developing a modular iOS SDK in Swift. Used Alamofire for networking, implemented XCTest, and created documentation for developer integration.</p>
+        </div>
+        <div class="timeline-dot"></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-content left">
+          <h3>Quantum Computing Capstone Project</h3>
+          <img src="images/qiskit.png" alt="Qiskit Logo">
+          <p>Developed a quantum assisted blockchain protocol with higher throughput and better energy efficiency. Implemented quantum hashing and entanglement for validation with 98%+ consensus accuracy.</p>
+        </div>
+        <div class="timeline-dot"></div>
+      </div>
+    </div>
+  </div>
+  <div class="contact__section">
+    <div class="contact__wrapper">
+      <h2>Contact Me</h2>
+      <form id="contact-form" action="https://formspree.io/f/mvgzealp" method="POST">
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="email" name="email" placeholder="Your Email" required>
+        <textarea name="message" placeholder="Your Message" required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+  <script src="js/typed-init.js"></script>
+  <script src="js/timeline-interaction.js"></script>
+  <script src="js/dynamic-background.js"></script>
+  <script src="js/smooth-scroll.js"></script>
 </body>
 </html>
