@@ -100,7 +100,7 @@
             const distX = x - mouseX;
             const distY = y - mouseY;
             const dist = Math.sqrt(distX * distX + distY * distY);
-            const maxDist = 400;
+            const maxDist = 800;
             
             if (dist < maxDist) {
               const influence = (1 - dist / maxDist) * 15;
