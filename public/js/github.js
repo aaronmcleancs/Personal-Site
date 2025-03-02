@@ -2,6 +2,7 @@ const projectConfig = {
   'CVV_15M_SARS-CoV-2': {
     owner: 'aaronmcleancs',
     repo: 'CVV_15M_SARS-CoV-2',
+    title: 'COVID-19 X-Ray Detector',
     description: 'TensorFlow Vision model for detecting cases of COVID-19 from lung x-rays, deployable on mobile hardware.',
     section: 0,
     skills: ['Python', 'TensorFlow', 'Machine Learning', 'Computer Vision', 'Amazon Web Services (AWS)']
@@ -9,6 +10,7 @@ const projectConfig = {
   'RepBook': {
     owner: 'aaronmcleancs',
     repo: 'RepBook-DemoServer',
+    title: 'Fitness Dashboard & AI Assistant',
     description: 'iOS Fitness Dashboard, user auth and secure storage with node and postgreSQL. Workout builder, AI Assistant with dynamic semantics fetching.',
     section: 1,
     skills: ['Swift', 'iOS Development', 'Node.js', 'Secure Authentication', 'REST']
@@ -16,6 +18,7 @@ const projectConfig = {
   'ParticleBox': {
     owner: 'aaronmcleancs',
     repo: 'ParticleBox',
+    title: 'ParticleBox Dynamics Engine',
     description: 'Multithreaded particle dynamics engine for visualizing forces among thousands of particles in real-time. Optimized for efficient rendering.',
     section: 2,
     skills: ['C++', 'Systems Programming', 'Optimization']
@@ -23,6 +26,7 @@ const projectConfig = {
   'Quantum': {
     owner: 'aaronmcleancs',
     repo: 'FidelityChain',
+    title: 'Quantum Fidelity Blockchain',
     description: 'Quantum-enhanced blockchain consensus protocol replacing proof-of-work with quantum state fidelity checks, reducing computational complexity from O(n·m) to O(log n).',
     section: 3,
     skills: ['Quantum Computing', 'Distributed Systems', 'Qiskit', 'Blockchain', 'Secure Communications']
@@ -56,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function initializeProjectCard(project, container) {
   const titleElement = container.querySelector('.project-title');
-  if (titleElement) titleElement.textContent = project.repo.replace(/-/g, ' ');
+  if (titleElement) titleElement.textContent = project.title || project.repo.replace(/-/g, ' ');
   const descriptionElement = container.querySelector('.project-description');
   if (descriptionElement) descriptionElement.textContent = project.description;
   const repoLink = container.querySelector('.project-repo-link');

@@ -449,7 +449,6 @@ code {
   background-color: rgba(255, 255, 255, 0.12);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
 }
-
 .fullscreen-viewer {
   display: none;
   position: fixed;
@@ -536,6 +535,35 @@ code {
 .fullscreen-close:hover {
   background: rgba(220, 53, 69, 0.6);
   transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .fullscreen-viewer {
+    padding: var(--space-sm);
+  }
+  
+  .fullscreen-image {
+    max-width: 85%;
+    max-height: 60vh;
+  }
+  
+  .fullscreen-nav {
+    padding: 0 var(--space-sm);
+  }
+  
+  .fullscreen-nav button {
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+  }
+  
+  .fullscreen-close {
+    width: 35px;
+    height: 35px;
+    font-size: 1.1rem;
+    top: calc(var(--space-md) + 40px);
+    right: var(--space-sm);
+  }
 }
 
 ul, ol {
