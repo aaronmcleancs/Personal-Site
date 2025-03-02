@@ -72,29 +72,26 @@
         <section id="overview" class="showcase__section">
             <h2>Overview</h2>
             <p>
-                RepBook demonstrates a complete three-tier architecture implementation with distinct presentation, application, and data tiers. Developed using Swift (iOS client), Node.js (server), and PostgreSQL (database), this full-stack application showcases modern software architecture principles and scalable design patterns. The project implements a comprehensive workout tracking system with secure authentication, data synchronization, and intelligent workout recommendations through a custom AI engine.
-            </p>
-            <p>
-                The system architecture follows RESTful API principles with stateless communication between the client and server, ensuring horizontal scalability. Authentication is handled through a custom token-based system utilizing cryptographic libraries on both ends, with bcrypt for server-side password hashing and Apple's Keychain for secure token storage on iOS. The network layer abstracts all API interactions through a custom Network Manager utility that implements protocol-oriented design patterns, making the codebase testable and maintainable.
+                Full-stack iOS fitness assistant made in Objective-C and Swift deployed with a demo Node.js SQL backend.
             </p>
             
             <div class="key-features">
                 <h3>Technical Implementation Highlights</h3>
                 <ul>
                     <li>
-                        <strong>Three-Tier Architecture:</strong> Clear separation between presentation (iOS), application logic (Node.js), and data persistence (PostgreSQL) layers.
+                        <strong>Three-Tier Architecture:</strong> Frontend (SwiftUI), application logic (Node.js), and databse (PostgreSQL) layers.
                     </li>
                     <li>
-                        <strong>RESTful API Design:</strong> Implemented 15+ API endpoints following REST principles with proper resource naming, HTTP method usage, and status code implementation.
+                        <strong>RESTful API Design:</strong> Implemented 15+ API endpoints following REST principles with SWAGGER Documentation.
                     </li>
                     <li>
-                        <strong>Protocol-Oriented Network Layer:</strong> Custom Swift Network Manager implementing protocol-oriented design for testability and abstraction.
+                        <strong>Protocol-Oriented Network Layer:</strong> Custom Swift NetworkManager implementing protocol-oriented design for testability and abstraction.
                     </li>
                     <li>
                         <strong>Semantic AI Engine:</strong> Workout recommendation system utilizing NLP techniques to analyze workout history and generate personalized plans.
                     </li>
                     <li>
-                        <strong>Database Optimization:</strong> Normalized PostgreSQL schema with proper indexing strategies, reducing query times by 60% compared to initial implementation.
+                        <strong>Database Optimization:</strong> Rigourously Normalized PostgreSQL schema with proper indexing strategies.
                     </li>
                 </ul>
             </div>
@@ -103,13 +100,7 @@
         <section id="background" class="showcase__section">
             <h2>Background</h2>
             <p>
-                RepBook was developed as a capstone project to demonstrate full-stack engineering capabilities across iOS development, backend architecture, and database design. The project specifically focuses on implementing industry-standard patterns and practices that are highly valued in enterprise software development.
-            </p>
-            <p>
-                The technical challenges addressed include secure user authentication across platforms, efficient data synchronization between mobile clients and cloud infrastructure, and implementing a modular architecture that allows for independent scaling of system components. Additionally, the project demonstrates practical implementation of machine learning concepts through the AI recommendation engine.
-            </p>
-            <p>
-                The development process followed agile methodologies with test-driven development practices for critical system components. This included unit testing for API endpoints, integration testing for the authentication flow, and UI testing for the iOS application. The combination of Swift for iOS development, Node.js for backend APIs, and PostgreSQL for data storage represents a modern, scalable technology stack commonly used in production environments.
+                RepBook was developed as a database optimization project, demonstrating backend architecture, and database design.
             </p>
         </section>
 
@@ -122,50 +113,31 @@
             </p>
             <ul>
                 <li><strong>Presentation Tier (iOS):</strong> Swift and Objective-C implementation using MVVM architecture for separation of UI and business logic</li>
-                <li><strong>Application Tier (Node.js):</strong> Express-based API server with middleware architecture for request processing, validation, and response formatting</li>
-                <li><strong>Data Tier (PostgreSQL):</strong> Normalized relational database with optimized schema design and index strategies</li>
+                <li><strong>Application Tier (Node.js):</strong> Express-based API server with middleware</li>
+                <li><strong>Data Tier (PostgreSQL):</strong> 3NF relational database</li>
             </ul>
-            
-            <h3>Backend Implementation</h3>
-            <p>
-                The Node.js backend implements a modular architecture with separation of concerns:
-            </p>
-            <ul>
-                <li><strong>Router Layer:</strong> Express routers for endpoint definition and request routing</li>
-                <li><strong>Controller Layer:</strong> Business logic implementation and request processing</li>
-                <li><strong>Service Layer:</strong> Reusable service components for cross-cutting concerns</li>
-                <li><strong>Data Access Layer:</strong> Database interaction through an ORM abstraction</li>
-            </ul>
-            
-            <p>
-                Authentication is handled through a JWT-based authentication system with middleware validation:
-            </p>
-            
-            <h3>iOS Client Architecture</h3>
-            <p>
-                The iOS client implements MVVM architecture with reactive bindings and protocol-oriented design:
-            </p>
-            <ul>
-                <li><strong>View Layer:</strong> UIKit-based views with programmatic constraints for responsive layouts</li>
-                <li><strong>ViewModel Layer:</strong> Business logic and data transformation for view consumption</li>
-                <li><strong>Model Layer:</strong> Swift structs implementing Codable for seamless JSON serialization</li>
-                <li><strong>Network Layer:</strong> Protocol-based network abstraction with URLSession implementation</li>
-            </ul>
-            
             <h3>API Documentation</h3>
             <p>
-                The RESTful API follows OpenAPI specification with comprehensive documentation. Core endpoints include:
+                The RESTful API follows the OpenAPI specification with comprehensive documentation. Core endpoints include:
             </p>
             <ul>
-                <li><code>POST /api/v1/auth/signup</code> - Create new user account with validation</li>
-                <li><code>POST /api/v1/auth/login</code> - Authenticate user and generate session token</li>
-                <li><code>GET /api/v1/users/:userId/profile</code> - Retrieve user profile data</li>
-                <li><code>GET /api/v1/users/:userId/metrics</code> - Retrieve user fitness metrics</li>
-                <li><code>POST /api/v1/workouts</code> - Create new workout plan</li>
-                <li><code>GET /api/v1/workouts/:workoutId</code> - Retrieve specific workout details</li>
-                <li><code>PUT /api/v1/workouts/:workoutId</code> - Update existing workout</li>
-                <li><code>POST /api/v1/logs</code> - Record completed workout session</li>
-                <li><code>GET /api/v1/recommendations</code> - Generate AI-powered workout recommendations</li>
+                <li><code>POST /signup</code> - Register a new user with account and metrics data.</li>
+                <li><code>POST /login</code> - Authenticate a user and generate an auth key.</li>
+                <li><code>GET /checkUsername/:username</code> - Check if a username is available.</li>
+                <li><code>POST /exercises</code> - Add exercises to a workout.</li>
+                <li><code>POST /updateUserInfo/:memberId</code> - Update personal user information.</li>
+                <li><code>GET /userDataAndMetrics/:memberId</code> - Retrieve user data and physical metrics.</li>
+                <li><code>POST /setGymMembership</code> - Set or update gym membership details.</li>
+                <li><code>GET /workouts/:memberId</code> - Retrieve all workouts for a specific member.</li>
+                <li><code>GET /membersMetrics/:memberId</code> - Retrieve a member's physical metrics.</li>
+                <li><code>POST /createWorkout/:memberId</code> - Create a new workout.</li>
+                <li><code>GET /exercises</code> - Retrieve a list of all exercises.</li>
+                <li><code>GET /exercises/search?workoutId=:workoutId</code> - Retrieve exercises for a specific workout.</li>
+                <li><code>GET /exercises/search?q=</code> - Search exercises by name.</li>
+                <li><code>DELETE /workouts/:workoutId</code> - Delete a specific workout.</li>
+                <li><code>PUT /workouts/:workoutId</code> - Rename an existing workout.</li>
+                <li><code>POST /loggedWorkouts</code> - Log a completed workout session.</li>
+                <li><code>GET /fetchSafeData/:memberId</code> - Fetch filtered user data and workout details.</li>
             </ul>
             
             <h3>AI Recommendation Engine</h3>
@@ -177,48 +149,6 @@
                 <li><strong>Feature Engineering:</strong> Extraction of meaningful features from raw workout data</li>
                 <li><strong>Pattern Recognition:</strong> Analysis of exercise combinations, intensity progression, and recovery patterns</li>
                 <li><strong>Recommendation Generation:</strong> Contextual recommendation based on user goals, history, and physiological constraints</li>
-            </ul>
-        </section>
-
-        <section id="performance" class="showcase__section">
-            <h2>Performance & Scalability</h2>
-            <p>
-                Performance optimization was a key consideration throughout development:
-            </p>
-            
-            <h3>Database Optimization</h3>
-            <ul>
-                <li><strong>Query Optimization:</strong> Reduced complex query execution time from 250ms to 85ms through proper indexing</li>
-                <li><strong>Connection Pooling:</strong> Implemented pg-pool for efficient database connection management</li>
-                <li><strong>Prepared Statements:</strong> All database interactions use prepared statements to prevent SQL injection and optimize query planning</li>
-                <li><strong>Schema Optimization:</strong> Normalization to 3NF while maintaining practical query performance</li>
-            </ul>
-            
-            <h3>API Performance</h3>
-            <ul>
-                <li><strong>Response Caching:</strong> Implemented Redis caching for frequently accessed data, reducing response time by 70%</li>
-                <li><strong>Payload Optimization:</strong> Implemented sparse fieldsets to reduce payload size by up to 60%</li>
-                <li><strong>Connection Optimization:</strong> Keep-alive headers and connection reuse for reduced latency</li>
-                <li><strong>Rate Limiting:</strong> Implemented token bucket algorithm to prevent API abuse</li>
-            </ul>
-            
-            <h3>iOS Client Performance</h3>
-            <ul>
-                <li><strong>Memory Management:</strong> Implemented proper memory management patterns to prevent leaks</li>
-                <li><strong>Background Processing:</strong> Heavy operations offloaded to background threads using GCD</li>
-                <li><strong>Image Optimization:</strong> Implemented progressive image loading and caching</li>
-                <li><strong>UI Performance:</strong> Cell reuse optimization and shadow layer caching for smooth scrolling</li>
-            </ul>
-            
-            <h3>Scalability Benchmarks</h3>
-            <p>
-                Performance testing demonstrated the system's scalability:
-            </p>
-            <ul>
-                <li><strong>API Response Time:</strong> Average response time of 75ms at p95 under load (1000 concurrent users)</li>
-                <li><strong>Database Throughput:</strong> Sustained 1200 queries per second with normalized response times</li>
-                <li><strong>System Scalability:</strong> Linear performance scaling when adding additional application servers</li>
-                <li><strong>Memory Usage:</strong> Stable memory footprint of 180MB per Node.js instance under full load</li>
             </ul>
         </section>
 

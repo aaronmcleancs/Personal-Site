@@ -78,21 +78,17 @@
             </p>
             <h3>Key Features</h3>
             <ul>
-                <li>High-accuracy classification (94.03%)</li>
+                <li>High-accuracy classification</li>
                 <li>Three-class discrimination: COVID-19, normal, and viral pneumonia</li>
                 <li>Mixed precision training </li>
                 <li>TensorFlow Metal acceleration for Apple M</li>
-                <li>Comprehensive data preprocessing and augmentation pipeline</li>
-                <li>Implementation of AlexNet-inspired architectural principles</li>
-                <li>Advanced regularization techniques to prevent overfitting</li>
-                <li>Custom TensorBoard integration for detailed training analytics</li>
             </ul>
         </section>
 
         <section id="background" class="showcase__section">
             <h2>Background & Methodology</h2>
             <p>
-                Our approach borrows key principles from AlexNet, a landmark CNN introduced by Krizhevsky et al. (2012), adapting them to fit the specific challenges of classifying COVID-19, normal, and pneumonia-affected chest X-rays. By incorporating ReLU activation functions, LRN, overlapping pooling, and dropout, we ensure the model can extract intricate patterns from medical images, improve its generalization capabilities, and mitigate overfitting.
+                The implementation incorporates ReLU activation functions, LRN, overlapping pooling, and dropout layers. The model can extract intricate patterns from X-ray images at a high degree of accuracy.
             </p>
 
             <h3>ReLU Activation Function</h3>
@@ -105,12 +101,11 @@
                 \]
             </p>
             <p>
-                ReLU accelerates training by preventing vanishing gradients and promoting sparse activations. This increased efficiency is critical for a large-scale model (~15 million parameters) and ensures that our training cycles are more productive, converging faster to high accuracy.
-            </p>
+                ReLU accelerates training by preventing vanishing gradients and promoting sparse activations.
 
             <h3>Local Response Normalization (LRN)</h3>
             <p>
-                To enhance feature selectivity, our model implements LRN, encouraging local competition among neurons and emphasizing discriminative patterns:
+                To enhance feature selectivity, our model implements LRN which ecourages higher competition among neurons:
             </p>
             <p>
                 \[
@@ -118,12 +113,12 @@
                 \]
             </p>
             <p>
-                LRN helps reduce redundancy in learned features and fosters robust representations, which is especially valuable when distinguishing subtle differences in chest radiographs.
+                LRN helps minimize redundancy in datasets with overlapping image features by reducing the impact of already learned features that should be omitted.
             </p>
 
             <h3>Overlapping Pooling</h3>
             <p>
-                By using overlapping pooling regions (\( s < z \)), the model captures a more fine-grained spatial representation of features. This subtle architectural choice helps reduce classification error rates and strengthens generalization, making it easier for the model to identify nuanced pathological markers in lung fields.
+                By using overlapping pooling regions (\( s < z \)), the model gains a spatial representation of the novelties in the X-rays.
             </p>
 
             <h3>Dropout Regularization</h3>
@@ -134,9 +129,6 @@
                 \[
                 P(h_j \mid x) = \sum_i P(h_j \mid i) P(i \mid x)
                 \]
-            </p>
-            <p>
-                Randomly "dropping" neurons during training introduces a form of ensemble averaging, improving the model's ability to generalize beyond its training distribution. In our implementation, we strategically place dropout layers after each of the dense layers, creating a powerful regularization effect that significantly improves generalization to unseen X-ray images.
             </p>
 
             <h3>Mixed Precision Training</h3>
@@ -150,7 +142,6 @@
                 <li>Reduce memory consumption by using 16-bit representation during computation</li>
                 <li>Maintain numerical stability with 32-bit master weights</li>
                 <li>Leverage the M-series processors' optimized matrix multiplication units</li>
-                <li>Achieve up to 2× throughput compared to single-precision training</li>
             </ul>
         </section>
 
@@ -159,14 +150,7 @@
             
             <h3>Data Pipeline & Preprocessing</h3>
             <p>
-                The model was trained on a curated dataset of 17,000 chest X-ray images across three categories. Our data pipeline implements several key computer science concepts:
-            </p>
-            <ul>
-                <li><strong>Efficient I/O Handling:</strong> Asynchronous data loading with batch processing</li>
-                <li><strong>Image Normalization:</strong> Scaling pixel values to [0,1] to stabilize gradient flow</li>
-                <li><strong>Label Encoding:</strong> Converting categorical labels to one-hot encoded vectors</li>
-                <li><strong>Stratified Sampling:</strong> Maintaining class balance across train/validation/test splits</li>
-            </ul>
+                The model was trained on a dataset of 17,000 chest X-ray images across three categories.
 
             <h3>Model Architecture</h3>
             <p>
@@ -190,34 +174,12 @@
                 <li>Final classification layer with softmax activation</li>
                 <li>Approximately 15 million trainable parameters</li>
             </ul>
-
-            <h3>Hardware Acceleration Configuration</h3>
-            <p>
-                We implemented specialized hardware detection and optimization that demonstrates principles of:
-            </p>
-            <ul>
-                <li>Device abstraction and hardware detection</li>
-                <li>Memory management optimization</li>
-                <li>Numerical precision configuration</li>
-                <li>Cross-platform compatibility design</li>
-            </ul>
-            
-            <h3>Custom TensorBoard Integration</h3>
-            <p>
-                We extended TensorFlow's callback system to capture detailed training metrics through object-oriented programming techniques, demonstrating:
-            </p>
-            <ul>
-                <li>Inheritance and polymorphism in Python</li>
-                <li>Event-driven programming through callback mechanisms</li>
-                <li>Graceful exception handling for robust execution</li>
-                <li>Introspection to access optimizer properties dynamically</li>
-            </ul>
         </section>
 
         <section id="performance" class="showcase__section">
             <h2>Performance & Results</h2>
             <p>
-                Our model achieves state-of-the-art performance on the three-class classification task. The quantitative results demonstrate both high accuracy and balanced performance across classes:
+                Our model achieved >95% accuracy classifying among three categories:
             </p>
 
             <h3>Model Configuration</h3>
@@ -251,14 +213,11 @@ weighted avg       0.94      0.94      0.94      1993
             </pre>
 
             <h3>Performance Analysis</h3>
-            <p>
-                A detailed examination of the confusion matrix reveals several important insights:
-            </p>
             <ul>
                 <li><strong>COVID-19 Detection:</strong> The model correctly identified 708 out of 724 COVID-19 cases (97.8% recall), demonstrating exceptional sensitivity for this critical class</li>
                 <li><strong>Normal Classification:</strong> 922 out of 1000 normal cases were correctly identified (92.2% recall), with most misclassifications (70 cases) incorrectly labeled as COVID-19</li>
                 <li><strong>Pneumonia Identification:</strong> The model correctly classified 244 out of 269 pneumonia cases (90.7% recall)</li>
-                <li><strong>Cross-Class Errors:</strong> Very few COVID-19 cases were misclassified as pneumonia (6 cases) and vice versa (11 cases), indicating the model effectively distinguishes between these pathologies</li>
+                <li><strong>Cross-Class Errors:</strong> Very few COVID-19 cases were misclassified as pneumonia (6 cases) and vice versa (11 cases)</li>
             </ul>
 
             <h3>Error Analysis</h3>
@@ -294,31 +253,6 @@ weighted avg       0.94      0.94      0.94      1993
                 <li><strong>Inference Speed:</strong> ~25ms per image (40 images per second)</li>
                 <li><strong>Memory Footprint:</strong> Peak memory usage of 4.8GB during training</li>
                 <li><strong>Power Efficiency:</strong> Training completed on battery power with minimal thermal throttling</li>
-            </ul>
-
-            <h3>Conclusion & Future Work</h3>
-            <p>
-                The CVV_15M_SARS-CoV-2 model successfully demonstrates how principles from computer vision can be applied to solve critical real-world medical classification problems. With a test accuracy of 94.03% across three classes, the model achieves clinical-grade performance while remaining computationally efficient enough for deployment on consumer hardware.
-            </p>
-
-            <p>
-                Key contributions include:
-            </p>
-            <ul>
-                <li>An AlexNet-inspired architecture specifically optimized for chest X-ray classification</li>
-                <li>Hardware-aware implementation targeting Apple M-series processors</li>
-                <li>Comprehensive evaluation demonstrating balanced performance across all classes</li>
-                <li>Mixed-precision training approach that maximizes computational efficiency</li>
-            </ul>
-
-            <p>
-                Future work directions include:
-            </p>
-            <ul>
-                <li><strong>Model Distillation:</strong> Creating a smaller, faster model for mobile deployment</li>
-                <li><strong>Explainability:</strong> Implementing gradient-based visualization techniques to highlight regions of interest</li>
-                <li><strong>Multi-modal Learning:</strong> Incorporating clinical metadata to improve diagnostic accuracy</li>
-                <li><strong>Transfer Learning:</strong> Extending the model to detect additional respiratory conditions</li>
             </ul>
         </section>
 
