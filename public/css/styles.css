@@ -956,6 +956,7 @@ body {
   .timeline-content.left,
   .timeline-content.right {
     width: 90%;
+    border-bottom: 50px;
     left: 5% !important;
     text-align: left;
     position: relative;
@@ -963,6 +964,10 @@ body {
   
   .timeline-line {
     left: 3%;
+  }
+  
+  .timeline-item {
+    height: auto;
   }
   
   .timeline-item::before {
