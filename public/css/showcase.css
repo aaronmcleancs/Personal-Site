@@ -723,8 +723,6 @@ tbody tr:hover {
   }
 }
 
-
-
 .project-card {
   background: var(--glass-bg);
   backdrop-filter: blur(var(--glass-blur));

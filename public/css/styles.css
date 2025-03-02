@@ -327,7 +327,7 @@ body {
   padding-top: var(--space-sm);
 }
 
-/* Mobile-specific styles */
+
 @media (max-width: 768px) {
   .hero2__section {
     border-radius: 0;
@@ -1216,7 +1216,7 @@ body {
 
 .contact__section {
   padding: var(--space-xl) 0;
-  margin: var(--space-xl) 0; /* increased margin */
+  margin: var(--space-xl) 0;
   background-color: var(--bg-primary);
   color: var(--text-primary);
   position: relative;
@@ -1237,7 +1237,7 @@ body {
 .contact__wrapper {
   max-width: 800px;
   margin: 0 auto;
-  padding: 0 var(--space-lg); /* increased horizontal padding */
+  padding: 0 var(--space-lg);
   text-align: center;
   position: relative;
   z-index: 1;
@@ -1247,7 +1247,7 @@ body {
   font-size: var(--font-size-4xl);
   margin-bottom: var(--space-xl);
   color: var(--primary);
-  margin-bottom: 30px; /* increased margin-bottom */
+  margin-bottom: 30px;
   font-weight: 800;
   position: relative;
   display: inline-block;
@@ -1280,7 +1280,7 @@ body {
   border-radius: var(--radius-lg);
   color: var(--text-primary);
   font-size: var(--font-size-md);
-  font-weight: 600; /* thicker text */
+  font-weight: 600;
   transition: background var(--transition-medium), border var(--transition-medium), 
     transform var(--transition-fast);
 }
@@ -1310,10 +1310,10 @@ body {
   background-color: var(--primary);
   color: #ffffff;
   border: none;
-  border-radius: var(--radius-md); /* increased border radius */
+  border-radius: var(--radius-md);
   cursor: pointer;
   font-size: var(--font-size-md);
-  font-weight: 600; /* thicker text */
+  font-weight: 600;
   transition: background-color var(--transition-medium), transform var(--transition-fast),
     box-shadow var(--transition-fast);
   position: relative;
