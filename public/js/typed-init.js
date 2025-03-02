@@ -17,3 +17,5 @@ var typed = new Typed('.auto-type', {
     backSpeed: 40,
     loop: true
   });
+
+  
