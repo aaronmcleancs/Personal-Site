@@ -450,7 +450,6 @@ code {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
 }
 
-
 .fullscreen-viewer {
   display: none;
   position: fixed;
@@ -462,6 +461,7 @@ code {
   opacity: 0;
   transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   backdrop-filter: blur(40px);
+  padding: var(--space-md);
 }
 
 .fullscreen-viewer.active {
@@ -488,7 +488,7 @@ code {
   top: 50%;
   width: 100%;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   padding: 0 var(--space-md);
   transform: translateY(-50%);
 }
@@ -516,7 +516,7 @@ code {
 
 .fullscreen-close {
   position: absolute;
-  top: var(--space-md);
+  top: calc(var(--space-md) + 60px);
   right: var(--space-md);
   background: rgba(30, 30, 32, 0.5);
   border: none;
@@ -537,7 +537,6 @@ code {
   background: rgba(220, 53, 69, 0.6);
   transform: scale(1.1);
 }
-
 
 ul, ol {
   padding-left: 1.5rem;
