@@ -37,7 +37,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }, 1000);
   
   function updateActiveSection() {
-    // Hide progress tracker if the fullscreen viewer is active.
     if (document.querySelector('.fullscreen-viewer.active')) {
       progressTracker.style.display = 'none';
       return;

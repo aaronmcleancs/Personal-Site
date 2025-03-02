@@ -16,10 +16,19 @@ document.addEventListener('DOMContentLoaded', function() {
     currentIndex = index;
     fullscreenImage.src = galleryImages[currentIndex].src;
     viewer.classList.add('active');
+    const progressTracker = document.querySelector('.progress-tracker');
+    if (progressTracker) {
+      progressTracker.style.display = 'none';
+    }
   }
 
   function closeViewer() {
     viewer.classList.remove('active');
+    const progressTracker = document.querySelector('.progress-tracker');
+    if (progressTracker) {
+      progressTracker.style.display = 'flex';
+    }
+    window.dispatchEvent(new Event('scroll'));
   }
 
   function showPrev() {
