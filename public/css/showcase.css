@@ -89,7 +89,7 @@ img {
   text-decoration: none;
   font-weight: 300;
   font-size: var(--font-size-md);
-  margin: 0 var(--space-sm);
+  margin: 0 var(--space-md);
   transition: all var(--transition-medium);
   position: relative;
 }
