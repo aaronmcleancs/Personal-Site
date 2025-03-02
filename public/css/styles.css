@@ -24,6 +24,7 @@
   --transition-fast: 0.2s ease;
   --transition-medium: 0.3s ease;
   --transition-slow: 0.5s ease;
+  --logo-scroll-duration: 60s;
   
  
   --radius-sm: 5px;
@@ -753,12 +754,12 @@ body {
     line-height: 1.4;
   }
 }
-
 .timeline__section {
   position: relative;
-  padding: var(--space-xl) 0;
-  margin: var(--space-lg) 0;
-  background-color: var(--bg-primary);
+  padding: 50px 0;
+  padding-bottom: 150px;
+  margin: 30px 0;
+  background-color: #000000;
   overflow: hidden;
 }
 
@@ -783,7 +784,7 @@ body {
 .timeline-line {
   position: absolute;
   width: 2px;
-  background: linear-gradient(180deg, var(--primary), transparent);
+  background: linear-gradient(180deg, var(--accentColor), transparent);
   top: 0;
   bottom: 0;
   left: 50%;
@@ -811,68 +812,25 @@ body {
   transform: translateX(-50%);
   width: 40px;
   height: 2px;
-  background-color: var(--primary);
-}
-
-@keyframes pulse {
-  0%, 100% {
-    opacity: 0.6;
-  }
-  50% {
-    opacity: 1;
-  }
-}
-
-.timeline__section {
-  position: relative;
-  padding: 50px 0;
-  padding-bottom: 150px;
-  margin: 30px 0;
-  background-color: #000000; 
-}
-
-.timeline__wrapper {
-  position: relative;
-  width: 90%;
-  margin: 0 auto;
-}
-
-.timeline-line {
-  position: absolute;
-  width: 2px;
-  background: linear-gradient(180deg, var(--accentColor), transparent);
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1; 
-}
-
-.timeline-line::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 40px;
-  height: 2px;
   background-color: var(--accentColor);
 }
 
 @keyframes pulse {
   0%, 100% {
-      background: linear-gradient(180deg, var(--accentColor), transparent);
+    opacity: 0.6;
+    background: linear-gradient(180deg, var(--accentColor), transparent);
   }
   50% {
-      background: linear-gradient(180deg, transparent, var(--accentColor));
+    opacity: 1;
+    background: linear-gradient(180deg, transparent, var(--accentColor));
   }
 }
 
-
 .timeline-item {
   position: relative;
-  margin: var(--space-xl) 0;
+  margin: 50px 0;
   z-index: 2;
+  height: 120px;
 }
 
 .timeline-item::before {
@@ -881,12 +839,11 @@ body {
   top: 20px;
   left: 50%;
   transform: translateX(-50%);
-  width: 12px;
-  height: 12px;
-  background-color: var(--bg-primary);
-  border: 2px solid var(--primary);
+  width: 5px;
+  height: 5px;
+  background-color: var(--accentColor);
   border-radius: 50%;
-  box-shadow: 0 0 0 4px rgba(113, 146, 227, 0.2);
+  box-shadow: 0 0 0 2px var(--accentColor);
   transition: all var(--transition-medium);
   z-index: 3;
 }
@@ -898,18 +855,19 @@ body {
 
 .timeline-content {
   width: 45%;
-  padding: var(--space-md);
+  padding: 20px;
   background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(5px);
-  position: relative;
-  border-radius: var(--radius-md);
-  color: var(--text-primary);
-  transition: transform var(--transition-medium), box-shadow var(--transition-medium), background var(--transition-medium);
+  position: absolute;
+  border-radius: 12px;
+  color: var(--white);
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  transition: transform 0.3s ease, height 0.3s ease, box-shadow var(--transition-medium), background var(--transition-medium);
   border: 1px solid rgba(255, 255, 255, 0.05);
   will-change: transform, box-shadow, background;
-  min-height: 100px;
-  z-index: 2;
-  position: absolute;
+  overflow: hidden;
+  height: auto;
+  z-index: 10;
 }
 
 .timeline-content::after {
@@ -928,17 +886,9 @@ body {
   text-align: right;
 }
 
-.timeline-content.left::before {
-  right: -20px;
-}
-
 .timeline-content.right {
   left: 55%;
   text-align: left;
-}
-
-.timeline-content.right::before {
-  left: -20px;
 }
 
 .timeline-content:hover {
@@ -948,8 +898,8 @@ body {
 
 .timeline-content h3 {
   margin-top: 0;
-  font-size: var(--font-size-2xl);
-  color: var(--primary);
+  font-size: 1.7rem;
+  color: var(--accentColor);
   margin-bottom: var(--space-sm);
   position: relative;
   cursor: pointer;
@@ -960,13 +910,13 @@ body {
 }
 
 .timeline-content p {
-  font-size: var(--font-size-md);
+  font-size: 1.2rem;
   color: var(--text-secondary);
   line-height: 1.6;
   opacity: 0;
   max-height: 0;
   overflow: hidden;
-  transition: opacity var(--transition-medium), max-height var(--transition-medium);
+  transition: opacity 0.3s ease, max-height 0.3s ease;
 }
 
 .timeline-content.active p {
@@ -977,8 +927,8 @@ body {
 .timeline-content img {
   height: 40px;
   width: 40px;
-  margin-bottom: var(--space-sm);
-  border-radius: var(--radius-sm);
+  margin-bottom: 10px;
+  border-radius: 5px;
   object-fit: cover;
   transition: transform var(--transition-medium);
   transform-origin: center center;
@@ -988,169 +938,59 @@ body {
   transform: scale(1.1);
 }
 
-@media screen and (max-width: 1300px) {
-  .timeline-content,
-  .timeline-content.left,
-  .timeline-content.right {
-    width: 90%;
-    left: 10%;
-    text-align: left;
-  }
-  
-  .timeline-content.left::before,
-  .timeline-content.right::before {
-    left: -30px;
-    width: 30px;
-  }
-  
-  .timeline-line {
-    left: 5%;
-  }
-  
-  .timeline-item::before {
-    left: 5%;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .timeline-item {
-    margin: var(--space-lg) 0;
-  }
-  
-  .timeline-content h3 {
-    font-size: var(--font-size-md);
-  }
-}
-
 .social-menu {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-@media (max-width: 1300px) {
-  .social-menu {
-    justify-content: center;
+@media screen and (min-width: 769px) {
+  .timeline-content:hover p {
+    opacity: 1;
+    max-height: 500px;
   }
-}
-
-
-.timeline-item {
-  position: relative;
-  margin: 50px 0;
-  z-index: 2; 
-  height: 120px; /* Fixed height for timeline items */
-}
-
-.timeline-item::before {
-  content: '';
-  position: absolute;
-  top: 20px; 
-  left: 50%;
-  transform: translateX(-50%);
-  width: 5px;
-  height: 5px;
-  background-color: var(--accentColor);
-  border-radius: 50%;
-  box-shadow: 0 0 0 2px var(--accentColor);
-}
-
-.timeline-content {
-  width: 45%;
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(5px);
-  position: absolute; /* Changed to absolute positioning */
-  border-radius: 12px;
-  color: var(--white);
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  transition: transform 0.3s ease, height 0.3s ease;
-  overflow: hidden; /* Hide overflow content */
-  height: auto; /* Start with auto height */
-  z-index: 10; /* Ensure it stays above other elements */
-}
-
-
-.timeline-content.left {
-  left: 0;
-  text-align: right;
-}
-
-.timeline-content.right {
-  left: 55%;
-  text-align: left;
-}
-
-.timeline-content h3 {
-  margin-top: 0;
-  font-size: 1.7rem;
-  color: var(--accentColor);
-}
-
-.timeline-content p {
-  font-size: 1.2rem;
-}
-
-.timeline-content img {
-  height: 40px;
-  width: 40px;
-  margin-bottom: 10px;
-  border-radius: 5px;
 }
 
 @media screen and (max-width: 1300px) {
   .timeline-content,
   .timeline-content.left,
   .timeline-content.right {
-      width: 90%;
-      left: 5% !important;
-      text-align: left;
+    width: 90%;
+    left: 5% !important;
+    text-align: left;
+    position: relative;
   }
+  
   .timeline-line {
-      left: 3%;
+    left: 3%;
   }
   
   .timeline-item::before {
     left: 3%;
     transform: translateX(-50%);
   }
+  
+  .social-menu {
+    justify-content: center;
+  }
 }
-
 
 @media screen and (max-width: 768px) {
   .timeline-item {
-      margin: 30px 0;
-      height: auto;
+    margin: 30px 0;
+    height: auto;
   }
+  
   .timeline-content h3 {
-      font-size: 1.5rem;
+    font-size: 1.5rem;
   }
+  
   .timeline-content p {
-      font-size: 1rem;
-      opacity: 0;
-      max-height: 0;
-      overflow: hidden;
-      transition: opacity 0.3s ease, max-height 0.3s ease;
+    font-size: 1rem;
   }
-  .timeline-content.active p {
-      opacity: 1;
-      max-height: 500px;
-  }
+  
   .timeline-content {
-      position: relative;
-  }
-}
-
-
-@media screen and (min-width: 769px) {
-  .timeline-content p {
-    opacity: 0;
-    max-height: 0;
-    transition: opacity 0.3s ease, max-height 0.3s ease;
-  }
-  .timeline-content:hover p {
-    opacity: 1;
-    max-height: 500px;
+    position: relative;
   }
 }
 
@@ -1433,11 +1273,11 @@ body {
 #contact-form input,
 #contact-form textarea {
   width: 100%;
-  padding: var(--space-sm);
+  padding: var(--space-md);
   background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(5px);
   border: 1px solid rgba(255, 255, 255, 0.07);
-  border-radius: var(--radius-lg); /* increased border radius */
+  border-radius: var(--radius-lg);
   color: var(--text-primary);
   font-size: var(--font-size-md);
   font-weight: 600; /* thicker text */

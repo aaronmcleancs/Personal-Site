@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/social-media-icons.css"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.14.0/devicon.min.css">
     <script src="https://kit.fontawesome.com/ca7f2ffa51.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/js/github.js"></script>
@@ -214,35 +215,51 @@
     });
     </script>
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-    const timelineContents = document.querySelectorAll('.timeline-content');
-    
-    timelineContents.forEach(content => {
-        const heading = content.querySelector('h3');
-        let touchTriggered = false;
+        document.addEventListener('DOMContentLoaded', function() {
+        const timelineContents = document.querySelectorAll('.timeline-content');
         
-        if (heading) {
-            heading.addEventListener('click', function(e) {
-                // Only toggle if the touch event hasn't recently triggered a toggle
-                if (!touchTriggered) {
-                    content.classList.toggle('active');
-                }
-                e.stopPropagation();
-            });
-        }
-        
-        content.addEventListener('touchstart', function(e) {
-            if (e.target !== heading && !heading.contains(e.target)) {
-                touchTriggered = true;
-                content.classList.toggle('active');
-                // Reset the flag after a short delay to allow the click event to be ignored
-                setTimeout(function() {
-                    touchTriggered = false;
-                }, 300);
+        timelineContents.forEach(content => {
+            const heading = content.querySelector('h3');
+            let touchStartX = 0;
+            let touchStartY = 0;
+            let touchMoved = false;
+            let touchHandled = false;
+            
+            if (heading) {
+                heading.addEventListener('click', function(e) {
+                    if (touchHandled) {
+                        touchHandled = false;
+                        return;
+                    }
+                    if (!touchMoved) {
+                        content.classList.toggle('active');
+                    }
+                    e.stopPropagation();
+                });
             }
-        }, { passive: true });
+            
+            content.addEventListener('touchstart', function(e) {
+                const touch = e.touches[0];
+                touchStartX = touch.clientX;
+                touchStartY = touch.clientY;
+                touchMoved = false;
+            }, { passive: true });
+            
+            content.addEventListener('touchmove', function(e) {
+                const touch = e.touches[0];
+                if (Math.abs(touch.clientX - touchStartX) > 10 || Math.abs(touch.clientY - touchStartY) > 10) {
+                    touchMoved = true;
+                }
+            }, { passive: true });
+            
+            content.addEventListener('touchend', function(e) {
+                if (!touchMoved && heading && !heading.contains(e.target)) {
+                    content.classList.toggle('active');
+                    touchHandled = true;
+                }
+            });
+        });
     });
-});
     </script>
     <script>
         (function() {
