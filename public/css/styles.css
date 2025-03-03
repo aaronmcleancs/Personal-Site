@@ -996,6 +996,15 @@ body {
   }
 }
 
+.timeline-date {
+  font-size: 0.85rem;
+  color: #6b7280;
+  font-weight: 500;
+  margin-top: -5px;
+  margin-bottom: 8px;
+  display: block;
+}
+
 .social-menu ul {
   position: relative;
   display: flex;
@@ -1362,3 +1371,4 @@ body {
     grid-column: 1 / 2;
   }
 }
+
