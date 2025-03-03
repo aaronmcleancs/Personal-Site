@@ -71,6 +71,13 @@ function initializeProjectCard(project, container) {
   if (skillsElement && project.skills) {
     skillsElement.textContent = project.skills.join(' · ');
   }
+  const updatedElement = container.querySelector('.updated-date');
+  if (updatedElement) {
+    updatedElement.style.cursor = 'pointer';
+    updatedElement.addEventListener('click', () => {
+      window.open(`https://github.com/${project.owner}/${project.repo}`, '_blank');
+    });
+  }
 }
 
 async function fetchGitHubData(project, container) {

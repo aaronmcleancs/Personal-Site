@@ -66,8 +66,8 @@ document.addEventListener('DOMContentLoaded', function() {
   
   const spacing = 45;
   const baseDotRadius = 2;  
-  const maxDotRadius = 2.5; 
-  const dotColor = 'rgb(32, 32, 32)';
+  const maxDotRadius = 2.8; 
+  const dotColor = 'rgb(68, 68, 68)';
   
   const waveSpeed = 0.005;
   const waveAmplitude = 10;
