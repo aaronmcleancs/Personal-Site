@@ -49,6 +49,11 @@ img {
   display: block;
 }
 
+.navbar .logo a.icon:hover {
+  transform: none !important;
+  color: inherit !important;
+}
+
 
 .showcase__wrapper {
   width: min(100% - 3rem, 1200px);
@@ -56,103 +61,6 @@ img {
   padding: 0 var(--space-md);
 }
 
-.navbar {
-  background-color: rgba(36, 36, 36, 0.326);
-  position: fixed;
-  width: 100%;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  height: 53px;
-  backdrop-filter: blur(9px);
-  z-index: 9999999;
-  transition: height var(--transition-medium), background-color var(--transition-medium);
-  padding: 0 var(--space-md);
-}
-
-@media screen and (max-width: 1300px) {
-  .navbar {
-    height: 50px;
-    padding: 0 var(--space-sm);
-  }
-}
-
-.icon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 50px;
-}
-
-.navbar a {
-  color: var(--text-primary);
-  text-decoration: none;
-  font-weight: 300;
-  font-size: var(--font-size-md);
-  margin: 0 var(--space-md);
-  transition: all var(--transition-medium);
-  position: relative;
-}
-
-.navbar a::after {
-  content: '';
-  position: absolute;
-  bottom: -5px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background-color: var(--primary);
-  transition: width var(--transition-medium);
-}
-
-.navbar a:hover {
-  font-weight: 500;
-  color: var(--primary);
-}
-
-.navbar a:hover::after {
-  width: 100%;
-}
-
-.main-nav {
-  position: fixed;
-  width: 100%;
-}
-
-.fixed {
-  top: 15%;
-  opacity: 100%;
-  position: fixed;
-  transition: all var(--transition-medium);
-}
-
-.visible {
-  opacity: 1 !important;
-}
-
-.right-nav {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-}
-
-.download-btn {
-  padding: var(--space-xs) var(--space-md);
-  background-color: rgba(18, 18, 18, 0.6);
-  color: var(--text-primary);
-  margin: var(--space-xs);
-  border-radius: var(--radius-md);
-  text-decoration: none;
-  font-weight: 100;
-  transition: all var(--transition-fast);
-}
-
-.download-btn:hover {
-  background-color: rgba(10, 10, 10, 0.9);
-  border-color: var(--primary);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(113, 146, 227, 0.15);
-}
 
 .showcase__hero {
   position: relative;

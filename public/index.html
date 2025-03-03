@@ -191,6 +191,24 @@
       </form>
     </div>
   </div>
+  <footer class="footer">
+    <div class="footer__container">
+      <div class="footer__content">
+        <div class="footer__logo">
+          <img src="icon.png" height="22px" width="22px" alt="Aaron McLean Logo">
+          <h3>Aaron McLean</h3>
+        </div>
+      </div>
+      <div class="footer__copyright">
+        <p>&copy; <span id="current-year"></span> Aaron McLean. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+  
+  <script>
+    // Automatically update the year in copyright
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
   <script src="js/typed-init.js"></script>
   <script src="js/timeline-interactions.js"></script>

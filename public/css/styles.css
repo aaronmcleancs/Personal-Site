@@ -153,6 +153,15 @@ body {
   box-shadow: 0 4px 12px rgba(113, 146, 227, 0.15);
 }
 
+.navbar a.icon:hover {
+  font-weight: 300 !important;
+  color: var(--text-primary) !important;
+}
+
+
+.navbar a.icon:hover::after {
+  width: 0 !important;
+}
 .hero__section {
   color: var(--text-primary);
   background-image: url(output.svg);
@@ -1372,3 +1381,41 @@ body {
   }
 }
 
+.footer {
+  background-color: #080808;
+  color: #ffffff;
+  padding: 1.5rem 0;
+  width: 100%;
+}
+
+.footer__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  text-align: center;
+}
+
+.footer__content {
+  margin-bottom: 0.5rem;
+}
+
+.footer__logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.footer__logo img {
+  margin-right: 8px;
+}
+
+.footer__logo h3 {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.footer__copyright p {
+  font-size: 0.8rem;
+  color: #777777;
+}
