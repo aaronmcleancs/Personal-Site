@@ -1,11 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
   const sections = [
     { id: 'overview', name: 'Overview' },
+    { id: 'gallery', name: 'Gallery' },
     { id: 'background', name: 'Background' },
     { id: 'implementation', name: 'Implementation' },
-    { id: 'performance', name: 'Performance' },
-    { id: 'tech-stack', name: 'Tech Stack' },
-    { id: 'gallery', name: 'Gallery' }
+    { id: 'performance', name: 'Performance' }
   ];
   
   const progressTracker = document.createElement('div');
