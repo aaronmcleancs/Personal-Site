@@ -722,7 +722,6 @@ tbody tr:hover {
     to { transform: translateY(0); opacity: 1; }
   }
 }
-
 .project-card {
   background: var(--glass-bg);
   backdrop-filter: blur(var(--glass-blur));
@@ -786,6 +785,7 @@ tbody tr:hover {
   display: flex;
   gap: var(--space-md);
   margin-top: var(--space-xs);
+  flex-wrap: wrap;
 }
 
 .project-language,
@@ -805,8 +805,10 @@ tbody tr:hover {
 .project-language::before {
   content: "";
   display: inline-block;
+  min-width: 0.8rem;
   width: 0.8rem;
   height: 0.8rem;
+  flex-shrink: 0;
   border-radius: 50%;
   background-color: var(--primary);
 }

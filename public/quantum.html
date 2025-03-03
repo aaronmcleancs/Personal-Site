@@ -16,7 +16,9 @@
 <body>
     <div class="navbar">
         <div class="logo">
-            <div class="icon"><img src="icon.png" height="27px" width="27px" alt="Logo"></div>
+            <a href="index.html" class="icon">
+                <img src="icon.png" height="27px" width="27px" alt="Logo">
+            </a>
         </div>
         <a href="index.html">Home</a>
         <a href="#overview">Overview</a>
@@ -228,21 +230,6 @@
                 <li><strong>Teleportation Protocol:</strong> Enables quantum state sharing across the network</li>
                 <li><strong>Fidelity Check System:</strong> Measures quantum state overlap to determine consensus</li>
             </ul>
-            
-            <h3>Key Implementation Detail</h3>
-            <p>
-                The core of the system lies in mapping blockchain data to quantum states:
-            </p>
-            
-            <pre><code class="language-python">
-# Simplified block-to-quantum-state mapping
-def block_to_quantum_state(block_data):
-    # Hash the block and convert to angles θ and φ
-    block_hash = hashlib.sha256(block_data.encode()).digest()
-    theta = (int.from_bytes(block_hash[0:8], byteorder='big') / (2**64)) * 2 * np.pi
-    phi = (int.from_bytes(block_hash[8:16], byteorder='big') / (2**64)) * 2 * np.pi
-    return theta, phi
-            </code></pre>
             
             <h3>Security Analysis</h3>
             <p>
