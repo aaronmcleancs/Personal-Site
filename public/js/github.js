@@ -104,8 +104,8 @@ function updateProjectCard(data, container) {
     licenseElement.textContent = data.license ? data.license.name : 'No License';
   }
   const updatedElement = container.querySelector('.updated-date');
-  if (updatedElement && data.updated_at) {
-    updatedElement.textContent = formatDate(data.updated_at);
+  if (updatedElement && data.pushed_at) {
+    updatedElement.textContent = formatDate(data.pushed_at);
   }
 }
 
