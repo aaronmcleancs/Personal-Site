@@ -61,7 +61,7 @@ body {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  height: 53px;
+  height: 47px;
   backdrop-filter: blur(9px);
   z-index: 9999999;
   transition: height var(--transition-medium), background-color var(--transition-medium);
@@ -1165,7 +1165,9 @@ body {
 
 .section-separator {
   position: relative;
+  box-sizing: border-box;
   height: 120px;
+  padding-top: 20px; /* Added padding above the entire separator */
   margin: 0 var(--space-lg);
   overflow: hidden;
 }
@@ -1173,7 +1175,7 @@ body {
 .section-separator::before {
   content: '';
   position: absolute;
-  top: 50%;
+  top: calc(50% + 10px); /* Shifted down by half the padding */
   left: 0;
   right: 0;
   height: 1px;
@@ -1189,7 +1191,7 @@ body {
 .section-separator::after {
   content: '';
   position: absolute;
-  top: 50%;
+  top: calc(50% + 10px); /* Shifted down by half the padding */
   left: 50%;
   transform: translate(-50%, -50%);
   width: 40px;
@@ -1202,7 +1204,7 @@ body {
 
 .separator-dot {
   position: absolute;
-  top: 50%;
+  top: calc(50% + 10px); /* Shifted down by half the padding */
   left: 50%;
   transform: translate(-50%, -50%);
   width: 10px;
@@ -1228,15 +1230,17 @@ body {
   .section-separator {
     margin: 0 var(--space-md);
     height: 80px;
+    padding-top: 20px;
   }
 }
 
 @media screen and (max-width: 600px) {
   .section-separator {
     margin: 0 var(--space-sm);
-    height: 60px;
+    height: 80px;
   }
 }
+
 
 .contact__section {
   padding: var(--space-xl) 0;

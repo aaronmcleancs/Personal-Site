@@ -9,6 +9,8 @@ document.addEventListener('DOMContentLoaded', function() {
   
   const progressTracker = document.createElement('div');
   progressTracker.className = 'progress-tracker';
+  // Initially hide the tracker
+  progressTracker.classList.add('hidden');
   
   sections.forEach(section => {
     const dot = document.createElement('div');
@@ -30,10 +32,6 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   
   document.body.appendChild(progressTracker);
-  
-  setTimeout(() => {
-    progressTracker.classList.add('visible');
-  }, 1000);
   
   function updateActiveSection() {
     if (document.querySelector('.fullscreen-viewer.active')) {
@@ -65,10 +63,13 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
     
-    if (window.scrollY < 100 || (window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 100) {
-      progressTracker.classList.remove('visible');
-    } else {
+    // Show tracker only when scrolled past initial view
+    if (window.scrollY > 100 && (window.innerHeight + window.scrollY) < document.documentElement.scrollHeight - 100) {
+      progressTracker.classList.remove('hidden');
       progressTracker.classList.add('visible');
+    } else {
+      progressTracker.classList.remove('visible');
+      progressTracker.classList.add('hidden');
     }
   }
   

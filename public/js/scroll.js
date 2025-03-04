@@ -1,25 +1,51 @@
 $(document).ready(function() {
-  $(window).on('scroll', function() {
-    var scrollTop = $(window).scrollTop();
-    var viewportHeight = $(window).height();
+  
+  const observerOptions = {
+    root: null, 
+    rootMargin: '0px',
+    threshold: 0.1 
+  };
 
-    
-    if (scrollTop > viewportHeight - 300) {
-      $('#scroll').addClass('animate__fadeInUp').removeClass('animate__fadeOutDown');
-    }
+  const cardElements = ['#card1', '#card2', '#card3', '#card4'];
 
-    
-    if (scrollTop > viewportHeight - 200) {
-      $('#card1').addClass('animate__fadeInUp visible');
-      setTimeout(function(){
-        $('#card2').addClass('animate__fadeInUp visible');
-      }, 50);
-      setTimeout(function(){
-        $('#card3').addClass('animate__fadeInUp visible');
-      }, 100);
-      setTimeout(function(){
-        $('#card4').addClass('animate__fadeInUp visible');
-      }, 150);
+  const cardObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        
+        setTimeout(() => {
+          $(entry.target)
+            .addClass('animate__fadeInUp visible')
+            .removeClass('animate__fadeOutDown');
+        }, index * 50);
+
+        
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  
+  cardElements.forEach(selector => {
+    const element = document.querySelector(selector);
+    if (element) {
+      cardObserver.observe(element);
     }
   });
+
+  
+  const scrollObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        $('#scroll')
+          .addClass('animate__fadeInUp')
+          .removeClass('animate__fadeOutDown');
+      }
+    });
+  }, observerOptions);
+
+  
+  const scrollElement = document.querySelector('#scroll');
+  if (scrollElement) {
+    scrollObserver.observe(scrollElement);
+  }
 });

@@ -3,7 +3,7 @@ const projectConfig = {
     owner: 'aaronmcleancs',
     repo: 'CVV_15M_SARS-CoV-2',
     title: 'COVID-19 X-Ray Detector',
-    description: 'TensorFlow Vision model for detecting cases of COVID-19 from lung x-rays, deployable on mobile hardware.',
+    description: 'A compact, high-performance TensorFlow vision model for detecting COVID-19 and Viral Pneumonia cases from lung x-rays, deployable on mobile hardware with high accuracy in resource-constrained environments.',
     section: 0,
     skills: ['Python', 'TensorFlow', 'Machine Learning', 'Computer Vision', 'Amazon Web Services (AWS)']
   },
@@ -11,23 +11,23 @@ const projectConfig = {
     owner: 'aaronmcleancs',
     repo: 'RepBook-DemoServer',
     title: 'Fitness Dashboard & AI Assistant',
-    description: 'iOS Fitness Dashboard, user auth and secure storage with node and postgreSQL. Workout builder, AI Assistant with dynamic semantics fetching.',
+    description: 'Full-stack iOS fitness dashboard with secure user authentication, normalized backend and dynamic AI assistant with semantics fetching.',
     section: 1,
-    skills: ['Swift', 'iOS Development', 'Node.js', 'Secure Authentication', 'REST']
+    skills: ['Swift', 'iOS Development', 'Node.js', 'PostgreSQL', 'Secure Authentication', 'REST']
   },
   'ParticleBox': {
     owner: 'aaronmcleancs',
     repo: 'ParticleBox',
     title: 'ParticleBox Dynamics Engine',
-    description: 'Multithreaded particle dynamics engine for visualizing forces among thousands of particles in real-time. Optimized for efficient rendering.',
+    description: 'A rigourously optimized multithreaded particle dynamics engine engineered to push the upper bound of simotaniously simulated objects, visualizing interactions among thousands of particles in real-time with efficient rendering.',
     section: 2,
-    skills: ['C++', 'Systems Programming', 'Optimization']
+    skills: ['C++', 'Systems Programming', 'Optimization', 'Multithreading', 'Real-time Rendering']
   },
   'Quantum': {
     owner: 'aaronmcleancs',
     repo: 'FidelityChain',
     title: 'Quantum Fidelity Blockchain',
-    description: 'Quantum-enhanced blockchain consensus protocol replacing proof-of-work with quantum state fidelity checks, reducing computational complexity from O(n·m) to O(log n).',
+    description: 'Quantum-enhanced blockchain consensus protocol replacing proof-of-work with quantum state fidelity checks, reducing computational complexity and energy impact.',
     section: 3,
     skills: ['Quantum Computing', 'Distributed Systems', 'Qiskit', 'Blockchain', 'Secure Communications']
   }
