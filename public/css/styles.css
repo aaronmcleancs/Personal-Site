@@ -413,6 +413,7 @@ body {
     background-position: 0% center;
   }
 }
+
 .card-props {
   border-radius: var(--radius-2xl);
   height: auto;
@@ -760,6 +761,7 @@ body {
     line-height: 1.4;
   }
 }
+
 .timeline__section {
   position: relative;
   padding: 50px 0;
@@ -1004,6 +1006,8 @@ body {
     position: relative;
   }
 }
+
+
 
 .timeline-date {
   font-size: 0.85rem;
