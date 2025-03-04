@@ -49,11 +49,6 @@ img {
   display: block;
 }
 
-.navbar .logo a.icon:hover {
-  transform: none !important;
-  color: inherit !important;
-}
-
 
 .showcase__wrapper {
   width: min(100% - 3rem, 1200px);

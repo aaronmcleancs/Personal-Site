@@ -1,7 +1,8 @@
 (function() {
   const heroSection = document.querySelector('.hero__section');
-  let ticking = false;
-  let currentScroll = window.scrollY;
+  let animationFrameId = null;
+  let lastScrollY = window.scrollY;
+  let currentScale = getBaseScale(window.innerWidth);
   
   function getBaseScale(width) {
     const minWidth = 300, maxWidth = 1300;
@@ -10,40 +11,68 @@
     return 1300 - (width - minWidth) * ((1300 - 220) / (maxWidth - minWidth));
   }
   
-  function updateBackground(scrollVal) {
-    const scrollHeight = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+  function calculateTargetScale(scrollVal) {
+    const scrollHeight = Math.max(
+      document.body.scrollHeight, 
+      document.documentElement.scrollHeight
+    );
     const scrollPercent = scrollVal / (scrollHeight - window.innerHeight);
     const baseScale = getBaseScale(window.innerWidth);
-    const dynamicScale = baseScale + scrollPercent * 800;
-    heroSection.style.backgroundSize = `${dynamicScale}%`;
-    ticking = false;
+    return baseScale + scrollPercent * 800;
   }
   
   function smoothUpdate() {
-    const targetScroll = window.scrollY;
-    currentScroll += (targetScroll - currentScroll) * 0.1;
-    updateBackground(currentScroll);
-    if (Math.abs(targetScroll - currentScroll) > 0.5) {
-      requestAnimationFrame(smoothUpdate);
+    const targetScale = calculateTargetScale(window.scrollY);
+    
+    
+    const ease = navigator.userAgent.indexOf('Firefox') !== -1 ? 0.05 : 0.1;
+    currentScale += (targetScale - currentScale) * ease;
+    
+    
+    heroSection.style.backgroundSize = `${currentScale}%`;
+    
+    
+    if (Math.abs(targetScale - currentScale) > 0.1) {
+      animationFrameId = requestAnimationFrame(smoothUpdate);
     } else {
-      currentScroll = targetScroll;
-      updateBackground(currentScroll);
+      animationFrameId = null;
     }
   }
   
   function onScroll() {
-    if (!ticking) {
-      ticking = true;
-      requestAnimationFrame(smoothUpdate);
+    
+    if (Math.abs(window.scrollY - lastScrollY) < 5) return;
+    
+    lastScrollY = window.scrollY;
+    
+    
+    if (animationFrameId) {
+      cancelAnimationFrame(animationFrameId);
     }
+    
+    
+    animationFrameId = requestAnimationFrame(smoothUpdate);
   }
   
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', () => {
-    updateBackground(window.scrollY);
+  
+  let scrollTimeout;
+  window.addEventListener('scroll', function() {
+    if (!scrollTimeout) {
+      scrollTimeout = setTimeout(function() {
+        scrollTimeout = null;
+        onScroll();
+      }, 10); 
+    }
+  }, { passive: true });
+  
+  window.addEventListener('resize', function() {
+    currentScale = calculateTargetScale(window.scrollY);
+    heroSection.style.backgroundSize = `${currentScale}%`;
   });
   
-  updateBackground(window.scrollY);
+  
+  currentScale = calculateTargetScale(window.scrollY);
+  heroSection.style.backgroundSize = `${currentScale}%`;
 })();
 
 document.addEventListener('DOMContentLoaded', function() {
