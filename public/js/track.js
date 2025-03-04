@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
     
-    if (window.scrollY < 100) {
+    if (window.scrollY < 100 || (window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 100) {
       progressTracker.classList.remove('visible');
     } else {
       progressTracker.classList.add('visible');
