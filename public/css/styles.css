@@ -1253,7 +1253,6 @@ body {
   left: -50%;
   width: 200%;
   height: 200%;
-  background: radial-gradient(circle at center, rgba(113, 146, 227, 0.03), transparent 70%);
   pointer-events: none;
 }
 
@@ -1385,10 +1384,11 @@ body {
 }
 
 .footer {
-  background-color: #080808;
+  background: linear-gradient(180deg, #000000 0%, #080808 100%);
   color: #ffffff;
   padding: 1.5rem 0;
   width: 100%;
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.8);
 }
 
 .footer__container {
