@@ -681,8 +681,6 @@ body {
   .column2__right {
     grid-template-columns: 1fr;
     margin: var(--space-md);
-   
-    gap: var(--space-xl);
   }
   
   .column2__left h2 {
@@ -754,7 +752,7 @@ body {
   }
   
   .column2__right {
-    gap: var(--space-2xl);
+    gap: var(--space-xl);
   }
   
   .column2__left h2 {
