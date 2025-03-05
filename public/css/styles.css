@@ -751,10 +751,6 @@ body {
     }
   }
   
-  .column2__right {
-    gap: var(--space-xl);
-  }
-  
   .column2__left h2 {
     font-size: var(--font-size-lg);
   }
