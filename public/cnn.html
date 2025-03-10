@@ -78,7 +78,7 @@
         <section id="overview" class="showcase__section">
             <h2>Overview</h2>
             <p>
-                CVV_15M_SARS-CoV-2 is a convolutional neural network built to classify chest X-ray images with high accuracy on mobile hardware. My approach is finely tuned for performance on Apple M-series CPUs. 
+                CVV_15M_SARS-CoV-2 is a convolutional neural network to classify chest X-ray images with high accuracy on mobile hardware. Finely tuned for performance on Apple M-series CPUs. 
             </p>
             <h3>Key Features</h3>
             <ul>
@@ -105,7 +105,7 @@
 
             <h3>ReLU Activation Function</h3>
             <p>
-                Instead of traditional sigmoid or tanh units, we deploy ReLU activations:
+                TensorFlow employs ReLU activations:
             </p>
             <p>
                 \[
@@ -113,7 +113,7 @@
                 \]
             </p>
             <p>
-                ReLU accelerates training by preventing vanishing gradients and promoting sparse activations.
+                ReLU accelerates trainingon smaller datasets by preventing vanishing gradients and promoting sparse activations.
 
             <h3>Local Response Normalization (LRN)</h3>
             <p>
@@ -163,17 +163,7 @@
             <h3>Data Pipeline & Preprocessing</h3>
             <p>
                 The model was trained on a dataset of 17,000 chest X-ray images across three categories.
-
-            <h3>Model Architecture</h3>
-            <p>
-                Our CNN architecture employs a systematic hierarchical feature extraction approach with several key computer science principles:
             </p>
-            <ul>
-                <li><strong>Increasing Filter Depth:</strong> 64→128→256→512 filters capture increasingly complex features</li>
-                <li><strong>Spatial Dimensionality Reduction:</strong> MaxPooling layers reduce spatial dimensions while preserving feature information</li>
-                <li><strong>Dense Representation:</strong> Final fully-connected layers transform spatial features into classification decisions</li>
-                <li><strong>Probabilistic Output:</strong> Softmax activation provides normalized probability distribution across classes</li>
-            </ul>
 
             <h3>Model Configuration</h3>
             <p>
@@ -205,24 +195,91 @@
             </p>
 
             <h3>Confusion Matrix</h3>
-            <pre>
-[[708  10   6]
- [ 70 922   8]
- [ 11  14 244]]
-            </pre>
-
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Covid</th>
+                        <th>Normal</th>
+                        <th>Pneumonia</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>Covid</th>
+                        <td>708</td>
+                        <td>10</td>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <th>Normal</th>
+                        <td>70</td>
+                        <td>922</td>
+                        <td>8</td>
+                    </tr>
+                    <tr>
+                        <th>Pneumonia</th>
+                        <td>11</td>
+                        <td>14</td>
+                        <td>244</td>
+                    </tr>
+                </tbody>
+            </table>
+            
             <h3>Classification Report</h3>
-            <pre>
-              precision    recall  f1-score   support
-
-       covid       0.90      0.98      0.94       724
-      normal       0.97      0.92      0.95      1000
-   pneumonia       0.95      0.91      0.93       269
-
-    accuracy                           0.94      1993
-   macro avg       0.94      0.94      0.94      1993
-weighted avg       0.94      0.94      0.94      1993
-            </pre>
+            <table class="metric-table">
+                <thead>
+                    <tr>
+                        <th>Class</th>
+                        <th>Precision</th>
+                        <th>Recall</th>
+                        <th>F1-Score</th>
+                        <th>Support</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Covid</td>
+                        <td>0.90</td>
+                        <td>0.98</td>
+                        <td>0.94</td>
+                        <td>724</td>
+                    </tr>
+                    <tr>
+                        <td>Normal</td>
+                        <td>0.97</td>
+                        <td>0.92</td>
+                        <td>0.95</td>
+                        <td>1000</td>
+                    </tr>
+                    <tr>
+                        <td>Pneumonia</td>
+                        <td>0.95</td>
+                        <td>0.91</td>
+                        <td>0.93</td>
+                        <td>269</td>
+                    </tr>
+                    <tr>
+                        <th>Accuracy</th>
+                        <td colspan="3">0.94</td>
+                        <td>1993</td>
+                    </tr>
+                    <tr>
+                        <th>Macro Avg</th>
+                        <td>0.94</td>
+                        <td>0.94</td>
+                        <td>0.94</td>
+                        <td>1993</td>
+                    </tr>
+                    <tr>
+                        <th>Weighted Avg</th>
+                        <td>0.94</td>
+                        <td>0.94</td>
+                        <td>0.94</td>
+                        <td>1993</td>
+                    </tr>
+                </tbody>
+            </table>
 
             <h3>Performance Analysis</h3>
             <ul>
@@ -231,35 +288,6 @@ weighted avg       0.94      0.94      0.94      1993
                 <li><strong>Pneumonia Identification:</strong> The model correctly classified 244 out of 269 pneumonia cases (90.7% recall)</li>
                 <li><strong>Cross-Class Errors:</strong> Very few COVID-19 cases were misclassified as pneumonia (6 cases) and vice versa (11 cases)</li>
             </ul>
-
-            <h3>Error Analysis</h3>
-            <p>
-                The most common misclassification pattern was normal X-rays being labeled as COVID-19 (70 cases). This suggests:
-            </p>
-            <ul>
-                <li>The model may be slightly biased toward COVID-19 detection (high recall but lower precision)</li>
-                <li>There may be subtle features in some normal X-rays that resemble early COVID-19 patterns</li>
-                <li>This error pattern is preferable to missing actual COVID-19 cases (from a medical perspective)</li>
-            </ul>
-
-            <h3>Class-wise Performance</h3>
-            <p>
-                All three classes show balanced and strong performance metrics:
-            </p>
-            <ul>
-                <li><strong>COVID-19:</strong> F1-score of 0.94 (precision: 0.90, recall: 0.98)</li>
-                <li><strong>Normal:</strong> F1-score of 0.95 (precision: 0.97, recall: 0.92)</li>
-                <li><strong>Pneumonia:</strong> F1-score of 0.93 (precision: 0.95, recall: 0.91)</li>
-            </ul>
-
-            <p>
-                These metrics demonstrate that the model achieves both high accuracy and class balance, making it suitable for real-world clinical deployment.
-            </p>
-
-            <h3>Performance on Apple M1 Pro</h3>
-            <p>
-                The model was specifically optimized for Apple's M-series processors.
-            </p>
         </section>
 
         <section id="tech-stack" class="showcase__section">

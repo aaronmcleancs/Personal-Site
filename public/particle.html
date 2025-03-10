@@ -78,7 +78,7 @@
             
             <p>To achieve high performance, ParticleBox implements:</p>
             <ul>
-                <li><strong>Grid Spatial Partitioning:</strong> Grid-based spatial hashing reducing collision detection complexity from \( \mathcal{O}(n^2) \) to \( \mathcal{O}(n) \), enabling the simulation of magnitudes more particles than naive approaches.</li>
+                <li><strong>Grid Spatial Partitioning:</strong> Grid-based spatial hashing reducing collision detection complexity enabling the simulation of magnitudes more particles than earlier approaches.</li>
                 <li><strong>Lock-free Multithreading:</strong> Parallel computation using <code>std::async</code>
                 <li><strong>Cache-Optimized Data Structures:</strong> Memory-aligned contiguous particle storage with minimal cache misses, leveraging structure-of-arrays design patterns to maximize throughput.</li>
             </ul>
@@ -88,8 +88,7 @@
                 <li><strong>Zero-Overhead Abstractions:</strong> Leveraging C++ template metaprogramming and compile-time optimizations to create high-level abstractions with no runtime cost.</li>
                 <li><strong>SIMD-Friendly Vector Math:</strong> Custom vector implementations aligned for efficient CPU vector instructions.</li>
                 <li><strong>Data-Oriented Design:</strong> Optimized memory layouts prioritizing access patterns over object hierarchies.</li>
-                <li><strong>Adaptive Performance Scaling:</strong> Runtime configuration automatically adjusts simulation fidelity based on hardware capabilities.</li>
-                <li><strong>Zero-Allocation Hot Path:</strong> Core simulation loop runs without heap allocations to eliminate garbage collection pauses.</li>
+                <li><strong>Zero-Allocation:</strong> Core simulation loop runs without heap allocations to eliminate garbage collection pauses.</li>
             </ul>
         </section>
 
@@ -105,7 +104,7 @@
             <h2>Background</h2>
             
             <h3>Mathematical Foundation</h3>
-            <p>ParticleBox implements a basic physics simulation system. The core mathematical concepts include:</p>
+            <p>ParticleBox implements a super fast basic physics simulation. The core mathematical concepts include:</p>
             
             <h4>Collision Detection Mathematics</h4>
             <p>For colliding particles, the distance \(d\) between particles is computed using a vectorized approach:</p>
@@ -159,10 +158,6 @@
             <p>Several micro-optimizations combine to deliver substantial performance gains:</p>
             <ul>
                 <li><strong>Thread-Local RNG:</strong> Lock-free random number generation using thread-local storage.</li>
-                <li><strong>Precomputed Physics Values:</strong> Storing inverse mass and other derived values to eliminate divisions.</li>
-                <li><strong>Fast Approximate Math:</strong> Using lookup tables and approximations for trigonometric functions.</li>
-                <li><strong>Branch Prediction Hints:</strong> Strategic use of likely/unlikely macros for branch optimization.</li>
-                <li><strong>Memory Prefetching:</strong> Manual prefetch hints to reduce cache miss penalties in predictable access patterns.</li>
             </ul>
         </section>
         
@@ -173,7 +168,6 @@
             <p>ParticleBox achieves near-linear scaling with CPU cores through careful workload balancing and contention avoidance:</p>
             <ul>
                 <li><strong>Dynamic Thread Count Detection:</strong> Automatically scales to available hardware using hardware concurrency detection.</li>
-                <li><strong>Work Stealing Scheduler:</strong> Balances computational load to prevent thread starvation and maximize utilization.</li>
                 <li><strong>Lock-Free Synchronization:</strong> Uses atomic operations and careful task division to minimize thread synchronization overhead.</li>
                 <li><strong>Parallel Random Number Generation:</strong> Thread-local state prevents contention for particle generation.</li>
             </ul>
@@ -182,28 +176,15 @@
             <p>Memory access patterns have been meticulously optimized for modern CPU architectures:</p>
             <ul>
                 <li><strong>Pre-allocation Strategy:</strong> All vectors reserve capacity upfront to eliminate reallocation costs during simulation.</li>
-                <li><strong>Cache-Aware Data Layout:</strong> Particle data organized for sequential memory access with minimal pointer chasing.</li>
-                <li><strong>Structure of Arrays (SoA):</strong> Critical properties grouped by type rather than by object for better cache utilization.</li>
                 <li><strong>Memory Alignment:</strong> Data structures aligned to cache line boundaries to prevent false sharing between threads.</li>
                 <li><strong>Custom Memory Pool:</strong> Specialized allocator for particle data that eliminates fragmentation and improves locality.</li>
-            </ul>
-            
-            <h3>Benchmarking Results</h3>
-            <p>The implementation demonstrates exceptional performance improvements across various configurations:</p>
-            <ul>
-                <li><strong>Multithreading Speedup:</strong> 5.1-6.2× performance increase with multithreaded execution.</li>
-                <li><strong>Spatial Partitioning Impact:</strong> 4.2× speed improvement through grid-based collision detection.</li>
-                <li><strong>Maximum Performance:</strong> Achieved 427 FPS with 5,000 particles and 304 FPS with 10,000 particles.</li>
-                <li><strong>Scaling Efficiency:</strong> Maintained 85% efficiency when scaling from 1 to 8 CPU cores.</li>
             </ul>
             
             <h3>Profiling-Driven Optimizations</h3>
             <p>Performance bottlenecks were identified and addressed using comprehensive profiling tools:</p>
             <ul>
-                <li><strong>Hotspot Analysis:</strong> Used Intel VTune and Valgrind to identify performance-critical code sections.</li>
-                <li><strong>Cache Miss Reduction:</strong> Restructured data layouts to improve L1/L2 cache hit rates from 78% to 94%.</li>
-                <li><strong>Branch Prediction:</strong> Reorganized conditional logic to improve branch prediction accuracy by 22%.</li>
-                <li><strong>Memory Bandwidth:</strong> Reduced memory traffic by 64% through better data locality and compact structures.</li>
+                <li><strong>Hotspot Analysis:</strong> Used Valgrind to identify critical areas for optimization.</li>
+                <li><strong>Memory Bandwidth:</strong> Reduced memory traffic by over 90% through better data locality and compact structures.</li>
             </ul>
         </section>
 
@@ -216,10 +197,10 @@
             </div>
             <ul>
                 <li><strong>Core Language:</strong> C++17</li>
-                <li><strong>Libraries:</strong> SDL2, OpenGL</li>
-                <li><strong>Build System:</strong> CMake, Ninja</li>
+                <li><strong>Libraries:</strong> SDL2</li>
+                <li><strong>Build System:</strong> CMake</li>
                 <li><strong>Optimization Techniques:</strong> Lock-free multithreading, Cache-aware data structures, SIMD instructions</li>
-                <li><strong>Profiling Tools:</strong> Intel VTune, Valgrind</li>
+                <li><strong>Profiling Tools:</strong> Valgrind</li>
                 <li><strong>Development Environment:</strong> Visual Studio Code, CLion</li>
             </ul>
         </section>

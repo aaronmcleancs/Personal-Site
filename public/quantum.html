@@ -31,7 +31,6 @@
     <div class="showcase__hero">
         <div class="showcase__wrapper">
             <div class="project-card">
-                <!-- GitHub Stats Section -->
                 <div class="project-card__header">
                     <div class="project-card__header-left">
                         <h1 class="project-title"></h1>
@@ -77,7 +76,7 @@
         <section id="overview" class="showcase__section">
             <h2>Overview</h2>
             <p>
-                Designed a quantum-assisted blockchain consensus protocol using quantum fidelity checks, entanglement, and teleportation to improve efficiency and security. My Qiskit implementation demonstrated higher transaction throughput, lower computational costs, and better energy efficiency, showcasing quantum computing’s potential for scalable blockchain systems.
+                Designed a quantum-assisted blockchain consensus protocol using quantum fidelity checks, entanglement, and teleportation to improve efficiency and security.
             </p>
             <h3>Key Features</h3>
             <ul>
@@ -102,7 +101,7 @@
         <section id="background" class="showcase__section">
             <h2>Background</h2>
             <p>
-                The core innovation in this project is the integration of quantum state fidelity measurements into a 
+                This research offers a look forward at safe bloackchain in the age of quantum computers. The core innovation in this project is the integration of quantum state fidelity measurements into a 
                 decentralized consensus mechanism. Instead of a proof-of-work puzzle, each node prepares a unique quantum 
                 state derived from its candidate block (via a <em>quantum hashing function</em>), then teleports that state 
                 to other nodes for verification.
@@ -110,7 +109,7 @@
             
             <h3>Quantum Principles</h3>
             <p>
-                We rely on mathematical constructs such as:
+                There are a few prerequisite quantum principles to understand:
             </p>
             <ul>
                 <li><strong>Quantum State Fidelity</strong>: 
@@ -222,7 +221,7 @@
                 <li><strong>Ledger Management:</strong> Updates and maintains the blockchain state based on consensus results</li>
             </ul>
             
-            <h4>Quantum Components:</h4>
+            <h4>Quantum Components (Classically Simulated):</h4>
             <ul>
                 <li><strong>Quantum Random Number Generator:</strong> Provides true randomness for protocol operations</li>
                 <li><strong>Quantum Hashing Module:</strong> Maps classical block data to unique quantum states</li>
@@ -270,29 +269,6 @@
                     </tbody>
                 </table>
             </div>
-            
-            <h3>Limitations & Future Work</h3>
-            <p>
-                While the quantum-assisted consensus protocol demonstrates significant advantages over classical approaches,
-                several limitations and areas for future research remain:
-            </p>
-            
-            <h4>Current Limitations</h4>
-            <ul>
-                <li>Requires reliable quantum channels between nodes, which may not be practical for geographically distributed networks</li>
-                <li>Quantum state fidelity verification requires sophisticated quantum measurement capabilities at each node</li>
-                <li>Performance advantage diminishes in networks with very few nodes (N &lt; 5)</li>
-                <li>Current quantum hardware noise levels remain slightly above the optimal threshold for the protocol</li>
-            </ul>
-            
-            <h4>Future Research Directions</h4>
-            <ul>
-                <li>Development of more noise-resistant quantum consensus algorithms suitable for NISQ-era hardware</li>
-                <li>Integration with quantum key distribution networks to enhance security guarantees</li>
-                <li>Exploration of hybrid classical-quantum approaches that maintain performance advantages while reducing quantum resource requirements</li>
-                <li>Investigation of quantum-resistant verification mechanisms to ensure long-term security against future quantum attacks</li>
-                <li>Implementation of quantum smart contracts that leverage the quantum state representation for enhanced functionality</li>
-            </ul>
         </section>
 
         <!-- Performance Section -->
@@ -344,12 +320,6 @@
                 </table>
             </div>
 
-            <p>
-                Our experiments reveal a 17× improvement in energy efficiency and 2.3× improvement in transaction throughput 
-                compared to classical Proof of Work. Moreover, the consensus fault tolerance remains at least on par with 
-                Proof of Stake protocols, handling up to <em>f &lt; n/3</em> Byzantine nodes without loss of ledger integrity.
-            </p>
-
             <h3>Resource Requirements Comparison</h3>
             <div class="table-container">
                 <table>
@@ -394,7 +364,7 @@
             <ul class="tech-list">
                 <li><strong>Languages:</strong> Python 3.9</li>
                 <li><strong>Quantum Framework:</strong> Qiskit 0.42.0</li>
-                <li><strong>Simulation:</strong> Qiskit Aer, IBM Quantum real hardware access</li>
+                <li><strong>Simulation:</strong> Qiskit, Aer</li>
                 <li><strong>Data Analysis:</strong> NumPy, Pandas, Matplotlib</li>
                 <li><strong>Cloud Infrastructure:</strong> AWS for distributed node simulation</li>
                 <li><strong>Testing:</strong> Python unittest, Qiskit Test</li>
