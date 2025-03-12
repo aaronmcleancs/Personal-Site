@@ -75,6 +75,15 @@
   heroSection.style.backgroundSize = `${currentScale}%`;
 })();
 
+document.addEventListener('scroll', function() {
+  const navbar = document.querySelector('.navbar');
+  if (window.scrollY > 20) {
+    navbar.classList.add('scrolled');
+  } else {
+    navbar.classList.remove('scrolled');
+  }
+});
+
 document.addEventListener('DOMContentLoaded', function() {
   const heroSection = document.querySelector('.hero2__section');
   if (!heroSection) return;
