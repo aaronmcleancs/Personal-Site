@@ -1235,7 +1235,7 @@ body {
   position: relative;
   box-sizing: border-box;
   height: 120px;
-  padding-top: 20px; /* Added padding above the entire separator */
+  padding-top: 20px;
   margin: 0 var(--space-lg);
   overflow: hidden;
 }
@@ -1243,7 +1243,7 @@ body {
 .section-separator::before {
   content: '';
   position: absolute;
-  top: calc(50% + 10px); /* Shifted down by half the padding */
+  top: calc(50% + 10px);
   left: 0;
   right: 0;
   height: 1px;
@@ -1259,7 +1259,7 @@ body {
 .section-separator::after {
   content: '';
   position: absolute;
-  top: calc(50% + 10px); /* Shifted down by half the padding */
+  top: calc(50% + 10px);
   left: 50%;
   transform: translate(-50%, -50%);
   width: 40px;
@@ -1272,7 +1272,7 @@ body {
 
 .separator-dot {
   position: absolute;
-  top: calc(50% + 10px); /* Shifted down by half the padding */
+  top: calc(50% + 10px);
   left: 50%;
   transform: translate(-50%, -50%);
   width: 10px;
