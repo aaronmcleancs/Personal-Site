@@ -1,5 +1,5 @@
 const actions = [
-  { word: "deploy", icon: "fas fa-rocket" },
+  { word: "deploy", icon: "fas fa-code-branch" },
   { word: "optimize", icon: "fas fa-bolt" },
   { word: "refactor", icon: "fas fa-code" },
   { word: "scale", icon: "fas fa-chart-line" },
