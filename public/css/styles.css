@@ -227,7 +227,6 @@ body {
     text-align: center;
   }
 }
-
 .column__left {
   display: flex;
   flex-direction: column;
@@ -252,7 +251,7 @@ body {
   .column__left h2 {
     font-size: var(--font-size-2xl);
     display: table;
-    margin: 0 auto var(--space-md) auto;
+    margin: 0 auto var(--space-md);
   }
 }
 
@@ -280,7 +279,7 @@ body {
 
 @media screen and (max-width: 640px) {
   .column__left h1 {
-    font-size: var(--font-size-5xl);
+    font-size: var(--font-size-4xl);
   }
 }
 .terminal-container {
@@ -299,18 +298,42 @@ body {
   background-size: 400% 400%;
   animation: gradientBreathing 12s ease infinite;
   backdrop-filter: blur(10px);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
   padding: var(--space-sm) var(--space-md);
   display: inline-block;
   width: fit-content;
   position: relative;
-  border: 1px solid var(--border-color);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   transition: transform 0.1s ease-out, box-shadow 0.3s ease;
   transform-style: preserve-3d;
   transform: translateZ(0);
   will-change: transform;
+  box-shadow: 
+    0 5px 15px rgba(0, 0, 0, 0.2),
+    0 0 5px rgba(120, 120, 220, 0.1);
 }
 
+/* Iridescent overlay */
+.text-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(78, 54, 155, 0.151),
+    rgba(0, 140, 255, 0.248),
+    rgba(64, 66, 142, 0.194),
+    rgba(255, 255, 255, 0.069)
+  );
+  background-size: 400% 400%;
+  animation: iridescenceShift 8s ease infinite;
+  border-radius: var(--radius-md);
+  opacity: 0.6;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+/* Highlight effect */
 .text-wrapper::after {
   content: '';
   position: absolute;
@@ -325,6 +348,7 @@ body {
   pointer-events: none;
 }
 
+/* Hover effects */
 .text-wrapper:hover::after {
   opacity: 0.4;
 }
@@ -335,6 +359,12 @@ body {
     0 0 15px rgba(78, 53, 201, 0.2);
 }
 
+/* Subtle tilt effect on mouse movement */
+.terminal-container:hover .text-wrapper {
+  transition: transform 0.3s ease-out;
+}
+
+/* Animations */
 @keyframes gradientBreathing {
   0% {
     background-position: 0% 50%;
@@ -344,6 +374,18 @@ body {
   }
   100% {
     background-position: 0% 50%;
+  }
+}
+
+@keyframes iridescenceShift {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
   }
 }
 
