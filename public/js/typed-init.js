@@ -1,12 +1,8 @@
 const actions = [
-  { word: "commit", icon: "fab fa-git-alt" },
-  { word: "push", icon: "fas fa-upload" },
-  { word: "merge", icon: "fas fa-code-branch" },
   { word: "deploy", icon: "fas fa-rocket" },
-  { word: "debug", icon: "fas fa-bug" },
   { word: "optimize", icon: "fas fa-bolt" },
   { word: "refactor", icon: "fas fa-code" },
-  { word: "scale", icon: "fas fa-expand-arrows-alt" },
+  { word: "scale", icon: "fas fa-chart-line" },
   { word: "containerize", icon: "fab fa-docker" }
 ];
 
@@ -25,18 +21,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
 var typed = new Typed('.auto-type', {
   strings: [
-    "mobile app architecture",
-    "React.js application",
-    "neural network",
     "API integration",
-    "full-stack development",
     "embedded system",
     "algorithm design",
     "system optimization",
     "distributed system"
   ],
-  typeSpeed: 80,
-  backSpeed: 40,
+  typeSpeed: 110,
+  backSpeed: 30,
   loop: true,
   
   preStringTyped: function(arrayPos) {

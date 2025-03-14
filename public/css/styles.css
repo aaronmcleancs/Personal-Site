@@ -778,7 +778,6 @@ body {
    
    .white-card p:nth-child(2) {
      font-size: var(--font-size-lg);
-     margin-top: var(--space-lg);
    }
    
    .white-card p:nth-child(3) {
@@ -802,10 +801,6 @@ body {
    .card-props {
      padding: var(--space-md);
      margin: var(--space-xs);
-   }
-   
-   .white-card {
-     max-width: calc(100% - var(--space-md));
    }
    
    .white-card:hover {
@@ -892,7 +887,6 @@ body {
   
   .white-card p:nth-child(2) {
     font-size: var(--font-size-lg);
-    margin-top: 30px;
   }
   
   .white-card p:nth-child(3) {
