@@ -11,7 +11,7 @@
   --secondary: #9370DB;
   --text-primary: #ffffff;
   --text-secondary: #a9a9a9;
-  --text-muted: #525252;
+  --text-muted: #9c9c9c;
   --bg-primary: #000000;
   --bg-secondary: #111111;
   --bg-card: #191919;
@@ -312,7 +312,7 @@ body {
     0 0 5px rgba(120, 120, 220, 0.1);
 }
 
-/* Iridescent overlay */
+
 .text-wrapper::before {
   content: '';
   position: absolute;
@@ -332,7 +332,7 @@ body {
   pointer-events: none;
 }
 
-/* Highlight effect */
+
 .text-wrapper::after {
   content: '';
   position: absolute;
@@ -347,7 +347,7 @@ body {
   pointer-events: none;
 }
 
-/* Hover effects */
+
 .text-wrapper:hover::after {
   opacity: 0.4;
 }
@@ -358,12 +358,12 @@ body {
     0 0 15px rgba(78, 53, 201, 0.2);
 }
 
-/* Subtle tilt effect on mouse movement */
+
 .terminal-container:hover .text-wrapper {
   transition: transform 0.3s ease-out;
 }
 
-/* Animations */
+
 @keyframes gradientBreathing {
   0% {
     background-position: 0% 50%;
@@ -396,14 +396,102 @@ body {
 }
 
 .column__left span {
-  color: var(--primary);
+  color: var(--text-muted);
   font-family: Consolas, monaco, monospace;
   font-size: var(--font-size-lg);
+  padding-left: 3px;
+  padding-right: 3px;
 }
 
 @media screen and (max-width: 1300px) {
   .column__left p,
   .column__left span {
+    font-size: 12px;
+  }
+}
+
+
+.action-container {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  vertical-align: baseline;
+}
+
+.action-wrapper {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  vertical-align: baseline;
+}
+
+
+.action-word, .action-icon {
+  color: #ffffff !important;
+  font-family: Consolas, monaco, monospace;
+  font-size: var(--font-size-lg);
+  vertical-align: baseline;
+  line-height: normal;
+}
+
+
+.action-icon {
+  margin-left: 5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+@keyframes sweepOut {
+  0% { 
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% { 
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
+
+@keyframes sweepIn {
+  0% { 
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  100% { 
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.sweep-out {
+  animation: sweepOut 0.2s ease-in forwards;
+}
+
+.sweep-in {
+  animation: sweepIn 0.2s ease-out forwards;
+}
+
+
+.text-wrapper p {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+
+.icon-preloader {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media screen and (max-width: 1300px) {
+  .action-word, .action-icon {
     font-size: 12px;
   }
 }
