@@ -51,7 +51,6 @@ img {
 
 
 .showcase__wrapper {
-  width: min(100% - 3rem, 1200px);
   margin-inline: auto;
   padding: 0 var(--space-md);
 }
