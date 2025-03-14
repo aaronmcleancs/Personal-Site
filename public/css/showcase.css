@@ -13,7 +13,7 @@
   --border-color: rgba(66, 66, 69, 0.5);
   
  
-  --glass-bg: rgba(29, 29, 31, 0.5);
+  --glass-bg: rgba(17, 17, 17, 0.5);
   --glass-border: rgba(255, 255, 255, 0.1);
   --glass-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
   --glass-blur: 30px;
@@ -405,7 +405,6 @@ code {
   height: 50px;
   border-radius: 50%;
   display: grid;
-  place-items: center;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
