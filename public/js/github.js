@@ -105,7 +105,7 @@ function updateProjectCard(data, container) {
   }
   const updatedElement = container.querySelector('.updated-date');
   if (updatedElement && data.pushed_at) {
-    updatedElement.textContent = formatDate(data.pushed_at);
+    updatedElement.innerHTML = formatDate(data.pushed_at) + ' <span class="external-icon" style="margin-left: 4px;">↗</span>';
   }
 }
 
@@ -124,7 +124,7 @@ function setFallbackData(project, container) {
   });
   const updatedElement = container.querySelector('.updated-date');
   if (updatedElement) {
-    updatedElement.textContent = 'Recently';
+    updatedElement.innerHTML = 'Recently <span class="external-icon" style="margin-left: 4px;">↗</span>';
   }
 }
 
