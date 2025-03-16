@@ -127,11 +127,10 @@ img {
 
 
 .showcase__content {
-  max-width: 900px;
+  max-width: 1200px;
   margin: var(--space-xl) auto;
-  padding-top: var(--space-lg);
-  padding-left: 5px;
-  padding-right: 5px;
+  padding-left: 5%;
+  padding-right: 5%;
 }
 
 .showcase__section {

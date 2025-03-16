@@ -35,6 +35,7 @@
   --space-md: 1rem;
   --space-lg: 2rem;
   --space-xl: 3rem;
+  --space-2xl: 4rem;
 
   --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;
@@ -526,9 +527,9 @@ body {
 }
 .hero2__section {
   border-radius: var(--radius-3xl);
-  margin: var(--space-xl);
+  margin: var(--space-2xl);
   margin-top: 400px;
-  margin-bottom: 200px;
+  margin-bottom: 50px;
   color: rgb(17, 17, 17);
   background: var(--bg-primary);
   overflow: hidden;
@@ -551,7 +552,6 @@ body {
 .hero2__wrapper {
   display: grid;
   grid-template-rows: auto;
-  padding-top: var(--space-sm);
   position: relative;
   z-index: 3;
 }
@@ -604,9 +604,6 @@ body {
   margin-top: var(--space-lg);
   width: auto;
   text-align: center;
-  border-radius: var(--radius-xl);
-  background-color: rgba(27, 27, 27, 0.05);
-  backdrop-filter: blur(5px);
   z-index: 2;
   opacity: 0;
   transform: translateY(20px);
@@ -733,7 +730,6 @@ body {
   color: rgba(255, 255, 255, 0.95);
   font-size: var(--font-size-xl);
   font-weight: 600;
-  margin-bottom: var(--space-sm);
   position: relative;
   z-index: 2;
  }
