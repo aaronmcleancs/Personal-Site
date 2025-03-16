@@ -963,11 +963,6 @@ body {
    
   }
   
- 
-  .column2__right .card-props:not(:last-child) {
-    margin-bottom: var(--space-2xl);
-  }
-  
   .white-card p:nth-child(2) {
     font-size: var(--font-size-md);
   }
