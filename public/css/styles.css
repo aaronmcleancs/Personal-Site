@@ -46,6 +46,7 @@
   --font-size-3xl: 2.5rem;
   --font-size-4xl: 2.5rem;
   --font-size-5xl: 3rem;
+  --font-size-6xl: 4.5rem;
 }
 
 body {
@@ -199,6 +200,7 @@ body {
 
 .nav-icon {
   display: none;
+  font-size: 13px;
 }
 
 @media screen and (max-width: 768px) {
@@ -302,7 +304,7 @@ body {
 
 @media screen and (max-width: 1300px) {
   .column__left h1 {
-    font-size: var(--font-size-5xl);
+    font-size: var(--font-size-6xl);
   }
 }
 
@@ -527,10 +529,10 @@ body {
 }
 
 .hero2__section {
-  max-width: 1600px;
-  width: 100%;
-  margin: 400px auto 50px auto;
   border-radius: var(--radius-3xl);
+  margin: var(--space-2xl);
+  margin-top: 400px;
+  margin-bottom: 50px;
   color: rgb(17, 17, 17);
   background: var(--bg-primary);
   overflow: hidden;
