@@ -84,8 +84,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const x = e.clientX - rect.left - rect.width / 2;
     const y = e.clientY - rect.top - rect.height / 2;
     
-    const rotateX = y * 0.02;
-    const rotateY = x * -0.02;
+    const rotateX = y * 0.13;
+    const rotateY = x * -0.05;
     
     textWrapper.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(0)`;
   });
