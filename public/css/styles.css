@@ -55,6 +55,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
+
 .navbar {
   background-color: rgba(16, 16, 16, 0.216);
   position: fixed;
@@ -186,6 +187,33 @@ body {
 
 .navbar a.icon:hover::after {
   width: 0 !important;
+}
+
+/* Mobile nav styles */
+.nav-item {
+  display: flex;
+  align-items: center;
+}
+
+.nav-icon {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .nav-text {
+    display: none;
+  }
+  
+  .nav-icon {
+    display: block;
+  }
+  
+  .navbar a:not(.download-btn) {
+    width: 45px;
+    display: flex;
+    justify-content: center;
+    margin: 0 var(--space-xs);
+  }
 }
 
 .hero__section {

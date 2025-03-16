@@ -3,7 +3,8 @@ const actions = [
   { word: "optimize", icon: "fas fa-bolt" },
   { word: "refactor", icon: "fas fa-code" },
   { word: "scale", icon: "fas fa-chart-line" },
-  { word: "containerize", icon: "fab fa-docker" }
+  { word: "containerize", icon: "fab fa-docker" },
+  { word: "secure", icon: "fas fa-shield-alt" },
 ];
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -24,13 +25,14 @@ var typed = new Typed('.auto-type', {
     "API integration",
     "embedded system",
     "algorithm design",
-    "system optimization",
-    "distributed system"
+    "optimization",
+    "system",
+    "merchant platform",
   ],
-  typeSpeed: 110,
-  backSpeed: 30,
+  typeSpeed: 70,
+  backSpeed: 25,
   loop: true,
-  
+
   preStringTyped: function(arrayPos) {
     const actionWrapper = document.querySelector('.action-wrapper');
     
