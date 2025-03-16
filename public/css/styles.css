@@ -189,10 +189,11 @@ body {
   width: 0 !important;
 }
 
-/* Mobile nav styles */
+
 .nav-item {
   display: flex;
   align-items: center;
+  gap: 8px;
 }
 
 .nav-icon {
