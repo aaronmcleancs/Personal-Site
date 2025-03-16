@@ -26,7 +26,7 @@ var typed = new Typed('.auto-type', {
     "embedded system",
     "algorithm design",
     "optimization",
-    "system",
+    "backend service",
     "merchant platform",
   ],
   typeSpeed: 70,
