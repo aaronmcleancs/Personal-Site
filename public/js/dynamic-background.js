@@ -2,7 +2,7 @@
   const heroSection = document.querySelector('.hero__section');
   let animationFrameId = null;
   let lastScrollY = window.scrollY;
-  let currentScale = getBaseScale(window.innerWidth);
+  let currentScale = calculateTargetScale(window.scrollY);
   
   function getBaseScale(width) {
     const minWidth = 300, maxWidth = 1300;
@@ -18,20 +18,16 @@
     );
     const scrollPercent = scrollVal / (scrollHeight - window.innerHeight);
     const baseScale = getBaseScale(window.innerWidth);
-    return baseScale + scrollPercent * 800;
+    const baselineWidth = 1920;
+    const multiplier = window.innerWidth > baselineWidth ? 800 * (baselineWidth / window.innerWidth) : 800;
+    return baseScale + scrollPercent * multiplier;
   }
   
   function smoothUpdate() {
     const targetScale = calculateTargetScale(window.scrollY);
-    
-    
     const ease = navigator.userAgent.indexOf('Firefox') !== -1 ? 0.05 : 0.1;
     currentScale += (targetScale - currentScale) * ease;
-    
-    
     heroSection.style.backgroundSize = `${currentScale}%`;
-    
-    
     if (Math.abs(targetScale - currentScale) > 0.1) {
       animationFrameId = requestAnimationFrame(smoothUpdate);
     } else {
@@ -40,20 +36,13 @@
   }
   
   function onScroll() {
-    
     if (Math.abs(window.scrollY - lastScrollY) < 5) return;
-    
     lastScrollY = window.scrollY;
-    
-    
     if (animationFrameId) {
       cancelAnimationFrame(animationFrameId);
     }
-    
-    
     animationFrameId = requestAnimationFrame(smoothUpdate);
   }
-  
   
   let scrollTimeout;
   window.addEventListener('scroll', function() {
@@ -61,7 +50,7 @@
       scrollTimeout = setTimeout(function() {
         scrollTimeout = null;
         onScroll();
-      }, 10); 
+      }, 10);
     }
   }, { passive: true });
   
@@ -69,7 +58,6 @@
     currentScale = calculateTargetScale(window.scrollY);
     heroSection.style.backgroundSize = `${currentScale}%`;
   });
-  
   
   currentScale = calculateTargetScale(window.scrollY);
   heroSection.style.backgroundSize = `${currentScale}%`;

@@ -76,7 +76,7 @@ img {
   background-position: center;
   z-index: -1;
   opacity: 1;
-  transform: scale(1.03);
+  transform: scale(1.no03);
   animation: subtleZoom 20s infinite alternate ease-in-out;
 }
 
@@ -104,7 +104,7 @@ img {
 }
 
 .showcase__hero h1 {
-  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-size: clamp(1.8rem, 3.5vw, 3rem);
   font-weight: 700;
   letter-spacing: -0.03em;
   margin-bottom: var(--space-md);
