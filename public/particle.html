@@ -59,7 +59,7 @@
                     <p class="project-description">A high-performance, multithreaded particle physics simulator built from the ground up to demonstrate modern C++ optimization techniques and data structure mastery.</p>
                 </div>
                 <div class="project-updated">
-                    <span>Updated <span class="updated-date">February 2025</span></span>
+                    <span>Updated <span class="updated-date">March 2025</span></span>
                 </div>
             </div>
         </div>
@@ -74,21 +74,22 @@
     <div class="showcase__content">
         <section id="overview" class="showcase__section">
             <h2>Overview</h2>
-            <p>ParticleBox is a high-performance C++ particle simulator.</p>
+            <p>ParticleBox is a high-performance C++ particle simulator designed to demonstrate cutting-edge optimization techniques for real-time physics simulations.</p>
             
-            <p>To achieve high performance, ParticleBox implements:</p>
+            <p>To achieve exceptional performance, ParticleBox implements:</p>
             <ul>
-                <li><strong>Grid Spatial Partitioning:</strong> Grid-based spatial hashing reducing collision detection complexity enabling the simulation of magnitudes more particles than earlier approaches.</li>
-                <li><strong>Lock-free Multithreading:</strong> Parallel computation using <code>std::async</code>
-                <li><strong>Cache-Optimized Data Structures:</strong> Memory-aligned contiguous particle storage with minimal cache misses, leveraging structure-of-arrays design patterns to maximize throughput.</li>
+                <li><strong>Spatial Partitioning:</strong> Grid-based collision detection reducing complexity from O(n²) to O(n), enabling the simulation of magnitudes more particles than naive approaches.</li>
+                <li><strong>Multithreaded Processing:</strong> Parallel computation using hardware-aware threading with optimizations for specific architectures including Apple Silicon.</li>
+                <li><strong>SIMD Vector Operations:</strong> Leveraging CPU vector instructions for processing multiple particles simultaneously.</li>
+                <li><strong>Cache-Optimized Data Structures:</strong> Memory-aligned contiguous particle storage with minimal cache misses, using structure-of-arrays design for maximum throughput.</li>
             </ul>
             
             <h3>Technical Highlights</h3>
             <ul>
                 <li><strong>Zero-Overhead Abstractions:</strong> Leveraging C++ template metaprogramming and compile-time optimizations to create high-level abstractions with no runtime cost.</li>
-                <li><strong>SIMD-Friendly Vector Math:</strong> Custom vector implementations aligned for efficient CPU vector instructions.</li>
+                <li><strong>Advanced Math Optimizations:</strong> Fast inverse square root algorithm and bitwise operations for maximum computation efficiency.</li>
                 <li><strong>Data-Oriented Design:</strong> Optimized memory layouts prioritizing access patterns over object hierarchies.</li>
-                <li><strong>Zero-Allocation:</strong> Core simulation loop runs without heap allocations to eliminate garbage collection pauses.</li>
+                <li><strong>Zero-Allocation Runtime:</strong> Core simulation loop runs without heap allocations to eliminate garbage collection pauses.</li>
             </ul>
         </section>
 
@@ -104,16 +105,16 @@
             <h2>Background</h2>
             
             <h3>Mathematical Foundation</h3>
-            <p>ParticleBox implements a super fast basic physics simulation. The core mathematical concepts include:</p>
+            <p>ParticleBox implements an optimized physics simulation using numerically stable algorithms. The core mathematical concepts include:</p>
             
             <h4>Collision Detection Mathematics</h4>
-            <p>For colliding particles, the distance \(d\) between particles is computed using a vectorized approach:</p>
+            <p>For colliding particles, the distance \(d\) between particles is computed using SIMD-optimized vector operations:</p>
             <p>
                 \[
                 d = \sqrt{(p2.x - p1.x)^2 + (p2.y - p1.y)^2}
                 \]
             </p>
-            <p>A collision occurs when \(d < (r1 + r2)\), where \(r1\) and \(r2\) are the radii of the particles. This calculation is optimized by comparing squared distances to avoid costly square root operations in the inner loop.</p>
+            <p>A collision occurs when \(d < (r1 + r2)\), where \(r1\) and \(r2\) are the radii of the particles. This calculation avoids costly square root operations by comparing squared distances in the inner loop, using the Fast Inverse Square Root algorithm when needed.</p>
             
             <h4>Force Calculation</h4>
             <p>The repulsion force magnitude \(F_r\) between overlapping particles is given by:</p>
@@ -122,42 +123,76 @@
                 F_r = k_{rep} \cdot \delta
                 \]
             </p>
-            <p>Where \(\delta\) is the overlap distance \((r1 + r2) - d\), and \(k_{rep}\) is the repulsion strength constant. Force calculations are vectorized for cache efficiency.</p>
+            <p>Where \(\delta\) is the overlap distance \((r1 + r2) - d\), and \(k_{rep}\) is the repulsion strength constant. Force calculations are SIMD-vectorized for cache efficiency.</p>
             
             <h4>Integration Method</h4>
-            <p>The simulation uses semi-implicit Euler integration, updated velocity first, then position:</p>
+            <p>The simulation uses Verlet integration for better numerical stability and performance:</p>
             <p>
                 \[
-                \mathbf{v}_{t+\Delta t} = \mathbf{v}_t + \mathbf{a}_t \cdot \Delta t
-                \]
-                \[
-                \mathbf{p}_{t+\Delta t} = \mathbf{p}_t + \mathbf{v}_{t+\Delta t} \cdot \Delta t
+                \mathbf{p}_{t+\Delta t} = 2\mathbf{p}_t - \mathbf{p}_{t-\Delta t} + \mathbf{a}_t \cdot \Delta t^2
                 \]
             </p>
+            <p>This integration method provides better energy conservation and stability compared to traditional Euler integration, especially for particle systems.</p>
         </section>
         
         <section id="implementation" class="showcase__section">
             <h2>Implementation</h2>
             
             <h3>System Architecture</h3>
-            <p>ParticleBox follows a data-oriented architecture with clear separation of concerns to maximize parallelizability:</p>
+            <p>ParticleBox follows a data-oriented architecture with clear separation of concerns to maximize parallelizability and cache efficiency:</p>
             <ul>
-                <li><strong>Core Simulation Loop:</strong> Lock-free, zero-allocation update cycle optimized for cache coherence.</li>
-                <li><strong>Spatial Partitioning System:</strong> Custom grid implementation with O(1) cell lookup and neighbor iteration.</li>
-                <li><strong>Rendering Pipeline:</strong> Decoupled from physics using double-buffering to prevent thread contention.</li>
+                <li><strong>Core Simulation Loop:</strong> Lock-free, zero-allocation update cycle optimized for cache coherence and SIMD operations.</li>
+                <li><strong>Spatial Partitioning System:</strong> Grid-based partitioning with optimized cell lookups using bit-shifting operations for O(1) cell access.</li>
+                <li><strong>Parallel Processing Framework:</strong> Dynamically adapts to available hardware cores with platform-specific optimizations.</li>
+                <li><strong>Rendering Pipeline:</strong> Decoupled from physics using double-buffering to prevent thread contention with memory pooling for particle textures.</li>
                 <li><strong>Memory Manager:</strong> Custom allocator for particle data with pre-allocation strategies that eliminate fragmentation.</li>
             </ul>
             
-            <h3>Multithreaded Physics Engine</h3>
-            <p>The physics engine divides computation across available CPU cores using a sophisticated work distribution system, enabling parallel processing of particle updates and collision detection with minimal thread synchronization overhead.</p>
-            
-            <h3>Spatial Partitioning Implementation</h3>
-            <p>Grid-based spatial partitioning dramatically reduces collision checks by only considering nearby particles, transforming the complexity from O(n²) to O(n) and providing up to 5× performance improvement in dense particle simulations.</p>
-            
-            <h3>Performance-Critical Optimizations</h3>
-            <p>Several micro-optimizations combine to deliver substantial performance gains:</p>
+            <h3>Spatial Partitioning</h3>
+            <p>The spatial partitioning system is implemented using a fixed-grid approach with significant optimizations:</p>
             <ul>
-                <li><strong>Thread-Local RNG:</strong> Lock-free random number generation using thread-local storage.</li>
+                <li><strong>Optimized Cell Lookups:</strong> Using bit-shifting (>> CELL_SIZE_SHIFT) for fast cell index calculations.</li>
+                <li><strong>Adjacent Cell Checking:</strong> Only checking nearby grid cells (up to 9 cells) for potential collisions.</li>
+                <li><strong>Flat Arrays:</strong> Using flat vectors instead of nested containers for better cache locality when iterating through cells.</li>
+                <li><strong>Pre-computed Cell Assignments:</strong> Batch updating of cell assignments to minimize memory thrashing.</li>
+            </ul>
+            
+            <h3>Multithreaded Physics Engine</h3>
+            <p>The physics engine divides computation across available CPU cores using a sophisticated work distribution system:</p>
+            <ul>
+                <li><strong>Parallel Particle Updates:</strong> Divides particles into chunks processed by multiple threads.</li>
+                <li><strong>Hardware Detection:</strong> Automatically detects available CPU cores for optimal thread count selection.</li>
+                <li><strong>Apple-specific Optimizations:</strong> Uses Grand Central Dispatch for optimal M1/M2 performance.</li>
+                <li><strong>OpenMP Directives:</strong> Used for cross-platform parallelization with #pragma omp.</li>
+                <li><strong>Thread-local Storage:</strong> Per-thread data structures to eliminate contention and false sharing.</li>
+            </ul>
+            
+            <h3>SIMD Optimizations</h3>
+            <p>Vector operations are heavily optimized using SIMD instructions:</p>
+            <ul>
+                <li><strong>Vector Operations:</strong> Uses SIMD instructions for processing multiple particles simultaneously.</li>
+                <li><strong>Platform Detection:</strong> Automatically detects and uses platform-specific SIMD capabilities (AVX2, SSE4, NEON).</li>
+                <li><strong>Apple Silicon:</strong> Special optimizations for Apple M1/M2 processors using simd_float2 native types.</li>
+                <li><strong>Batch Processing:</strong> Organizes particle data to enable efficient SIMD register usage.</li>
+            </ul>
+            
+            <h3>Memory Optimizations</h3>
+            <p>Memory access patterns have been meticulously optimized for modern CPU architectures:</p>
+            <ul>
+                <li><strong>Pre-allocation:</strong> Pre-allocates particle storage with reserve() to avoid reallocations during simulation.</li>
+                <li><strong>Memory Locality:</strong> Uses contiguous arrays for better cache performance.</li>
+                <li><strong>Thread-local RNGs:</strong> Uses thread-local random number generators to avoid contention.</li>
+                <li><strong>Memory Pooling:</strong> Texture caching for particle rendering to reduce GPU memory transfers.</li>
+                <li><strong>Structure of Arrays (SoA):</strong> Reorganized particle data in SoA format for better SIMD utilization.</li>
+            </ul>
+            
+            <h3>Math Optimizations</h3>
+            <p>Several mathematical optimizations provide significant performance gains:</p>
+            <ul>
+                <li><strong>Fast Inverse Square Root:</strong> Implements the Quake III fast inverse square root algorithm for distance calculations.</li>
+                <li><strong>Multiplication over Division:</strong> Using multiplication by inverse instead of division when possible.</li>
+                <li><strong>Bitwise Operations:</strong> Using fast bit-shifting operations for calculations and grid lookups.</li>
+                <li><strong>Early Exits:</strong> Avoiding unnecessary calculations when particles are far apart using distance threshold checks.</li>
             </ul>
         </section>
         
@@ -191,17 +226,16 @@
         <section id="tech-stack" class="showcase__section">
             <h2>Technology Stack</h2>
             <div class="tech-icons">
-                <i class="fab fa-cuttlefish" title="C++"></i>
-                <i class="fas fa-gamepad" title="SDL2"></i>
-                <i class="fas fa-cogs" title="Low-Level Optimizations"></i>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/1/18/ISO_C%2B%2B_Logo.svg" alt="C++ Logo" title="C++" class="icon">
             </div>
             <ul>
                 <li><strong>Core Language:</strong> C++17</li>
-                <li><strong>Libraries:</strong> SDL2</li>
-                <li><strong>Build System:</strong> CMake</li>
-                <li><strong>Optimization Techniques:</strong> Lock-free multithreading, Cache-aware data structures, SIMD instructions</li>
-                <li><strong>Profiling Tools:</strong> Valgrind</li>
+                <li><strong>Graphics API:</strong> SDL2</li>
+                <li><strong>Build System:</strong> CMake with platform-specific optimization flags</li>
+                <li><strong>Optimization Techniques:</strong> Spatial partitioning, SIMD, Multithreading, Memory layout optimization</li>
+                <li><strong>Profiling Tools:</strong> Valgrind, Intel VTune, Apple Instruments</li>
                 <li><strong>Development Environment:</strong> Visual Studio Code, CLion</li>
+                <li><strong>Platform Support:</strong> Windows, macOS, Linux with platform-specific optimizations</li>
             </ul>
         </section>
     </div>
