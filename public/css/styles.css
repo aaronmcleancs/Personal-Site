@@ -649,7 +649,6 @@ html {
   padding: var(--space-sm) var(--space-md);
   margin-top: var(--space-lg);
   width: auto;
-  text-align: center;
   z-index: 2;
   opacity: 0;
   transform: translateY(20px);
