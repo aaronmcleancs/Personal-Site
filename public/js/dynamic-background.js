@@ -233,3 +233,14 @@ document.addEventListener('DOMContentLoaded', function() {
   
   drawGrid();
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+  const scrollSuggestion = document.querySelector('.scroll-suggestion');
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 50) {
+      scrollSuggestion.classList.add('hidden');
+    } else {
+      scrollSuggestion.classList.remove('hidden');
+    }
+  });
+});

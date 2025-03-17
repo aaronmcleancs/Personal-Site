@@ -51,3 +51,14 @@ $(document).ready(function() {
     }
   }
 });
+document.addEventListener('DOMContentLoaded', function() {
+  var scrollPill = document.querySelector('.scroll-pill');
+  if (scrollPill) {
+    scrollPill.addEventListener('click', function() {
+      var projectsSection = document.querySelector('#projects');
+      if (projectsSection) {
+        projectsSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  }
+});
