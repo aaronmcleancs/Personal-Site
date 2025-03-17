@@ -218,15 +218,25 @@ html {
     display: none;
   }
   
-  .nav-icon {
-    display: block;
-  }
-  
   .navbar a:not(.download-btn) {
     width: 45px;
     display: flex;
     justify-content: center;
     margin: 0 var(--space-xs);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .nav-text {
+    display: none !important;
+  }
+  
+ 
+  .navbar a:not(.download-btn) {
+    width: auto;
+    display: flex;
+    justify-content: center;
+    margin: 0 var(--space-md);
   }
 }
 
