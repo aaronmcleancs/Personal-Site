@@ -633,12 +633,6 @@ body {
   background-size: 200% auto;
 }
 
-.github-icon {
-  height: 1em; /* Matches the text size */
-  vertical-align: middle; /* Aligns with text */
-  display: inline-block;
-}
-
 @keyframes gradientText {
   0% {
     background-position: 0% center;

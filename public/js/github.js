@@ -2,7 +2,7 @@ const projectConfig = {
   'CVV_15M_SARS-CoV-2': {
     owner: 'aaronmcleancs',
     repo: 'CVV_15M_SARS-CoV-2',
-    title: 'Machine Learning',
+    title: 'Medical Imaging AI: X-Ray Diagnosis System',
     description: 'Compact, high-performance TensorFlow vision model for detecting COVID-19 and Viral Pneumonia cases from lung x-rays, deployable on mobile hardware with high accuracy in resource-constrained environments.',
     section: 0,
     skills: ['Python', 'TensorFlow', 'Machine Learning', 'Computer Vision', 'Amazon Web Services (AWS)']
@@ -10,7 +10,7 @@ const projectConfig = {
   'RepBook': {
     owner: 'aaronmcleancs',
     repo: 'RepBook-DemoServer',
-    title: 'Full Stack Development',
+    title: 'Full Stack Fitness Assistant',
     description: 'Full-stack iOS fitness dashboard with secure user authentication, normalized backend and dynamic AI assistant with semantics fetching.',
     section: 1,
     skills: ['Swift', 'iOS Development', 'Node.js', 'PostgreSQL', 'Secure Authentication', 'REST']
@@ -18,7 +18,7 @@ const projectConfig = {
   'ParticleBox': {
     owner: 'aaronmcleancs',
     repo: 'ParticleBox',
-    title: 'High Performance Computing',
+    title: 'High Performance Particle Simulator',
     description: 'A rigourously optimized multithreaded particle dynamics engine engineered to push the upper bound of simotaniously simulated objects, visualizing interactions among thousands of particles in real-time with efficient rendering.',
     section: 2,
     skills: ['C++', 'Systems Programming', 'Optimization', 'Multithreading', 'Real-time Rendering']
