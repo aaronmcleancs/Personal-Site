@@ -1,6 +1,5 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -582,7 +581,7 @@ html {
 .hero2__section {
   border-radius: var(--radius-3xl);
   margin: var(--space-2xl);
-  margin-top: 400px;
+  margin-top: 50px;
   margin-bottom: 50px;
   color: rgb(17, 17, 17);
   background: var(--bg-primary);

@@ -18,8 +18,9 @@
     );
     const scrollPercent = scrollVal / (scrollHeight - window.innerHeight);
     const baseScale = getBaseScale(window.innerWidth);
+    // Reduced the multiplier by 40%
     const baselineWidth = 1920;
-    const multiplier = window.innerWidth > baselineWidth ? 800 * (baselineWidth / window.innerWidth) : 800;
+    const multiplier = window.innerWidth > baselineWidth ? 480 * (baselineWidth / window.innerWidth) : 480; // Changed from 800 to 480
     return baseScale + scrollPercent * multiplier;
   }
   
