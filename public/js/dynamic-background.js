@@ -103,12 +103,12 @@ document.addEventListener('DOMContentLoaded', function() {
   window.addEventListener('resize', resizeCanvas);
   
   const spacing = 45;
-  const baseDotRadius = 2;  
-  const maxDotRadius = 2.8; 
-  const dotColor = 'rgb(68, 68, 68)';
+  const baseDotRadius = 1.5;  
+  const maxDotRadius = 2.6; 
+  const dotColor = 'rgb(71, 71, 71)';
   
   const waveSpeed = 0.005;
-  const waveAmplitude = 10;
+  const waveAmplitude = 15;
   const waveFrequency = 0.05;
   const waveOffset = 5;
   
