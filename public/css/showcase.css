@@ -109,7 +109,6 @@ html {
 .navbar a::after {
   content: '';
   position: absolute;
-  bottom: -5px;
   left: 0;
   width: 0;
   height: 2px;
@@ -118,7 +117,6 @@ html {
 }
 
 .navbar a:hover {
-  font-weight: 500;
   color: var(--primary);
 }
 
