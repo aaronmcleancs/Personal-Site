@@ -241,38 +241,30 @@ function createTextImage() {
   
   const ctx = textCanvas.getContext('2d');
   
-  
   const containerWidth = textCanvas.parentElement.offsetWidth;
   const containerHeight = textCanvas.parentElement.offsetHeight;
   
-  
-  const scale = window.devicePixelRatio || 1;
+  // Force 150% resolution by multiplying the scale factor
+  const scale = (window.devicePixelRatio || 1) * 1.5;
   textCanvas.width = containerWidth * scale;
   textCanvas.height = containerHeight * scale;
   
-  
   ctx.scale(scale, scale);
-  
   
   ctx.fillStyle = 'white';
   ctx.fillRect(0, 0, containerWidth, containerHeight);
-  
-  
   
   const fontSize = Math.min(
     Math.floor(containerHeight * 0.65),
     Math.floor(containerWidth / 8)
   );
   
-  
   ctx.fillStyle = 'black';
   ctx.font = '900 ' + fontSize + 'px "Audiowide", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   
-  
   ctx.fillText('Aaron McLean', containerWidth / 2, containerHeight / 2);
-  
   
   processTextImage(textCanvas);
 }
@@ -422,18 +414,15 @@ function initWebGL() {
       return;
   }
   
-  
   const containerWidth = shaderCanvas.parentElement.offsetWidth;
   const containerHeight = shaderCanvas.parentElement.offsetHeight;
   
-  
-  const scale = window.devicePixelRatio || 1;
+  // Force 150% resolution by multiplying the scale factor
+  const scale = (window.devicePixelRatio || 1) * 1.5;
   shaderCanvas.width = containerWidth * scale;
   shaderCanvas.height = containerHeight * scale;
   
-  
   gl.viewport(0, 0, shaderCanvas.width, shaderCanvas.height);
-  
   
   const program = createShaderProgram(gl, vertexShaderSource, liquidFragSource);
   if (!program) {
@@ -441,20 +430,16 @@ function initWebGL() {
       return;
   }
   
-  
   gl.useProgram(program);
-  
   
   const vertices = new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]);
   const vertexBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
   gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
   
-  
   const positionLocation = gl.getAttribLocation(program, 'a_position');
   gl.enableVertexAttribArray(positionLocation);
   gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
-  
   
   const uniforms = {};
   const uniformNames = [
@@ -473,9 +458,7 @@ function initWebGL() {
       uniforms[name] = gl.getUniformLocation(program, name);
   });
   
-  
   setupTexture(gl, uniforms);
-  
   
   gl.uniform1f(uniforms.u_ratio, containerWidth / containerHeight);
   gl.uniform1f(uniforms.u_img_ratio, containerWidth / containerHeight);
@@ -485,16 +468,13 @@ function initWebGL() {
   gl.uniform1f(uniforms.u_patternBlur, params.patternBlur);
   gl.uniform1f(uniforms.u_liquid, params.liquid);
   
-  
   window.glContext = {
     gl: gl,
     uniforms: uniforms
   };
   
-  
   let animationTime = 0;
   let lastTime = 0;
-  
   
   function render(currentTime) {
       currentTime *= 0.001; 
@@ -504,35 +484,26 @@ function initWebGL() {
       animationTime += deltaTime * params.speed * 1000;
       gl.uniform1f(uniforms.u_time, animationTime);
       
-      
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-      
       
       requestAnimationFrame(render);
   }
   
   requestAnimationFrame(render);
-
-        
+  
   window.addEventListener('resize', function() {
-    
     setTimeout(() => {
       if (!shaderCanvas || !shaderCanvas.parentElement) return;
-      
       
       const newWidth = shaderCanvas.parentElement.offsetWidth;
       const newHeight = shaderCanvas.parentElement.offsetHeight;
       
-      
       shaderCanvas.width = newWidth * scale;
       shaderCanvas.height = newHeight * scale;
       
-      
       gl.viewport(0, 0, shaderCanvas.width, shaderCanvas.height);
       
-      
       gl.uniform1f(uniforms.u_ratio, newWidth / newHeight);
-      
       
       createTextImage();
     }, 100);
