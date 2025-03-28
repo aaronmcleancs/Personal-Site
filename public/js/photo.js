@@ -50,6 +50,21 @@ document.addEventListener('DOMContentLoaded', function() {
   prevButton.addEventListener('click', showPrev);
   nextButton.addEventListener('click', showNext);
   closeButton.addEventListener('click', closeViewer);
+    document.addEventListener('keydown', function (e) {
+      if (!viewer.classList.contains('active')) return;
+  
+      switch (e.key) {
+        case 'ArrowLeft':
+          showPrev();
+          break;
+        case 'ArrowRight':
+          showNext();
+          break;
+        case 'Escape':
+          closeViewer();
+          break;
+      }
+    });
 
   viewer.addEventListener('click', function(e) {
     if (e.target === viewer) {

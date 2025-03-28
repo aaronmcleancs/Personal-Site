@@ -6,7 +6,6 @@ const params = {
   speed: 0.07,
   patternScale: 0.1,
 };
-
 const vertexShaderSource = `#version 300 es
 precision mediump float;
 
@@ -267,7 +266,7 @@ function createTextImage() {
   
   
   ctx.fillStyle = 'black';
-  ctx.font = '900 ' + fontSize + 'px "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, sans-serif';
+  ctx.font = '900 ' + fontSize + 'px "Audiowide", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   
