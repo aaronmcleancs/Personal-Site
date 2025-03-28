@@ -18,10 +18,10 @@
     );
     const scrollPercent = scrollVal / (scrollHeight - window.innerHeight);
     const baseScale = getBaseScale(window.innerWidth);
-    // Reduced the multiplier by 40%
     const baselineWidth = 1920;
-    const multiplier = window.innerWidth > baselineWidth ? 480 * (baselineWidth / window.innerWidth) : 480; // Changed from 800 to 480
-    return baseScale + scrollPercent * multiplier;
+    const multiplier = window.innerWidth > baselineWidth ? 700 * (baselineWidth / window.innerWidth) : 700;
+    const offset = baseScale * 0.4;
+    return (baseScale + scrollPercent * multiplier) - offset * (1 - scrollPercent);
   }
   
   function smoothUpdate() {
@@ -62,6 +62,7 @@
   
   currentScale = calculateTargetScale(window.scrollY);
   heroSection.style.backgroundSize = `${currentScale}%`;
+  heroSection.style.backgroundPosition = "center top";
 })();
 
 document.addEventListener('DOMContentLoaded', function() {

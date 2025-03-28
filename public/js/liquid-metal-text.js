@@ -1,11 +1,11 @@
 const params = {
-    refraction: 0.001,      
-    edge: 0.000,            
-    patternBlur: 0.104,     
-    liquid: 0.500,          
-    speed: 0.08,           
-    patternScale: 0.1,      
-  };
+  refraction: 0.001,
+  edge: 0.002,
+  patternBlur: 0.1,
+  liquid: 0.6,
+  speed: 0.04,
+  patternScale: 0.07,
+};
 
 const vertexShaderSource = `#version 300 es
 precision mediump float;
