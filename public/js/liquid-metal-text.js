@@ -1,10 +1,10 @@
 const params = {
-  refraction: 0.001,
-  edge: 0.002,
-  patternBlur: 0.1,
-  liquid: 0.6,
-  speed: 0.04,
-  patternScale: 0.07,
+  refraction: 0.002,
+  edge: 0.000,
+  patternBlur: 0.05,
+  liquid: 0.85,
+  speed: 0.07,
+  patternScale: 0.1,
 };
 
 const vertexShaderSource = `#version 300 es
@@ -267,7 +267,7 @@ function createTextImage() {
   
   
   ctx.fillStyle = 'black';
-  ctx.font = '900 ' + fontSize + 'px Inter, Arial, Helvetica, sans-serif';
+  ctx.font = '900 ' + fontSize + 'px "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   
