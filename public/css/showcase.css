@@ -106,22 +106,8 @@ html {
   position: relative;
 }
 
-.navbar a::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background-color: var(--primary);
-  transition: width var(--transition-medium);
-}
-
 .navbar a:hover {
   color: var(--primary);
-}
-
-.navbar a:hover::after {
-  width: 100%;
 }
 
 .main-nav {
