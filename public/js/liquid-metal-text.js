@@ -2,8 +2,8 @@ const params = {
   refraction: 0.002,
   edge: 0.000,
   patternBlur: 0.05,
-  liquid: 0.85,
-  speed: 0.07,
+  liquid: 0.35,
+  speed: 0.04,
   patternScale: 0.1,
 };
 const vertexShaderSource = `#version 300 es
