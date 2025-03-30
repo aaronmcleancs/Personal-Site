@@ -2,7 +2,7 @@ const actions = [
   { word: "deploy", icon: "fas fa-code-branch" },
   { word: "optimize", icon: "fas fa-bolt" },
   { word: "refactor", icon: "fas fa-code" },
-  { word: "boost", icon: "fas fa-chart-line" },
+  { word: "scale", icon: "fas fa-chart-line" },
   { word: "containerize", icon: "fab fa-docker" },
   { word: "secure", icon: "fas fa-shield-alt" },
 ];
