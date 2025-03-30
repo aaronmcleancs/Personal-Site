@@ -1,5 +1,6 @@
 (function() {
   const heroSection = document.querySelector('.hero__section');
+  const zoomFactor = 1.2;
   let animationFrameId = null;
   let lastScrollY = window.scrollY;
   let currentScale = calculateTargetScale(window.scrollY);
@@ -28,7 +29,7 @@
     const targetScale = calculateTargetScale(window.scrollY);
     const ease = navigator.userAgent.indexOf('Firefox') !== -1 ? 0.05 : 0.1;
     currentScale += (targetScale - currentScale) * ease;
-    heroSection.style.backgroundSize = `${currentScale}%`;
+    heroSection.style.backgroundSize = `${currentScale * zoomFactor}%`;
     if (Math.abs(targetScale - currentScale) > 0.1) {
       animationFrameId = requestAnimationFrame(smoothUpdate);
     } else {
@@ -57,11 +58,11 @@
   
   window.addEventListener('resize', function() {
     currentScale = calculateTargetScale(window.scrollY);
-    heroSection.style.backgroundSize = `${currentScale}%`;
+    heroSection.style.backgroundSize = `${currentScale * zoomFactor}%`;
   });
   
   currentScale = calculateTargetScale(window.scrollY);
-  heroSection.style.backgroundSize = `${currentScale}%`;
+  heroSection.style.backgroundSize = `${currentScale * zoomFactor}%`;
   heroSection.style.backgroundPosition = "center top";
 })();
 

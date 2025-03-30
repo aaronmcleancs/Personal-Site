@@ -244,7 +244,6 @@ function createTextImage() {
   const containerWidth = textCanvas.parentElement.offsetWidth;
   const containerHeight = textCanvas.parentElement.offsetHeight;
   
-  // Force 150% resolution by multiplying the scale factor
   const scale = (window.devicePixelRatio || 1) * 1.5;
   textCanvas.width = containerWidth * scale;
   textCanvas.height = containerHeight * scale;
