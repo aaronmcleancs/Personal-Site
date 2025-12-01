@@ -146,15 +146,33 @@ class SiteSearch {
         return results.slice(0, 5);
     }
 
+    // Security: Escape HTML to prevent XSS
+    escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    // Security: Escape regex special characters to prevent ReDoS
+    escapeRegex(string) {
+        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+
     highlightMatch(text, query) {
-        const searchTerm = query.trim();
+        const searchTerm = this.escapeRegex(query.trim());
+        if (!searchTerm) return this.escapeHtml(text);
+
         const regex = new RegExp(`(${searchTerm})`, 'gi');
-        return text.replace(regex, '<mark>$1</mark>');
+        const escapedText = this.escapeHtml(text);
+        return escapedText.replace(regex, '<mark>$1</mark>');
     }
 
     displayResults(results, query) {
         this.resultsContainer.innerHTML = '';
         this.resultsContainer.classList.add('active');
+
+        // Security: Sanitize query for display
+        const safeQuery = this.escapeHtml(query.trim().substring(0, 100)); // Limit length
 
         // Add site results
         results.forEach(result => {
@@ -182,12 +200,13 @@ class SiteSearch {
         internetSearch.target = '_blank';
         internetSearch.rel = 'noopener noreferrer';
 
-        const icon = document.createElement('i');
-        icon.className = 'fas fa-globe';
-
         const text = document.createElement('div');
         text.className = 'search-result-title';
-        text.innerHTML = `<i class="fas fa-search"></i> Search Internet for "${query}"`;
+        // Use textContent instead of innerHTML for user input
+        const searchIcon = document.createElement('i');
+        searchIcon.className = 'fas fa-search';
+        text.appendChild(searchIcon);
+        text.appendChild(document.createTextNode(` Search Internet for "${safeQuery}"`));
 
         internetSearch.appendChild(text);
         this.resultsContainer.appendChild(internetSearch);
