@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,15 +9,16 @@
     <link rel="icon" type="image/png" href="icon.png">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/showcase.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <script src="https://kit.fontawesome.com/ca7f2ffa51.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
     <div class="navbar">
         <div class="logo">
-          <a href="index.html" class="icon">
-            <img src="icon.png" height="27px" width="27px" alt="Logo">
-          </a>
+            <a href="index.html" class="icon">
+                <img src="icon.png" height="27px" width="27px" alt="Logo">
+            </a>
         </div>
         <a href="index.html" class="nav-text">Home</a>
         <a href="#overview" class="nav-text">Overview</a>
@@ -24,7 +26,7 @@
         <a href="#background" class="nav-text">Background</a>
         <a href="#implementation" class="nav-text">Implementation</a>
         <a href="#performance" class="nav-text">Performance</a>
-      </div>
+    </div>
 
     <div class="showcase__hero">
         <div class="showcase__wrapper">
@@ -74,26 +76,25 @@
         <section id="overview" class="showcase__section">
             <h2>Overview</h2>
             <p>
-                Full-stack iOS fitness assistant made in nodejs and Swift deployed with a demo SQL backend.
+                RepBook is a full-stack iOS fitness assistant engineered with a robust three-tier architecture. It
+                combines a native SwiftUI frontend, a Node.js application layer, and a normalized PostgreSQL database to
+                deliver personalized workout plans via a semantic recommendation engine.
             </p>
-            
+
             <div class="key-features">
-                <h3>Technical Implementation Highlights</h3>
+                <h3>Key Features</h3>
                 <ul>
                     <li>
-                        <strong>Three-Tier Architecture:</strong> Frontend (SwiftUI), application logic (Node.js), and database (PostgreSQL) layers.
+                        <strong>Three-Tier Architecture:</strong> Strict separation of concerns between the Swift
+                        frontend, Node.js backend, and PostgreSQL database.
                     </li>
                     <li>
-                        <strong>RESTful API Design:</strong> Implemented 15+ API endpoints following REST principles with SWAGGER Documentation.
+                        <strong>RESTful API:</strong> A comprehensive suite of over 15 documented endpoints managing
+                        authentication, data retrieval, and state updates.
                     </li>
                     <li>
-                        <strong>Protocol-Oriented Network Layer:</strong> Custom Swift NetworkManager implementing protocol-oriented design for testability and abstraction.
-                    </li>
-                    <li>
-                        <strong>Semantic AI Engine:</strong> Workout recommendation system utilizing NLP techniques to analyze workout history and generate personalized plans.
-                    </li>
-                    <li>
-                        <strong>Database Optimization:</strong> Normalized PostgreSQL schema with proper indexing strategies.
+                        <strong>Semantic Recommendation Engine:</strong> An intelligent system that analyzes workout
+                        history to generate context-aware training plans.
                     </li>
                 </ul>
             </div>
@@ -107,58 +108,45 @@
             </div>
         </section>
 
-        <section id="background" class="showcase__section">
-            <h2>Background</h2>
-            <p>
-                RepBook was developed as a database optimization project, demonstrating backend architecture, and database design.
-            </p>
-        </section>
-
         <section id="implementation" class="showcase__section">
-            <h2>Implementation</h2>
-            
+            <h2>Implementation Details</h2>
+
             <h3>System Architecture</h3>
             <p>
-                RepBook follows a strict three-tier architecture with clear boundaries between system components:
+                The application follows a clean three-tier design pattern to ensure scalability and maintainability:
             </p>
             <ul>
-                <li><strong>Presentation Tier (iOS):</strong> Swift and Objective-C implementation using MVVM architecture for separation of UI and business logic</li>
-                <li><strong>Application Tier (Node.js):</strong> Express-based API server with middleware</li>
-                <li><strong>Data Tier (PostgreSQL):</strong> 3NF relational database</li>
+                <li><strong>Presentation Tier (iOS):</strong> Built with Swift and SwiftUI using the MVVM pattern for
+                    reactive UI updates and clear logic separation.</li>
+                <li><strong>Application Tier (Node.js):</strong> An Express-based REST API handling business logic,
+                    authentication, and request routing.</li>
+                <li><strong>Data Tier (PostgreSQL):</strong> A highly normalized (3NF) relational database optimized for
+                    complex queries and data integrity.</li>
             </ul>
-            <h3>API Documentation</h3>
+
+            <h3>API Design</h3>
             <p>
-                The RESTful API follows the OpenAPI specification with comprehensive documentation. Core endpoints include:
+                The backend exposes a RESTful interface documented with Swagger/OpenAPI. Key functional areas include:
             </p>
             <ul>
-                <li><code>POST /signup</code> - Register a new user with account and metrics data.</li>
-                <li><code>POST /login</code> - Authenticate a user and generate an auth key.</li>
-                <li><code>GET /checkUsername/:username</code> - Check if a username is available.</li>
-                <li><code>POST /exercises</code> - Add exercises to a workout.</li>
-                <li><code>POST /updateUserInfo/:memberId</code> - Update personal user information.</li>
-                <li><code>GET /userDataAndMetrics/:memberId</code> - Retrieve user data and physical metrics.</li>
-                <li><code>POST /setGymMembership</code> - Set or update gym membership details.</li>
-                <li><code>GET /workouts/:memberId</code> - Retrieve all workouts for a specific member.</li>
-                <li><code>GET /membersMetrics/:memberId</code> - Retrieve a member's physical metrics.</li>
-                <li><code>POST /createWorkout/:memberId</code> - Create a new workout.</li>
-                <li><code>GET /exercises</code> - Retrieve a list of all exercises.</li>
-                <li><code>GET /exercises/search?workoutId=:workoutId</code> - Retrieve exercises for a specific workout.</li>
-                <li><code>GET /exercises/search?q=</code> - Search exercises by name.</li>
-                <li><code>DELETE /workouts/:workoutId</code> - Delete a specific workout.</li>
-                <li><code>PUT /workouts/:workoutId</code> - Rename an existing workout.</li>
-                <li><code>POST /loggedWorkouts</code> - Log a completed workout session.</li>
-                <li><code>GET /fetchSafeData/:memberId</code> - Fetch filtered user data and workout details.</li>
+                <li><strong>Authentication:</strong> Secure user registration and login flows (<code>/signup</code>,
+                    <code>/login</code>).
+                </li>
+                <li><strong>Workout Management:</strong> Endpoints for creating, logging, and retrieving workout
+                    sessions (<code>/workouts</code>, <code>/loggedWorkouts</code>).</li>
+                <li><strong>Data Retrieval:</strong> Efficient querying of exercises and user metrics
+                    (<code>/exercises</code>, <code>/userDataAndMetrics</code>).</li>
             </ul>
-            
-            <h3>AI Recommendation Engine</h3>
+
+            <h3>Recommendation Engine</h3>
             <p>
-                The recommendation system implements semantic analysis of workout data to generate personalized plans:
+                The core innovation of RepBook is its semantic analysis engine, which personalizes the user experience:
             </p>
             <ul>
-                <li><strong>Data Processing:</strong> Historical workout data is processed to extract training patterns and preferences</li>
-                <li><strong>Feature Engineering:</strong> Extraction of meaningful features from raw workout data</li>
-                <li><strong>Pattern Recognition:</strong> Analysis of exercise combinations, intensity progression, and recovery patterns</li>
-                <li><strong>Recommendation Generation:</strong> Contextual recommendation based on user goals, history, and physiological constraints</li>
+                <li><strong>Pattern Recognition:</strong> Analyzes historical training data to identify user preferences
+                    and progression.</li>
+                <li><strong>Contextual Generation:</strong> Suggests exercises and routines based on recovery status,
+                    goals, and available equipment.</li>
             </ul>
         </section>
 
@@ -182,17 +170,17 @@
     </div>
     <footer class="footer">
         <div class="footer__container">
-          <div class="footer__content">
-            <div class="footer__logo">
-              <img src="icon.png" height="22px" width="22px" alt="Aaron McLean Logo">
-              <h3>aaronmclean.xyz</h3>
+            <div class="footer__content">
+                <div class="footer__logo">
+                    <img src="icon.png" height="22px" width="22px" alt="Aaron McLean Logo">
+                    <h3>aaronmclean.xyz</h3>
+                </div>
             </div>
-          </div>
-          <div class="footer__copyright">
-            <p>&copy; <span id="current-year"></span> Aaron McLean</p>
-          </div>
+            <div class="footer__copyright">
+                <p>&copy; <span id="current-year"></span> Aaron McLean</p>
+            </div>
         </div>
-      </footer>
+    </footer>
     <div class="fullscreen-viewer">
         <img src="" alt="Fullscreen image" class="fullscreen-image">
         <div class="fullscreen-nav">
@@ -211,4 +199,5 @@
     <script src="js/github.js"></script>
     <script src="js/track.js"></script>
 </body>
+
 </html>
