@@ -295,7 +295,6 @@ html {
 .search-result-item:hover {
   background: rgba(255, 255, 255, 0.08);
   border-color: var(--primary);
-  transform: translateX(4px);
 }
 
 .search-result-title {
@@ -361,10 +360,113 @@ html {
   }
 }
 
+/* Mobile Search Styles */
+.mobile-search-trigger {
+  display: none;
+  color: var(--text-secondary);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 8px;
+  transition: color 0.2s ease;
+}
+
+.mobile-search-trigger:hover {
+  color: var(--text-primary);
+}
+
+.mobile-search-close {
+  display: none;
+  /* Hidden by default, shown in fullscreen */
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: var(--text-secondary);
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1002;
+}
+
 @media screen and (max-width: 600px) {
   .navbar-search {
     display: none;
+    /* Hidden by default on mobile */
   }
+
+  .navbar-search.active {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(10, 10, 10, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: 2000;
+    flex-direction: column;
+    padding: 80px 20px 20px;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .mobile-search-trigger {
+    display: block;
+  }
+
+  /* Fullscreen adjustments */
+  .navbar-search.active .search-input {
+    width: 100%;
+    max-width: 400px;
+    height: 50px;
+    font-size: 1.1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .navbar-search.active .search-icon {
+    top: 105px;
+    /* Adjust based on padding */
+    left: calc(50% - 180px);
+    /* Approximate centering adjustment */
+    transform: none;
+    font-size: 1.1rem;
+  }
+
+  /* Fix search icon position in fullscreen */
+  .navbar-search.active .input-wrapper {
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+  }
+
+  .navbar-search.active .search-icon {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+  }
+
+  .navbar-search.active .search-results {
+    position: static;
+    width: 100%;
+    max-width: 400px;
+    max-height: calc(100vh - 150px);
+    background: transparent;
+    box-shadow: none;
+    border: none;
+    margin-top: 20px;
+    opacity: 1;
+    overflow-y: auto;
+  }
+
+  .navbar-search.active .mobile-search-close {
+    display: block;
+  }
+
+  /* Hide other navbar items when search is active if needed, 
+     but overlay covers them anyway */
 }
 
 .navbar a.icon:hover {
@@ -2248,7 +2350,6 @@ html {
 
 .footer__links a:hover {
   color: var(--primary);
-  transform: translateX(4px);
   text-shadow: 0 0 8px rgba(113, 146, 227, 0.4);
   border-bottom: 0.5px solid rgba(255, 255, 255, 0.3);
   /* Thinner underline on hover */

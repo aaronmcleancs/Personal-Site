@@ -11,12 +11,30 @@ class SiteSearch {
     async init() {
         this.searchInput = document.querySelector('.search-input');
         this.resultsContainer = document.querySelector('.search-results');
+        this.searchContainer = document.querySelector('.navbar-search');
         const clearBtn = document.querySelector('.search-clear');
+        const mobileTrigger = document.querySelector('.mobile-search-trigger');
+        const mobileClose = document.querySelector('.mobile-search-close');
 
         if (!this.searchInput || !this.resultsContainer) return;
 
         // Index all pages
         await this.indexPages();
+
+        // Mobile Toggle
+        if (mobileTrigger) {
+            mobileTrigger.addEventListener('click', () => {
+                this.searchContainer.classList.add('active');
+                this.searchInput.focus();
+                document.body.style.overflow = 'hidden'; // Prevent scrolling
+            });
+        }
+
+        if (mobileClose) {
+            mobileClose.addEventListener('click', () => {
+                this.closeMobileSearch();
+            });
+        }
 
         // Event listeners
         this.searchInput.addEventListener('input', (e) => {
@@ -34,8 +52,10 @@ class SiteSearch {
 
         // Close on outside click
         document.addEventListener('click', (e) => {
-            if (!e.target.closest('.navbar-search')) {
+            if (!e.target.closest('.navbar-search') && !e.target.closest('.mobile-search-trigger')) {
                 this.clearResults();
+                // Only close mobile search if we clicked outside (optional, maybe we want it persistent until X is clicked)
+                // For now, let's keep it persistent on mobile until X is clicked or Escape
             }
         });
 
@@ -43,23 +63,35 @@ class SiteSearch {
         this.searchInput.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 this.clearResults();
+                this.closeMobileSearch();
                 this.searchInput.blur();
             }
         });
     }
 
+    closeMobileSearch() {
+        if (this.searchContainer) {
+            this.searchContainer.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    }
+
     async indexPages() {
         const pages = [
-            { url: 'index.html', title: 'Home' },
-            { url: 'cnn.html', title: 'Anomaly Detection Project' },
-            { url: 'particle.html', title: 'ParticleBox Project' },
-            { url: 'quantum.html', title: 'Quantum Blockchain Project' },
-            { url: 'ios.html', title: 'RepBook iOS Project' }
+            { sourceUrl: 'index.html', targetUrl: 'index.html', title: 'Home' },
+            { sourceUrl: 'cnn.html', targetUrl: 'cnn.html', title: 'Anomaly Detection Project' },
+            { sourceUrl: 'particle.html', targetUrl: 'particle.html', title: 'ParticleBox Project' },
+            { sourceUrl: 'quantum.html', targetUrl: 'quantum.html', title: 'Quantum Blockchain Project' },
+            { sourceUrl: 'ios.html', targetUrl: 'ios.html', title: 'RepBook iOS Project' },
+            // Shadow content for external links
+            { sourceUrl: 'data/linkedin.html', targetUrl: 'https://www.linkedin.com/in/aaronmcleann/', title: 'LinkedIn Profile' },
+            { sourceUrl: 'data/github.html', targetUrl: 'https://github.com/aaronmcleancs', title: 'GitHub Profile' },
+            { sourceUrl: 'data/cv.html', targetUrl: '/images/CV.pdf', title: 'Curriculum Vitae' }
         ];
 
         for (const page of pages) {
             try {
-                const response = await fetch(page.url);
+                const response = await fetch(page.sourceUrl);
                 const html = await response.text();
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(html, 'text/html');
@@ -70,7 +102,8 @@ class SiteSearch {
                     '.hero2__section',
                     '.project-card',
                     'section',
-                    'main'
+                    'main',
+                    'body' // Added body for shadow files which might be simple
                 ];
 
                 let content = '';
@@ -88,12 +121,12 @@ class SiteSearch {
                 content = content.replace(/\s+/g, ' ').trim();
 
                 this.index.push({
-                    url: page.url,
+                    url: page.targetUrl, // Use targetUrl for navigation
                     title: page.title,
                     content: content.toLowerCase()
                 });
             } catch (error) {
-                console.error(`Failed to index ${page.url}:`, error);
+                console.error(`Failed to index ${page.sourceUrl}:`, error);
             }
         }
 
@@ -178,7 +211,12 @@ class SiteSearch {
         results.forEach(result => {
             const item = document.createElement('a');
             item.className = 'search-result-item';
-            item.href = result.url;
+
+            // Construct URL with Text Fragment
+            // Format: #:~:text=[prefix-,]textStart[,suffix]
+            // We'll use the simple format #:~:text=term for now
+            const encodedQuery = encodeURIComponent(query.trim());
+            item.href = `${result.url}#:~:text=${encodedQuery}`;
 
             const title = document.createElement('div');
             title.className = 'search-result-title';

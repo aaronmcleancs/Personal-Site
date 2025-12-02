@@ -28,6 +28,20 @@
         <a href="#background" class="nav-text">Background</a>
         <a href="#implementation" class="nav-text">Implementation</a>
         <a href="#performance" class="nav-text">Performance</a>
+        <div class="right-nav" style="margin-left: auto; display: flex; align-items: center;">
+            <div class="mobile-search-trigger">
+                <i class="fas fa-search"></i>
+            </div>
+            <div class="navbar-search">
+                <button class="mobile-search-close">×</button>
+                <div class="input-wrapper" style="position: relative; width: 100%;">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-input" placeholder="Search site..." autocomplete="off">
+                    <button class="search-clear" aria-label="Clear search">×</button>
+                </div>
+                <div class="search-results"></div>
+            </div>
+        </div>
     </div>
 
     <div class="showcase__hero">
@@ -224,6 +238,7 @@
     <script src="js/showcase.js"></script>
     <script src="js/github.js"></script>
     <script src="js/track.js"></script>
+    <script src="js/search.js"></script>
     <script>
         document.getElementById('current-year').textContent = new Date().getFullYear();
     </script>
